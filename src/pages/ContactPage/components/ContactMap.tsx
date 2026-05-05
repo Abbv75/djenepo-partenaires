@@ -1,9 +1,10 @@
-import { Box, VStack, HStack, Text } from '@chakra-ui/react'
+import { Box, VStack, HStack, Text, Icon } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
+import { CheckIcon } from '@chakra-ui/icons'
 
 const MotionBox = motion(Box)
 
-export const ContactMap = () => {
+export default () => {
   return (
     <MotionBox
       initial={{ opacity: 0, x: 20 }}
@@ -45,16 +46,28 @@ export const ContactMap = () => {
         </Text>
         <VStack align="flex-start" spacing={4}>
           {[
-            { emoji: '🎯', text: 'Expertise locale et connaissance du contexte africain' },
-            { emoji: '👥', text: 'Approche participative centrée sur les bénéficiaires' },
-            { emoji: '📊', text: 'Méthodologies rigoureuses et éprouvées sur le terrain' },
-            { emoji: '🌍', text: 'Présence dans 8 pays d\'Afrique de l\'Ouest' },
-            { emoji: '⚡', text: 'Réactivité et flexibilité dans nos interventions' },
-          ].map((item) => (
-            <HStack key={item.text} spacing={3} align="flex-start">
-              <Text fontSize="18px" flexShrink={0}>{item.emoji}</Text>
+            'Expertise locale et connaissance du contexte africain',
+            'Approche participative centrée sur les bénéficiaires',
+            'Méthodologies rigoureuses et éprouvées sur le terrain',
+            'Présence dans 8 pays d\'Afrique de l\'Ouest',
+            'Réactivité et flexibilité dans nos interventions',
+          ].map((text) => (
+            <HStack key={text} spacing={3} align="flex-start">
+              <Box 
+                w="22px" 
+                h="22px" 
+                borderRadius="full" 
+                bg="whiteAlpha.200" 
+                display="flex" 
+                alignItems="center" 
+                justifyContent="center"
+                flexShrink={0}
+                mt="2px"
+              >
+                <Icon as={CheckIcon} color="gold.400" fontSize="10px" />
+              </Box>
               <Text fontSize="14px" color="brand.100" lineHeight={1.6}>
-                {item.text}
+                {text}
               </Text>
             </HStack>
           ))}

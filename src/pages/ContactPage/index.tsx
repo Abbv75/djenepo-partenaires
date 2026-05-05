@@ -6,7 +6,7 @@ import {
 import { ContactHero } from './components/ContactHero'
 import { ContactInfoCards } from './components/ContactInfoCards'
 import { ContactForm } from './components/ContactForm'
-import { ContactMap } from './components/ContactMap'
+import ContactMap from './components/ContactMap'
 
 export default function ContactPage() {
   return (
