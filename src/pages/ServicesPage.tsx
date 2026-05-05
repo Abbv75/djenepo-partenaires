@@ -1,24 +1,19 @@
 import { Link } from 'react-router-dom'
 import {
   Box,
-  Container,
-  Flex,
-  Grid,
+  Container, Grid,
   GridItem,
   HStack,
   VStack,
   Text,
   Button,
   Icon,
-  Badge,
-  SimpleGrid,
-  List,
+  Badge, List,
   ListItem,
-  ListIcon,
+  ListIcon
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import {
-  FiTarget,
   FiTrendingUp,
   FiUsers,
   FiCheck,
@@ -26,7 +21,7 @@ import {
   FiBookOpen,
   FiBarChart2,
   FiCompass,
-  FiLayers,
+  FiLayers
 } from 'react-icons/fi'
 
 const MotionBox = motion(Box)
@@ -185,7 +180,6 @@ export default function ServicesPage() {
                   templateColumns={{ base: '1fr', lg: '1fr 1fr' }}
                   gap={12}
                   alignItems="center"
-                  direction={i % 2 === 1 ? 'row-reverse' : 'row'}
                 >
                   <GridItem order={{ base: 1, lg: i % 2 === 1 ? 2 : 1 }}>
                     <HStack spacing={4} mb={5}>

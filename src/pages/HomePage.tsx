@@ -26,7 +26,6 @@ import {
 } from 'react-icons/fi'
 
 const MotionBox = motion(Box)
-const MotionFlex = motion(Flex)
 
 const stats = [
   { value: '50+', label: 'Projets accompagnés', icon: FiTarget },
@@ -64,14 +63,6 @@ const services = [
     color: 'purple.500',
     bg: 'purple.50',
   },
-]
-
-const partners = [
-  'ONG Internationales',
-  'Institutions Publiques',
-  'Partenaires Techniques',
-  'Bailleurs de fonds',
-  'Collectivités locales',
 ]
 
 export default function HomePage() {

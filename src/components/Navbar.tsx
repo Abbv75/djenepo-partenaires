@@ -10,8 +10,7 @@ import {
   Text,
   useDisclosure,
   Collapse,
-  Container,
-  Image,
+  Container
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 

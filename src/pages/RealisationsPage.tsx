@@ -1,18 +1,14 @@
 import { Link } from 'react-router-dom'
 import {
   Box,
-  Container,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
+  Container, HStack,
   VStack,
   Text,
   Button,
   Icon,
   Badge,
   SimpleGrid,
-  Tag,
+  Tag
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import {
@@ -20,8 +16,7 @@ import {
   FiCalendar,
   FiMapPin,
   FiUsers,
-  FiTarget,
-  FiExternalLink,
+  FiTarget
 } from 'react-icons/fi'
 
 const MotionBox = motion(Box)
