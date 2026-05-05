@@ -1,35 +1,36 @@
 import { Box, SimpleGrid, Icon, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { FiMapPin, FiPhone, FiMail, FiClock } from 'react-icons/fi'
+import { CONTACT_INFO } from '../../../constant/contact'
 
 const MotionBox = motion(Box)
 
-const contactInfo = [
+const contactCards = [
   {
     icon: FiMapPin,
     title: 'Adresse',
-    content: 'Bamako, Mali\nACI 2000, Hamdallaye',
+    content: CONTACT_INFO.address.full,
     color: 'brand.600',
     bg: 'brand.50',
   },
   {
     icon: FiPhone,
     title: 'Téléphone',
-    content: '+223 XX XX XX XX\n+223 XX XX XX XX',
+    content: CONTACT_INFO.phones.join('\n'),
     color: 'gold.500',
     bg: 'gold.50',
   },
   {
     icon: FiMail,
     title: 'Email',
-    content: 'contact@djenepopartners.com\ninfo@djenepopartners.com',
+    content: CONTACT_INFO.emails.join('\n'),
     color: 'teal.500',
     bg: 'teal.50',
   },
   {
     icon: FiClock,
     title: 'Horaires',
-    content: 'Lun – Ven : 8h00 – 17h00\nSam : 9h00 – 13h00',
+    content: CONTACT_INFO.hours.full,
     color: 'purple.500',
     bg: 'purple.50',
   },
@@ -38,7 +39,7 @@ const contactInfo = [
 export const ContactInfoCards = () => {
   return (
     <SimpleGrid columns={{ base: 1, sm: 2, lg: 4 }} spacing={6} mb={16}>
-      {contactInfo.map((info, i) => (
+      {contactCards.map((info, i) => (
         <MotionBox
           key={info.title}
           initial={{ opacity: 0, y: 20 }}

@@ -13,6 +13,7 @@ import {
   Image
 } from '@chakra-ui/react'
 import { IMAGES } from '../constant/image'
+import { CONTACT_INFO } from '../constant/contact'
 import { FiMapPin, FiPhone, FiMail, FiLinkedin, FiFacebook } from 'react-icons/fi'
 
 const footerLinks = [
@@ -62,15 +63,15 @@ export default function Footer() {
             <VStack align="flex-start" spacing={3}>
               <HStack spacing={3}>
                 <Icon as={FiMapPin} color="gold.400" />
-                <Text color="gray.400" fontSize="14px">Bamako, Mali</Text>
+                <Text color="gray.400" fontSize="14px">{CONTACT_INFO.address.city}</Text>
               </HStack>
               <HStack spacing={3}>
                 <Icon as={FiPhone} color="gold.400" />
-                <Text color="gray.400" fontSize="14px">+223 XX XX XX XX</Text>
+                <Text color="gray.400" fontSize="14px">{CONTACT_INFO.phones[0]}</Text>
               </HStack>
               <HStack spacing={3}>
                 <Icon as={FiMail} color="gold.400" />
-                <Text color="gray.400" fontSize="14px">contact@djenepopartners.com</Text>
+                <Text color="gray.400" fontSize="14px">{CONTACT_INFO.emails[0]}</Text>
               </HStack>
             </VStack>
           </GridItem>
@@ -122,7 +123,8 @@ export default function Footer() {
           <HStack spacing={4}>
             <Box
               as="a"
-              href="#"
+              href={CONTACT_INFO.socials.linkedin}
+              target="_blank"
               w="35px"
               h="35px"
               borderRadius="8px"
@@ -138,7 +140,8 @@ export default function Footer() {
             </Box>
             <Box
               as="a"
-              href="#"
+              href={CONTACT_INFO.socials.facebook}
+              target="_blank"
               w="35px"
               h="35px"
               borderRadius="8px"

@@ -24,6 +24,7 @@ import {
   FiGlobe,
   FiBookOpen,
 } from 'react-icons/fi'
+import { CONTACT_INFO } from '../constant/contact'
 
 const MotionBox = motion(Box)
 
@@ -122,7 +123,7 @@ export default function HomePage() {
                   gap={2}
                 >
                   <Box w="6px" h="6px" borderRadius="full" bg="brand.600" />
-                  Basé à Bamako, Mali
+                  Basé à {CONTACT_INFO.address.city}
                 </Badge>
 
                 <Text
