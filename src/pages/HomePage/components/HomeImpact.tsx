@@ -6,15 +6,12 @@ import {
   Text,
   SimpleGrid,
   Icon,
-  Image,
-  Flex,
-  Badge,
+  Image, Badge
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { FiTrendingUp, FiActivity, FiTarget, FiPieChart, FiBarChart2, FiCheckCircle } from 'react-icons/fi'
 
 const MotionBox = motion(Box)
-const MotionFlex = motion(Flex)
 
 const ImpactStat = ({ icon, label, value, color, delay }: any) => (
   <MotionBox
