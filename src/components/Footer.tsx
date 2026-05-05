@@ -14,29 +14,28 @@ import {
 } from '@chakra-ui/react'
 import { IMAGES } from '../constant/image'
 import { CONTACT_INFO } from '../constant/contact'
+import { SERVICES } from '../constant/services'
 import { FiMapPin, FiPhone, FiMail, FiLinkedin, FiFacebook } from 'react-icons/fi'
 
-const footerLinks = [
-  {
-    title: 'Navigation',
-    links: [
-      { label: 'Accueil', to: '/' },
-      { label: 'Services', to: '/services' },
-      { label: 'Contact', to: '/contact' },
-    ],
-  },
-  {
-    title: 'Services',
-    links: [
-      { label: 'Planification Stratégique', to: '/services' },
-      { label: 'Suivi-Évaluation', to: '/services' },
-      { label: 'Formation & Renforcement', to: '/services' },
-      { label: 'Appui Technique', to: '/services' },
-    ],
-  },
-]
-
 export default function Footer() {
+  const footerLinks = [
+    {
+      title: 'Navigation',
+      links: [
+        { label: 'Accueil', to: '/' },
+        { label: 'Services', to: '/services' },
+        { label: 'Contact', to: '/contact' },
+      ],
+    },
+    {
+      title: 'Expertises',
+      links: SERVICES.map(service => ({
+        label: service.title,
+        to: `/services#${service.id}`
+      })),
+    },
+  ]
+
   return (
     <Box as="footer" bg="gray.900" color="white" pt={16} pb={6}>
       <Container maxW="1200px" px={{ base: 4, md: 6 }}>

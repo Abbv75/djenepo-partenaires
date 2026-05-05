@@ -8,10 +8,12 @@ import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [pathname])
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [pathname, hash])
   return null
 }
 

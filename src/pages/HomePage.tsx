@@ -16,15 +16,14 @@ import {
 import { motion } from 'framer-motion'
 import {
   FiTarget,
-  FiTrendingUp,
-  FiUsers,
   FiCheck,
   FiArrowRight,
   FiAward,
   FiGlobe,
-  FiBookOpen,
+  FiUsers,
 } from 'react-icons/fi'
 import { CONTACT_INFO } from '../constant/contact'
+import { SERVICES } from '../constant/services'
 
 const MotionBox = motion(Box)
 
@@ -35,38 +34,10 @@ const stats = [
   { value: '200+', label: 'Acteurs formés', icon: FiUsers },
 ]
 
-const services = [
-  {
-    icon: FiTarget,
-    title: 'Planification Stratégique',
-    desc: 'Théories du changement, logiques d\'intervention, cadres logiques adaptés.',
-    color: 'brand.600',
-    bg: 'brand.50',
-  },
-  {
-    icon: FiTrendingUp,
-    title: 'Suivi-Évaluation',
-    desc: 'Systèmes de suivi performants, indicateurs SMART, collecte et analyse de données.',
-    color: 'gold.500',
-    bg: 'gold.50',
-  },
-  {
-    icon: FiUsers,
-    title: 'Formation & Renforcement',
-    desc: 'Programmes de renforcement des capacités sur mesure pour les équipes terrain.',
-    color: 'teal.500',
-    bg: 'teal.50',
-  },
-  {
-    icon: FiBookOpen,
-    title: 'Appui Technique',
-    desc: 'Accompagnement opérationnel des ONG et institutions dans leurs missions.',
-    color: 'purple.500',
-    bg: 'purple.50',
-  },
-]
-
 export default function HomePage() {
+  // Take first 4 services for the home page summary
+  const homeServices = SERVICES.slice(0, 4)
+
   return (
     <Box>
       {/* ─── HERO ─── */}
@@ -321,48 +292,50 @@ export default function HomePage() {
           </VStack>
 
           <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
-            {services.map((s, i) => (
+            {homeServices.map((s, i) => (
               <MotionBox
-                key={s.title}
+                key={s.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Box
-                  bg="white"
-                  borderRadius="20px"
-                  p={7}
-                  h="full"
-                  border="1px solid"
-                  borderColor="gray.100"
-                  _hover={{
-                    boxShadow: '0 12px 40px rgba(43,91,196,0.12)',
-                    transform: 'translateY(-4px)',
-                    borderColor: 'brand.200',
-                  }}
-                  transition="all 0.3s ease"
-                  cursor="pointer"
-                >
+                <Link to={`/services#${s.id}`}>
                   <Box
-                    w="52px"
-                    h="52px"
-                    bg={s.bg}
-                    borderRadius="14px"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    mb={5}
+                    bg="white"
+                    borderRadius="20px"
+                    p={7}
+                    h="full"
+                    border="1px solid"
+                    borderColor="gray.100"
+                    _hover={{
+                      boxShadow: '0 12px 40px rgba(43,91,196,0.12)',
+                      transform: 'translateY(-4px)',
+                      borderColor: 'brand.200',
+                    }}
+                    transition="all 0.3s ease"
+                    cursor="pointer"
                   >
-                    <Icon as={s.icon} color={s.color} fontSize="22px" />
+                    <Box
+                      w="52px"
+                      h="52px"
+                      bg={s.bg}
+                      borderRadius="14px"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      mb={5}
+                    >
+                      <Icon as={s.icon} color={s.color} fontSize="22px" />
+                    </Box>
+                    <Text fontFamily="heading" fontWeight={700} fontSize="16px" color="gray.900" mb={3}>
+                      {s.title}
+                    </Text>
+                    <Text fontSize="14px" color="gray.600" lineHeight={1.7}>
+                      {s.desc}
+                    </Text>
                   </Box>
-                  <Text fontFamily="heading" fontWeight={700} fontSize="16px" color="gray.900" mb={3}>
-                    {s.title}
-                  </Text>
-                  <Text fontSize="14px" color="gray.600" lineHeight={1.7}>
-                    {s.desc}
-                  </Text>
-                </Box>
+                </Link>
               </MotionBox>
             ))}
           </SimpleGrid>

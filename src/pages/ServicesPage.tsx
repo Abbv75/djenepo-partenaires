@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import {
   Box,
   Container, Grid,
@@ -14,118 +15,29 @@ import {
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import {
-  FiTrendingUp,
-  FiUsers,
   FiCheck,
   FiArrowRight,
-  FiBookOpen,
-  FiBarChart2,
-  FiCompass,
-  FiLayers
 } from 'react-icons/fi'
+import { SERVICES } from '../constant/services'
 
 const MotionBox = motion(Box)
 
-const services = [
-  {
-    id: 'planification',
-    icon: FiCompass,
-    color: 'brand.600',
-    bg: 'brand.50',
-    title: 'Planification Stratégique',
-    tagline: 'Des projets bien conçus dès le départ',
-    desc: 'Nous aidons vos équipes à construire des cadres d\'intervention cohérents, à définir des théories du changement réalistes et à aligner vos activités sur vos objectifs de développement.',
-    features: [
-      'Élaboration de cadres logiques et logiques d\'intervention',
-      'Construction de théories du changement participatives',
-      'Analyse des parties prenantes et cartographie des acteurs',
-      'Formulation de projets et programmes',
-      'Alignement stratégique sur les ODD',
-    ],
-  },
-  {
-    id: 'suivi',
-    icon: FiTrendingUp,
-    color: 'gold.500',
-    bg: 'gold.50',
-    title: 'Suivi-Évaluation',
-    tagline: 'Mesurer pour mieux agir',
-    desc: 'DJENEPO PARTNERS conçoit et met en place des systèmes de suivi-évaluation robustes qui permettent à vos équipes de mesurer l\'impact réel de leurs interventions et de prendre des décisions fondées sur des données.',
-    features: [
-      'Conception de cadres de mesure de la performance (CMP)',
-      'Développement d\'indicateurs SMART et tableaux de bord',
-      'Mise en place de systèmes de collecte de données',
-      'Évaluations intermédiaires et finales',
-      'Analyse et capitalisation des résultats',
-    ],
-  },
-  {
-    id: 'formation',
-    icon: FiUsers,
-    color: 'teal.500',
-    bg: 'teal.50',
-    title: 'Formation & Renforcement des Capacités',
-    tagline: 'Investir dans les hommes',
-    desc: 'Nous développons et animons des programmes de formation sur mesure qui renforcent durablement les compétences des équipes projet, des coordinateurs terrain et des responsables de suivi-évaluation.',
-    features: [
-      'Formations en gestion axée sur les résultats (GAR)',
-      'Ateliers de renforcement en suivi-évaluation',
-      'Formation à la collecte de données mobile (KoboToolbox, ODK)',
-      'Mentoring et accompagnement des équipes',
-      'Développement de guides et outils pédagogiques',
-    ],
-  },
-  {
-    id: 'appui',
-    icon: FiLayers,
-    color: 'purple.500',
-    bg: 'purple.50',
-    title: 'Appui Technique',
-    tagline: 'Un accompagnement opérationnel sur le terrain',
-    desc: 'Nos experts interviennent directement auprès de vos équipes pour apporter un soutien technique ciblé dans la mise en œuvre de vos projets et programmes de développement.',
-    features: [
-      'Accompagnement à la mise en œuvre de projets',
-      'Revues de performances et audits de projet',
-      'Facilitation d\'ateliers et de réunions stratégiques',
-      'Rédaction de rapports et documents techniques',
-      'Conseil en stratégie organisationnelle',
-    ],
-  },
-  {
-    id: 'recherche',
-    icon: FiBarChart2,
-    color: 'orange.500',
-    bg: 'orange.50',
-    title: 'Recherche & Analyses',
-    tagline: 'Des données pour guider vos décisions',
-    desc: 'Nous réalisons des études de base, des enquêtes terrain et des analyses sectorielles qui alimentent la prise de décision éclairée et améliorent la conception des interventions.',
-    features: [
-      'Études de base et de fin de projet',
-      'Enquêtes ménages et sondages d\'opinion',
-      'Analyses de contexte et diagnostics sectoriels',
-      'Cartographie des besoins et vulnérabilités',
-      'Rapports d\'analyse et de synthèse',
-    ],
-  },
-  {
-    id: 'coaching',
-    icon: FiBookOpen,
-    color: 'pink.500',
-    bg: 'pink.50',
-    title: 'Coaching Organisationnel',
-    tagline: 'Renforcer votre organisation de l\'intérieur',
-    desc: 'Nous accompagnons les organisations dans leur développement institutionnel, la structuration de leurs processus internes et l\'amélioration de leur gouvernance pour une efficacité accrue.',
-    features: [
-      'Diagnostic organisationnel et plan de développement',
-      'Structuration des processus internes',
-      'Amélioration de la gouvernance et des procédures',
-      'Gestion du changement organisationnel',
-      'Développement de politiques et manuels de procédures',
-    ],
-  },
-]
-
 export default function ServicesPage() {
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '')
+      const element = document.getElementById(id)
+      if (element) {
+        // Small delay to ensure everything is rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }, 100)
+      }
+    }
+  }, [hash])
+
   return (
     <Box pt="72px">
       {/* Header */}
@@ -167,14 +79,16 @@ export default function ServicesPage() {
       <Box py={{ base: 16, md: 24 }} bg="white">
         <Container maxW="1200px" px={{ base: 4, md: 6 }}>
           <VStack spacing={16}>
-            {services.map((service, i) => (
+            {SERVICES.map((service, i) => (
               <MotionBox
                 key={service.id}
+                id={service.id}
                 w="full"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5 }}
+                scrollMarginTop="100px"
               >
                 <Grid
                   templateColumns={{ base: '1fr', lg: '1fr 1fr' }}
@@ -274,7 +188,7 @@ export default function ServicesPage() {
                   </GridItem>
                 </Grid>
 
-                {i < services.length - 1 && (
+                {i < SERVICES.length - 1 && (
                   <Box h="1px" bg="gray.100" mt={16} />
                 )}
               </MotionBox>
