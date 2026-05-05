@@ -10,7 +10,9 @@ import {
   Text,
   Divider,
   Icon,
+  Image
 } from '@chakra-ui/react'
+import { IMAGES } from '../constant/image'
 import { FiMapPin, FiPhone, FiMail, FiLinkedin, FiFacebook } from 'react-icons/fi'
 
 const footerLinks = [
@@ -45,29 +47,15 @@ export default function Footer() {
         >
           {/* Brand */}
           <GridItem>
-            <HStack spacing={3} mb={5}>
-              <Box
-                w="44px"
+            <Box mb={5} bg="white" p={2} borderRadius="8px" display="inline-block">
+              <Image 
+                src={IMAGES.logo} 
+                alt="Djenepo Partners" 
                 h="44px"
-                bg="brand.600"
-                borderRadius="10px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Text color="white" fontWeight={800} fontSize="18px" fontFamily="heading">
-                  D
-                </Text>
-              </Box>
-              <VStack spacing={0} align="flex-start">
-                <Text fontFamily="heading" fontWeight={800} fontSize="15px" color="white" lineHeight={1}>
-                  DJENEPO
-                </Text>
-                <Text fontFamily="heading" fontWeight={600} fontSize="11px" color="gold.400" lineHeight={1} mt="2px" letterSpacing="1.5px">
-                  PARTNERS
-                </Text>
-              </VStack>
-            </HStack>
+                w="auto"
+                objectFit="contain"
+              />
+            </Box>
             <Text color="gray.400" fontSize="14px" lineHeight={1.8} maxW="300px" mb={6}>
               Société de conseil basée à Bamako, spécialisée dans l'accompagnement stratégique
               des projets de développement en Afrique.

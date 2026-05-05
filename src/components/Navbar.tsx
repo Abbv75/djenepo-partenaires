@@ -10,9 +10,11 @@ import {
   Text,
   useDisclosure,
   Collapse,
-  Container
+  Container,
+  Image
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { IMAGES } from '../constant/image'
 
 const navLinks = [
   { label: 'Accueil', to: '/' },
@@ -51,45 +53,13 @@ export default function Navbar() {
         <Flex h="72px" align="center" justify="space-between">
           {/* Logo */}
           <Link to="/">
-            <HStack spacing={3}>
-              <Box
-                w="44px"
-                h="44px"
-                bg="brand.600"
-                borderRadius="10px"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                flexShrink={0}
-              >
-                <Text color="white" fontWeight={800} fontSize="18px" fontFamily="heading">
-                  D
-                </Text>
-              </Box>
-              <VStack spacing={0} align="flex-start">
-                <Text
-                  fontFamily="heading"
-                  fontWeight={800}
-                  fontSize="15px"
-                  color="brand.600"
-                  lineHeight={1}
-                  letterSpacing="-0.3px"
-                >
-                  DJENEPO
-                </Text>
-                <Text
-                  fontFamily="heading"
-                  fontWeight={600}
-                  fontSize="11px"
-                  color="gold.500"
-                  lineHeight={1}
-                  letterSpacing="1.5px"
-                  mt="2px"
-                >
-                  PARTNERS
-                </Text>
-              </VStack>
-            </HStack>
+            <Image 
+              src={IMAGES.logo} 
+              alt="Djenepo Partners" 
+              h={{ base: "40px", md: "50px" }}
+              w="auto"
+              objectFit="contain"
+            />
           </Link>
 
           {/* Desktop Nav */}
