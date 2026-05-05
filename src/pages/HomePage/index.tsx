@@ -4,7 +4,6 @@ import {
   Container,
   Flex,
   Grid,
-  GridItem,
   HStack,
   VStack,
   Text,
@@ -15,24 +14,13 @@ import {
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import {
-  FiTarget,
   FiCheck,
   FiArrowRight,
-  FiAward,
-  FiGlobe,
-  FiUsers,
 } from 'react-icons/fi'
-import { CONTACT_INFO } from '../constant/contact'
-import { SERVICES } from '../constant/services'
+import { SERVICES } from '../../constant/services'
+import { HomeHero } from '../../components/HomeHero'
 
 const MotionBox = motion(Box)
-
-const stats = [
-  { value: '50+', label: 'Projets accompagnés', icon: FiTarget },
-  { value: '12+', label: 'Années d\'expérience', icon: FiAward },
-  { value: '8', label: 'Pays d\'intervention', icon: FiGlobe },
-  { value: '200+', label: 'Acteurs formés', icon: FiUsers },
-]
 
 export default function HomePage() {
   // Take first 4 services for the home page summary
@@ -40,189 +28,7 @@ export default function HomePage() {
 
   return (
     <Box>
-      {/* ─── HERO ─── */}
-      <Box
-        pt={{ base: '100px', md: '120px' }}
-        pb={{ base: 16, md: 24 }}
-        position="relative"
-        overflow="hidden"
-        bg="white"
-      >
-        {/* Background decorations */}
-        <Box
-          position="absolute"
-          top="-100px"
-          right="-100px"
-          w="600px"
-          h="600px"
-          borderRadius="full"
-          bg="brand.50"
-          opacity={0.6}
-          zIndex={0}
-        />
-        <Box
-          position="absolute"
-          bottom="-80px"
-          left="-80px"
-          w="400px"
-          h="400px"
-          borderRadius="full"
-          bg="gold.50"
-          opacity={0.5}
-          zIndex={0}
-        />
-
-        <Container maxW="1200px" px={{ base: 4, md: 6 }} position="relative" zIndex={1}>
-          <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} gap={16} alignItems="center">
-            <GridItem>
-              <MotionBox
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-              >
-                <Badge
-                  bg="brand.50"
-                  color="brand.600"
-                  px={4}
-                  py={1.5}
-                  borderRadius="full"
-                  fontSize="13px"
-                  fontWeight={600}
-                  mb={5}
-                  display="inline-flex"
-                  alignItems="center"
-                  gap={2}
-                >
-                  <Box w="6px" h="6px" borderRadius="full" bg="brand.600" />
-                  Basé à {CONTACT_INFO.address.city}
-                </Badge>
-
-                <Text
-                  as="h1"
-                  fontFamily="heading"
-                  fontWeight={800}
-                  fontSize={{ base: '36px', md: '50px', lg: '56px' }}
-                  lineHeight={1.1}
-                  color="gray.900"
-                  mb={6}
-                >
-                  Transformer les projets en{' '}
-                  <Text as="span" color="brand.600">
-                    leviers d'
-                  </Text>
-                  <Text as="span" color="gold.500">
-                    impact durable
-                  </Text>
-                </Text>
-
-                <Text fontSize="17px" color="gray.600" lineHeight={1.8} mb={8} maxW="500px">
-                  DJENEPO PARTNERS accompagne les ONG, institutions publiques et partenaires
-                  techniques dans la conception et la mise en œuvre de projets de développement
-                  à fort impact.
-                </Text>
-
-                <HStack spacing={4} flexWrap="wrap">
-                  <Link to="/services">
-                    <Button variant="brand" size="lg" px={8} rightIcon={<FiArrowRight />}>
-                      Nos services
-                    </Button>
-                  </Link>
-                  <Link to="/contact">
-                    <Button
-                      variant="outline_brand"
-                      size="lg"
-                      px={8}
-                    >
-                      Discutons de votre projet
-                    </Button>
-                  </Link>
-                </HStack>
-
-                {/* Trust badges */}
-                <HStack mt={10} spacing={6} flexWrap="wrap">
-                  {['ONG', 'Institutions', 'Partenaires'].map((t) => (
-                    <HStack key={t} spacing={2}>
-                      <Icon as={FiCheck} color="green.500" />
-                      <Text fontSize="14px" color="gray.600" fontWeight={500}>{t}</Text>
-                    </HStack>
-                  ))}
-                </HStack>
-              </MotionBox>
-            </GridItem>
-
-            {/* Stats card */}
-            <GridItem display={{ base: 'none', lg: 'block' }}>
-              <MotionBox
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-              >
-                <Box
-                  bg="white"
-                  borderRadius="24px"
-                  p={8}
-                  boxShadow="0 20px 60px rgba(43,91,196,0.12)"
-                  border="1px solid"
-                  borderColor="gray.100"
-                  position="relative"
-                >
-                  {/* Accent */}
-                  <Box
-                    position="absolute"
-                    top={0}
-                    left={0}
-                    right={0}
-                    h="4px"
-                    bg="linear-gradient(90deg, #2B5BC4, #C8861A)"
-                    borderTopRadius="24px"
-                  />
-
-                  <Text fontFamily="heading" fontWeight={700} fontSize="18px" color="gray.800" mb={6}>
-                    Notre impact en chiffres
-                  </Text>
-
-                  <SimpleGrid columns={2} spacing={6}>
-                    {stats.map((s) => (
-                      <Box
-                        key={s.label}
-                        p={5}
-                        bg="gray.50"
-                        borderRadius="16px"
-                        _hover={{ bg: 'brand.50', transform: 'translateY(-2px)' }}
-                        transition="all 0.2s"
-                      >
-                        <Icon as={s.icon} color="brand.600" fontSize="22px" mb={3} />
-                        <Text
-                          fontFamily="heading"
-                          fontWeight={800}
-                          fontSize="30px"
-                          color="gray.900"
-                          lineHeight={1}
-                          mb={1}
-                        >
-                          {s.value}
-                        </Text>
-                        <Text fontSize="12px" color="gray.500" fontWeight={500}>
-                          {s.label}
-                        </Text>
-                      </Box>
-                    ))}
-                  </SimpleGrid>
-
-                  <Box mt={6} p={4} bg="brand.600" borderRadius="12px">
-                    <Text color="white" fontSize="13px" fontWeight={600} mb={1}>
-                      Partenaires de confiance
-                    </Text>
-                    <Text color="brand.200" fontSize="12px">
-                      ONG · Institutions · Bailleurs · Collectivités
-                    </Text>
-                  </Box>
-                </Box>
-              </MotionBox>
-            </GridItem>
-          </Grid>
-        </Container>
-      </Box>
+      <HomeHero />
 
       {/* ─── ABOUT STRIP ─── */}
       <Box bg="brand.600" py={14}>
