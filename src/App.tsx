@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Box } from '@chakra-ui/react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { CursorFollower } from './components/CursorFollower'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
@@ -20,6 +21,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
+      <CursorFollower />
       <ScrollToTop />
       <Navbar />
       <Box flex={1}>
