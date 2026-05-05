@@ -8,8 +8,7 @@ import {
   Icon,
   Badge,
   Grid,
-  GridItem,
-  useBreakpointValue,
+  GridItem
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -20,7 +19,6 @@ const MotionBox = motion(Box)
 const MotionText = motion(Text)
 
 export const HomeHero = () => {
-  const isMobile = useBreakpointValue({ base: true, md: false })
 
   return (
     <Box

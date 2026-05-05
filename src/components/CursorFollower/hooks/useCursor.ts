@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useMotionValue, useSpring } from 'framer-motion'
+import { useMotionValue, useSpring, useAnimation } from 'framer-motion'
 
 export const useCursor = () => {
   const [isHovered, setIsHovered] = useState(false)
+  const rippleControls = useAnimation()
   
   // Mouse position
   const mouseX = useMotionValue(0)
@@ -31,20 +32,31 @@ export const useCursor = () => {
       setIsHovered(!!isClickable)
     }
 
+    const handleMouseDown = () => {
+      rippleControls.start({
+        scale: [1, 2.5],
+        opacity: [0.5, 0],
+        transition: { duration: 0.5, ease: "easeOut" }
+      })
+    }
+
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('mouseover', handleMouseOver)
+    window.addEventListener('mousedown', handleMouseDown)
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseover', handleMouseOver)
+      window.removeEventListener('mousedown', handleMouseDown)
     }
-  }, [mouseX, mouseY])
+  }, [mouseX, mouseY, rippleControls])
 
   return {
     mouseX,
     mouseY,
     smoothX,
     smoothY,
-    isHovered
+    isHovered,
+    rippleControls
   }
 }
