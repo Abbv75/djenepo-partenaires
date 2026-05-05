@@ -5,7 +5,6 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
-import RealisationsPage from './pages/RealisationsPage'
 import ContactPage from './pages/ContactPage'
 
 function ScrollToTop() {
@@ -25,7 +24,6 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<ServicesPage />} />
-          <Route path="/realisations" element={<RealisationsPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </Box>

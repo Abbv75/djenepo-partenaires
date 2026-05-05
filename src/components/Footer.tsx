@@ -21,7 +21,6 @@ const footerLinks = [
     links: [
       { label: 'Accueil', to: '/' },
       { label: 'Services', to: '/services' },
-      { label: 'Réalisations', to: '/realisations' },
       { label: 'Contact', to: '/contact' },
     ],
   },
