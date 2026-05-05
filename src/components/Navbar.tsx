@@ -6,9 +6,7 @@ import {
   HStack,
   VStack,
   IconButton,
-  Button,
-  Text,
-  useDisclosure,
+  Button, useDisclosure,
   Collapse,
   Container,
   Image
