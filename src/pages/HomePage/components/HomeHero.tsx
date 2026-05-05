@@ -14,7 +14,7 @@ import {
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FiArrowRight, FiCheck, FiAward, FiTarget, FiGlobe } from 'react-icons/fi'
-import { CONTACT_INFO } from '../constant/contact'
+import { CONTACT_INFO } from '../../../constant/contact'
 
 const MotionBox = motion(Box)
 const MotionText = motion(Text)
