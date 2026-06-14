@@ -5,6 +5,7 @@ import { CustomModal } from '../../../components/ui/CustomModal';
 import { DynamicForm } from '../../../components/ui/DynamicForm';
 import type { FormField } from '../../../components/ui/DynamicForm';
 import type { BlogPost, Category } from '../../../types';
+import { blogPostSchema } from '../../../schemas';
 
 interface BlogModalProps {
   isOpen: boolean;
@@ -20,9 +21,11 @@ export function BlogModal({ isOpen, onClose, editingBlog, categories, onSuccess 
     title: '', excerpt: '', content: '',
     author_name: '', read_time: '', image_url: '', date: '', category_id: ''
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const toast = useToast();
 
   useEffect(() => {
+    setErrors({});
     if (editingBlog) {
       setFormData({
         title: editingBlog.title,
@@ -44,11 +47,32 @@ export function BlogModal({ isOpen, onClose, editingBlog, categories, onSuccess 
 
   const handleFormChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => {
+        const copy = { ...prev };
+        delete copy[name];
+        return copy;
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const validation = blogPostSchema.safeParse(formData);
+    if (!validation.success) {
+      const fieldErrors: Record<string, string> = {};
+      (validation.error as any).errors.forEach((err: any) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       if (editingBlog) {
         await api.put(`/blogs/${editingBlog.id}`, formData);
@@ -100,6 +124,7 @@ export function BlogModal({ isOpen, onClose, editingBlog, categories, onSuccess 
         fields={formFields} 
         formData={formData} 
         onChange={handleFormChange} 
+        errors={errors}
         columns={2}
       />
     </CustomModal>

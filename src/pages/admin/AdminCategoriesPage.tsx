@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Box, Flex, IconButton, useDisclosure, useToast, Spinner, Center, Text } from '@chakra-ui/react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
+import * as FiIcons from 'react-icons/fi';
+import * as HiIcons from 'react-icons/hi';
 import { createColumnHelper } from '@tanstack/react-table';
 import api from '../../constant/AxiosInstance';
 import { DataTable } from '../../components/DataTable';
@@ -10,6 +12,7 @@ import { ConfirmDeleteAlert } from '../../components/ui/ConfirmDeleteAlert';
 import { DynamicForm } from '../../components/ui/DynamicForm';
 import type { FormField } from '../../components/ui/DynamicForm';
 import type { Category } from '../../types';
+import { categorySchema } from '../../schemas';
 
 export default function AdminCategoriesPage() {
   const [data, setData] = useState<Category[]>([]);
@@ -21,6 +24,7 @@ export default function AdminCategoriesPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [editingCat, setEditingCat] = useState<Category | null>(null);
   const [formData, setFormData] = useState<Record<string, any>>({ name: '', icon: '' });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Delete Alert state
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
@@ -45,6 +49,7 @@ export default function AdminCategoriesPage() {
   }, []);
 
   const handleOpenModal = (cat?: Category) => {
+    setErrors({});
     if (cat) {
       setEditingCat(cat);
       setFormData({ name: cat.name, icon: cat.icon || '' });
@@ -57,11 +62,32 @@ export default function AdminCategoriesPage() {
 
   const handleFormChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => {
+        const copy = { ...prev };
+        delete copy[name];
+        return copy;
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const validation = categorySchema.safeParse(formData);
+    if (!validation.success) {
+      const fieldErrors: Record<string, string> = {};
+      (validation.error as any).errors.forEach((err: any) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       if (editingCat) {
         await api.put(`/categories/${editingCat.id}`, formData);
@@ -107,7 +133,11 @@ export default function AdminCategoriesPage() {
   // Dynamic Form configuration
   const formFields: FormField[] = [
     { name: 'name', label: 'Nom de la catégorie', type: 'text', placeholder: 'Ex: Technologies' },
-    { name: 'icon', label: "Nom de l'icône (React Icons)", type: 'text', placeholder: 'Ex: FiMonitor' }
+    { 
+      name: 'icon', 
+      label: "Icône de la catégorie", 
+      type: 'icon-picker'
+    }
   ];
 
   // TanStack Table configuration
@@ -124,7 +154,32 @@ export default function AdminCategoriesPage() {
     }),
     columnHelper.accessor('icon', {
       header: 'Icône',
-      cell: info => info.getValue(),
+      cell: info => {
+        const iconName = info.getValue() as string;
+        let IconCmp: any = null;
+        if (iconName) {
+          if (iconName.startsWith('Fi')) IconCmp = (FiIcons as any)[iconName];
+          if (iconName.startsWith('Hi')) IconCmp = (HiIcons as any)[iconName];
+        }
+        return (
+          <Flex align="center" gap={3}>
+            {IconCmp && (
+              <Flex 
+                align="center" 
+                justify="center" 
+                w="36px" 
+                h="36px" 
+                bg="brand.50" 
+                color="brand.500" 
+                borderRadius="md"
+              >
+                <IconCmp size={20} />
+              </Flex>
+            )}
+            <Text color="gray.600" fontSize="sm">{iconName}</Text>
+          </Flex>
+        );
+      },
     }),
     columnHelper.display({
       id: 'actions',
@@ -180,6 +235,7 @@ export default function AdminCategoriesPage() {
           fields={formFields} 
           formData={formData} 
           onChange={handleFormChange} 
+          errors={errors}
         />
       </CustomModal>
 
