@@ -10,12 +10,14 @@ import {
   Image,
   Avatar,
   Icon,
-  useDisclosure
+  useDisclosure,
+  Spinner,
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi'
-import { BLOG_POSTS } from '../../../constant/blog'
-import type { BlogPost } from '../../../constant/blog'
+import type { BlogPost } from '../../../types'
+import { useBlogs } from '../../../api/useBlogsQuery'
+import { resolveImageUrl } from '../../../utils/imageUrl'
 import dayjs from 'dayjs'
 import 'dayjs/locale/fr'
 
@@ -28,6 +30,10 @@ const MotionBox = motion(Box)
 export const HomeBlogSection = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
+
+  const { data: posts = [], isLoading } = useBlogs()
+  // Show only the 3 most recent posts on the home page
+  const recentPosts = posts.slice(0, 3)
 
   const handlePostClick = (post: BlogPost) => {
     setSelectedPost(post)
@@ -49,103 +55,109 @@ export const HomeBlogSection = () => {
           </Text>
         </VStack>
 
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
-          {BLOG_POSTS.map((post, i) => (
-            <MotionBox
-              key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              onClick={() => handlePostClick(post)}
-            >
-              <Box
-                bg="white"
-                borderRadius="24px"
-                overflow="hidden"
-                border="1px solid"
-                borderColor="gray.100"
-                h="full"
-                display="flex"
-                flexDirection="column"
-                cursor="pointer"
-                _hover={{
-                  boxShadow: '0 20px 40px rgba(43,91,196,0.1)',
-                  transform: 'translateY(-4px)',
-                  borderColor: 'brand.200',
-                }}
-                transition="all 0.3s ease"
+        {isLoading ? (
+          <Box display="flex" justifyContent="center" py={12}>
+            <Spinner size="xl" color="brand.500" />
+          </Box>
+        ) : (
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8}>
+            {recentPosts.map((post, i) => (
+              <MotionBox
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                onClick={() => handlePostClick(post)}
               >
-                <Box position="relative" overflow="hidden">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    w="full"
-                    h="200px"
-                    objectFit="cover"
-                  />
-                  <Badge
-                    position="absolute"
-                    top="4"
-                    left="4"
-                    bg="brand.600"
-                    color="white"
-                    px={3}
-                    py={1}
-                    borderRadius="full"
-                    fontSize="11px"
-                    fontWeight={600}
-                  >
-                    {post.category}
-                  </Badge>
+                <Box
+                  bg="white"
+                  borderRadius="24px"
+                  overflow="hidden"
+                  border="1px solid"
+                  borderColor="gray.100"
+                  h="full"
+                  display="flex"
+                  flexDirection="column"
+                  cursor="pointer"
+                  _hover={{
+                    boxShadow: '0 20px 40px rgba(43,91,196,0.1)',
+                    transform: 'translateY(-4px)',
+                    borderColor: 'brand.200',
+                  }}
+                  transition="all 0.3s ease"
+                >
+                  <Box position="relative" overflow="hidden">
+                    <Image
+                      src={resolveImageUrl(post.image_url)}
+                      alt={post.title}
+                      w="full"
+                      h="200px"
+                      objectFit="cover"
+                    />
+                    <Badge
+                      position="absolute"
+                      top="4"
+                      left="4"
+                      bg="brand.600"
+                      color="white"
+                      px={3}
+                      py={1}
+                      borderRadius="full"
+                      fontSize="11px"
+                      fontWeight={600}
+                    >
+                      {post.category?.name}
+                    </Badge>
+                  </Box>
+
+                  <Box p={6} flex={1} display="flex" flexDirection="column">
+                    <HStack spacing={4} mb={3} color="gray.400" fontSize="12px">
+                      <HStack spacing={1}>
+                        <Icon as={FiCalendar} />
+                        <Text>{dayjs(post.date).format('D MMMM YYYY')}</Text>
+                      </HStack>
+                      <HStack spacing={1}>
+                        <Icon as={FiClock} />
+                        <Text>{post.read_time}</Text>
+                      </HStack>
+                    </HStack>
+
+                    <Text
+                      fontFamily="heading"
+                      fontWeight={700}
+                      fontSize="16px"
+                      color="gray.900"
+                      lineHeight={1.4}
+                      mb={3}
+                      _hover={{ color: 'brand.600' }}
+                      transition="color 0.2s"
+                    >
+                      {post.title}
+                    </Text>
+
+                    <Text fontSize="13px" color="gray.600" lineHeight={1.6} mb={5} flex={1}>
+                      {post.excerpt}
+                    </Text>
+
+                    <HStack justify="space-between" align="center" pt={4} borderTop="1px solid" borderColor="gray.50">
+                      <HStack spacing={2.5}>
+                        <Avatar size="xs" name={post.author_name} />
+                        <Text fontSize="12px" fontWeight={600} color="gray.700">
+                          {post.author_name}
+                        </Text>
+                      </HStack>
+                      <HStack spacing={1} color="brand.600" fontWeight={700} fontSize="12px">
+                        <Text>Lire</Text>
+                        <Icon as={FiArrowRight} />
+                      </HStack>
+                    </HStack>
+                  </Box>
                 </Box>
-
-                <Box p={6} flex={1} display="flex" flexDirection="column">
-                  <HStack spacing={4} mb={3} color="gray.400" fontSize="12px">
-                    <HStack spacing={1}>
-                      <Icon as={FiCalendar} />
-                      <Text>{dayjs(post.date).format('D MMMM YYYY')}</Text>
-                    </HStack>
-                    <HStack spacing={1}>
-                      <Icon as={FiClock} />
-                      <Text>{post.readTime}</Text>
-                    </HStack>
-                  </HStack>
-
-                  <Text
-                    fontFamily="heading"
-                    fontWeight={700}
-                    fontSize="16px"
-                    color="gray.900"
-                    lineHeight={1.4}
-                    mb={3}
-                    _hover={{ color: 'brand.600' }}
-                    transition="color 0.2s"
-                  >
-                    {post.title}
-                  </Text>
-
-                  <Text fontSize="13px" color="gray.600" lineHeight={1.6} mb={5} flex={1}>
-                    {post.excerpt}
-                  </Text>
-
-                  <HStack justify="space-between" align="center" pt={4} borderTop="1px solid" borderColor="gray.50">
-                    <HStack spacing={2.5}>
-                      <Avatar size="xs" name={post.author.name} src={post.author.avatar} />
-                      <Text fontSize="12px" fontWeight={600} color="gray.700">
-                        {post.author.name}
-                      </Text>
-                    </HStack>
-                    <HStack spacing={1} color="brand.600" fontWeight={700} fontSize="12px">
-                      <Text>Lire</Text>
-                      <Icon as={FiArrowRight} />
-                    </HStack>
-                  </HStack>
-                </Box>
-              </Box>
-            </MotionBox>
-          ))}
-        </SimpleGrid>
+              </MotionBox>
+            ))}
+          </SimpleGrid>
+        )}
       </Container>
 
       <BlogDetailModal isOpen={isOpen} onClose={onClose} post={selectedPost} />
