@@ -1,6 +1,12 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Ne pas intercepter les requêtes vers /backend/
+  RewriteCond %{REQUEST_URI} ^/backend/ [NC]
+  RewriteRule ^ - [L]
+
+  # SPA fallback : tout le reste va vers index.html
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
