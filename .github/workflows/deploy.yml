@@ -26,18 +26,37 @@ jobs:
       - name: 🏗️ Build Project
         run: npm run build
 
-      - name: 📂 Sync files to server
+      - name: ⚙️ Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3' # Version supportée par Laravel 11
+          tools: composer:v2
+
+      - name: 📦 Install backend dependencies
+        run: |
+          cd backend
+          composer install --no-dev --optimize-autoloader
+
+      - name: 📂 Sync frontend files to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Set the port if you're using SFTP (usually 22) or FTPS (usually 21 or 990).
-          # You can add FTP_PORT to your GitHub Secrets if needed.
           port: ${{ 21 }}
-          # Target folder on the server
           server-dir: /web/
-          # Source folder in the build environment
           local-dir: ./dist/
-          # Set to true if you want to see detailed logs for debugging
-          # protocol: sftp # Uncomment this line if you are using SFTP
+
+      - name: 📂 Sync backend files to server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ 21 }}
+          server-dir: /backend/
+          local-dir: ./backend/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .env
