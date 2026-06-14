@@ -30,4 +30,56 @@ class BlogPostController extends Controller
         }
         return $this->success($blog);
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:blog_posts',
+            'excerpt' => 'required|string',
+            'content' => 'required|string',
+            'author_name' => 'required|string|max:255',
+            'read_time' => 'required|string|max:50',
+            'image_url' => 'required|string',
+            'date' => 'required|date',
+        ]);
+
+        $blog = BlogPost::create($validated);
+        return $this->success($blog->load('category'), 'Article créé avec succès', 201);
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $blog = BlogPost::find($id);
+        if (!$blog) {
+            return $this->notFound('Article introuvable');
+        }
+
+        $validated = $request->validate([
+            'category_id' => 'sometimes|required|exists:categories,id',
+            'title' => 'sometimes|required|string|max:255',
+            'slug' => 'sometimes|required|string|max:255|unique:blog_posts,slug,' . $id,
+            'excerpt' => 'sometimes|required|string',
+            'content' => 'sometimes|required|string',
+            'author_name' => 'sometimes|required|string|max:255',
+            'read_time' => 'sometimes|required|string|max:50',
+            'image_url' => 'sometimes|required|string',
+            'date' => 'sometimes|required|date',
+        ]);
+
+        $blog->update($validated);
+        return $this->success($blog->load('category'), 'Article mis à jour avec succès');
+    }
+
+    public function destroy(int $id)
+    {
+        $blog = BlogPost::find($id);
+        if (!$blog) {
+            return $this->notFound('Article introuvable');
+        }
+
+        $blog->delete();
+        return $this->success(null, 'Article supprimé avec succès');
+    }
 }

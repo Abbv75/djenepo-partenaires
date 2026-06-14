@@ -19,4 +19,44 @@ class CategoryController extends Controller
         }
         return $this->success($category);
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:categories',
+            'icon' => 'required|string|max:255',
+        ]);
+
+        $category = Category::create($validated);
+        return $this->success($category, 'Catégorie créée avec succès', 201);
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $category = Category::find($id);
+        if (!$category) {
+            return $this->notFound('Catégorie introuvable');
+        }
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'slug' => 'sometimes|required|string|max:255|unique:categories,slug,' . $id,
+            'icon' => 'sometimes|required|string|max:255',
+        ]);
+
+        $category->update($validated);
+        return $this->success($category, 'Catégorie mise à jour avec succès');
+    }
+
+    public function destroy(int $id)
+    {
+        $category = Category::find($id);
+        if (!$category) {
+            return $this->notFound('Catégorie introuvable');
+        }
+
+        $category->delete();
+        return $this->success(null, 'Catégorie supprimée avec succès');
+    }
 }

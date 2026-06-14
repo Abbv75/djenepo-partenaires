@@ -9,10 +9,18 @@ import {
   Button, useDisclosure,
   Collapse,
   Container,
-  Image
+  Image,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
+  Text
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { FiChevronDown, FiLogOut, FiHome } from 'react-icons/fi'
 import { IMAGES } from '../constant/image'
+import { useAuthStore } from '../store/useAuthStore'
 
 const navLinks = [
   { label: 'Accueil', to: '/' },
@@ -26,6 +34,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const routerState = useRouterState()
   const currentPath = routerState.location.pathname
+  const { isAuthenticated, user, logout } = useAuthStore()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -99,19 +108,42 @@ export default function Navbar() {
             ))}
           </HStack>
 
-          {/* CTA */}
-          <HStack display={{ base: 'none', md: 'flex' }}>
-            <Link to="/contact">
-              <Button
-                variant="brand"
-                size="sm"
-                px={5}
-                py={5}
-                fontSize="14px"
-              >
-                Nous contacter
-              </Button>
-            </Link>
+          {/* CTA & User Menu */}
+          <HStack display={{ base: 'none', md: 'flex' }} spacing={4}>
+            
+            {isAuthenticated && (
+              <Menu>
+                <MenuButton 
+                  as={Button} 
+                  variant="ghost" 
+                  rightIcon={<FiChevronDown />}
+                  px={2}
+                >
+                  <HStack>
+                    <Avatar size="sm" name={user?.name} bg="brand.500" color="white" />
+                    <Text fontSize="sm" fontWeight="500">{user?.name}</Text>
+                  </HStack>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem 
+                    icon={<FiHome />} 
+                    onClick={() => routerState.location.pathname !== '/admin' && (window.location.href = '/admin')}
+                  >
+                    Tableau de bord
+                  </MenuItem>
+                  <MenuItem 
+                    icon={<FiLogOut />} 
+                    color="red.500"
+                    onClick={() => {
+                      logout();
+                      window.location.href = '/login';
+                    }}
+                  >
+                    Se déconnecter
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            )}
           </HStack>
 
           {/* Mobile Hamburger */}

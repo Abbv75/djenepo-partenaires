@@ -10,6 +10,10 @@ import ContactPage from './pages/ContactPage'
 import RealisationsPage from './pages/RealisationsPage'
 import BlogPage from './pages/BlogPage'
 import LoginPage from './pages/LoginPage'
+import DashboardLayout from './layouts/DashboardLayout'
+import AdminHomePage from './pages/admin/AdminHomePage'
+import AdminCategoriesPage from './pages/admin/AdminCategoriesPage'
+import AdminBlogsPage from './pages/admin/AdminBlogsPage'
 
 // Root Route which acts as our layout container
 export const rootRoute = createRootRoute({
@@ -53,6 +57,30 @@ export const loginRoute = createRoute({
   component: LoginPage,
 })
 
+export const adminRootRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin',
+  component: DashboardLayout,
+})
+
+export const adminIndexRoute = createRoute({
+  getParentRoute: () => adminRootRoute,
+  path: '/',
+  component: AdminHomePage,
+})
+
+export const adminCategoriesRoute = createRoute({
+  getParentRoute: () => adminRootRoute,
+  path: '/categories',
+  component: AdminCategoriesPage,
+})
+
+export const adminBlogsRoute = createRoute({
+  getParentRoute: () => adminRootRoute,
+  path: '/blogs',
+  component: AdminBlogsPage,
+})
+
 // Register all routes into a route tree
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -61,14 +89,12 @@ const routeTree = rootRoute.addChildren([
   realisationsRoute,
   blogRoute,
   loginRoute,
+  adminRootRoute.addChildren([
+    adminIndexRoute,
+    adminCategoriesRoute,
+    adminBlogsRoute,
+  ]),
 ])
 
 // Create and export the router instance
 export const router = createRouter({ routeTree })
-
-// Register the router instance for type safety
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
-}

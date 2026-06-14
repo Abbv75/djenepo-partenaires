@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import {
   Box,
@@ -21,7 +21,7 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { FaQuoteLeft } from 'react-icons/fa';
 import { useAuthStore } from '../store/useAuthStore';
-import api from '../api/axios';
+import api from '../constant/AxiosInstance';
 import logo from '../assets/logo.png';
 
 const LoginPage = () => {
@@ -30,9 +30,15 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   
-  const login = useAuthStore((state) => state.login);
+  const { login, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
   const toast = useToast();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate({ to: '/admin' });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +53,7 @@ const LoginPage = () => {
         duration: 3000,
         isClosable: true,
       });
-      navigate({ to: '/' });
+      navigate({ to: '/admin' });
     } catch (err: any) {
       toast({
         title: 'Erreur de connexion',
