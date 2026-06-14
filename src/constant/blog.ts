@@ -1,4 +1,12 @@
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.png';
+import procar_corn from '../assets/blog/procar_corn.png';
+import procar_greenhouse from '../assets/blog/procar_greenhouse.png';
+import procar_market from '../assets/blog/procar_market.png';
+import procar_young_farmer from '../assets/blog/procar_young_farmer.png';
+import resi_resilience from '../assets/blog/resi_resilience.png';
+import resi_tablet from '../assets/blog/resi_tablet.png';
+import resi_water from '../assets/blog/resi_water.png';
+import resi_radio from '../assets/blog/resi_radio.png';
 
 export interface BlogPost {
   id: string
@@ -49,18 +57,18 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '4 min',
     excerpt: 'L\'utilisation d\'indicateurs SMART pour suivre l\'évolution de la productivité du maïs, riz et manioc dans le cadre du PADAAM.',
     content: `Le Programme Cadre des interventions du FIDA en milieu Rural au Bénin (ProCaR) montre comment la définition rigoureuse d'indicateurs de rendement permet de réajuster les approvisionnements en intrants auprès des producteurs vulnérables béninois.`,
-    image: 'https://images.unsplash.com/photo-1593113630400-ea4288922497?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_corn,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
     id: '4',
-    title: 'Le projet RESI2P et la résilience communautaire au Sahel',
-    category: 'Projet RESI2P',
+    title: 'Le projet RESI-2P et la résilience communautaire au Burkina Faso',
+    category: 'Projet RESI-2P',
     date: '06 Juin 2026',
     readTime: '5 min',
-    excerpt: 'Comment mesurer la résilience face au changement climatique à travers le projet RESI2P dans la sous-région.',
-    content: `Le projet RESI2P (Résilience et Innovation Participative des Populations) déploie des enquêtes ménages périodiques pour évaluer la capacité d'adaptation des populations sahéliennes face aux chocs climatiques récurrents.`,
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Comment mesurer la résilience face au changement climatique et aux crises sécuritaires au Burkina.',
+    content: `Le Programme pour le renforcement de la résilience des petits producteurs (RESI-2P) déploie des enquêtes ménages dans les régions Nord et Centre-Ouest pour évaluer la capacité d'adaptation des populations burkinabè vulnérables (notamment les PDI).`,
+    image: resi_resilience,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
@@ -82,18 +90,18 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '4 min',
     excerpt: 'Intégration d\'une perspective de genre dans le système de suivi-évaluation du PADMAR au Bénin.',
     content: `La collecte de données désagrégées par sexe au sein du ProCaR permet de mesurer la redistribution équitable des revenus liés au maraîchage et l'accès autonome des femmes béninoises au microcrédit agricole.`,
-    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_young_farmer,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
     id: '7',
-    title: 'RESI2P : Utilisation des technologies mobiles pour les enquêtes d\'impact',
-    category: 'Projet RESI2P',
+    title: 'RESI-2P : Utilisation des technologies mobiles pour les enquêtes d\'impact au Burkina',
+    category: 'Projet RESI-2P',
     date: '30 Mai 2026',
     readTime: '4 min',
-    excerpt: 'Le déploiement de KoboToolbox pour évaluer en temps réel la sécurité alimentaire sous le projet RESI2P.',
-    content: `L'utilisation de tablettes et de formulaires géolocalisés permet aux coordinateurs du projet RESI2P de cartographier instantanément les niveaux de vulnérabilité alimentaire des ménages ruraux.`,
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Le déploiement de KoboToolbox pour évaluer en temps réel la sécurité alimentaire sous le projet RESI-2P.',
+    content: `L'utilisation de tablettes et de formulaires géolocalisés permet aux coordinateurs du programme RESI-2P de cartographier instantanément les niveaux de vulnérabilité alimentaire dans les 36 communes cibles du Burkina Faso.`,
+    image: resi_tablet,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
@@ -126,18 +134,18 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '4 min',
     excerpt: 'Bilan à mi-parcours de l\'appui technique à la production sous serres et hors sol (PADMAR).',
     content: `L'introduction de solutions innovantes pour le maraîchage dans le cadre du ProCaR (PADMAR) a permis d'améliorer la productivité face aux changements climatiques chez les agriculteurs béninois formés.`,
-    image: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_greenhouse,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
     id: '11',
-    title: 'RESI2P : Le rôle clé de la capitalisation des leçons apprises',
-    category: 'Projet RESI2P',
+    title: 'RESI-2P : Le rôle clé de la capitalisation des leçons apprises (suite Neer-Tamba)',
+    category: 'Projet RESI-2P',
     date: '20 Mai 2026',
     readTime: '4 min',
-    excerpt: 'Comment documenter les bonnes pratiques d\'adaptation climatique pour la réplication.',
-    content: `La capitalisation sous le projet RESI2P met en lumière les techniques traditionnelles de gestion de l'eau combinées à des prévisions météorologiques locales par SMS pour sécuriser les cultures.`,
-    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Comment documenter les bonnes pratiques d\'adaptation climatique issues des projets agricoles burkinabè.',
+    content: `La capitalisation sous le projet RESI-2P met en lumière les techniques de gestion participative des ressources naturelles héritées du projet Neer-Tamba, combinées à de nouvelles stratégies de résilience agricole.`,
+    image: resi_resilience,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
@@ -170,18 +178,18 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '5 min',
     excerpt: 'Suivre l\'évolution de l\'accès au marché grâce au renforcement des infrastructures de transport.',
     content: `L'évaluation des aménagements de pistes rurales et des magasins de stockage construits sous l'égide du ProCaR montre une hausse du flux commercial et une meilleure rentabilité pour les filières maïs, riz et manioc.`,
-    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_market,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
     id: '15',
-    title: 'RESI2P : Le renforcement des capacités des autorités locales en S&E',
-    category: 'Projet RESI2P',
+    title: 'RESI-2P : Renforcement des capacités des acteurs communaux au Burkina',
+    category: 'Projet RESI-2P',
     date: '10 Mai 2026',
     readTime: '4 min',
-    excerpt: 'Former les élus communaux pour assurer la durabilité des aménagements hydro-agricoles.',
-    content: `Le transfert de compétences sous le projet RESI2P passe par des ateliers de planification de budget participatif orienté vers la maintenance locale des digues et micro-barrages.`,
-    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Former les comités de gestion pour assurer la durabilité des infrastructures hydrauliques.',
+    content: `Le transfert de compétences sous le programme RESI-2P passe par des ateliers de planification participative au niveau communal, garantissant une meilleure gestion des ressources en eau et des bas-fonds aménagés.`,
+    image: resi_water,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
@@ -214,18 +222,18 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '5 min',
     excerpt: 'Combien d\'emplois créés à travers le développement des filières agricoles béninoises ?',
     content: `L'étude d'impact montre que l'accès aux financements et partenariats productifs du ProCaR a permis l'insertion durable de plus de 1 200 jeunes dans l'entrepreneuriat agricole au Bénin.`,
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_young_farmer,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
     id: '19',
-    title: 'RESI2P : Le rôle des comités villageois d\'alerte précoce au Sahel',
-    category: 'Projet RESI2P',
+    title: 'RESI-2P : Intégration des personnes déplacées internes (PDI) au Burkina',
+    category: 'Projet RESI-2P',
     date: '02 Mai 2026',
     readTime: '4 min',
-    excerpt: 'Suivi communautaire des indicateurs de sécheresse et de risques agro-climatiques.',
-    content: `La mise en place de pluviomètres paysans sous le projet RESI2P responsabilise les communautés en leur permettant de diffuser des alertes rapides en cas de déficit hydrique marqué.`,
-    image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Suivi des indicateurs d\'inclusion sociale et de sécurité alimentaire dans les zones d\'accueil.',
+    content: `Le suivi-évaluation du programme RESI-2P met l'accent sur l'accès aux terres et aux ressources pour les populations déplacées par la crise sécuritaire, soutenant ainsi l'Offensive agropastorale du gouvernement.`,
+    image: resi_radio,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
@@ -258,18 +266,18 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '4 min',
     excerpt: 'Évaluation de l\'accès aux marchés et de la réduction de la pauvreté rurale.',
     content: `Les données du ProCaR révèlent une stabilisation et une hausse des revenus des petits producteurs béninois, renforçant leur sécurité alimentaire et nutritionnelle face aux chocs économiques.`,
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_corn,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
     id: '23',
-    title: 'RESI2P : Évaluation participative de la gestion des ressources pastorales',
-    category: 'Projet RESI2P',
+    title: 'RESI-2P : Accès aux marchés pour les entreprises rurales des jeunes et femmes',
+    category: 'Projet RESI-2P',
     date: '22 Avril 2026',
     readTime: '5 min',
-    excerpt: 'Suivi de la cohésion sociale autour des couloirs de transhumance au Sahel.',
-    content: `La mise en place de chartes de transhumance suivies par des comités paritaires agriculteurs-éleveurs sous le projet RESI2P a permis de réduire de 70% les conflits d'usage de l'eau.`,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Suivi du développement des micro-entreprises agricoles financées par le FIDA au Burkina Faso.',
+    content: `La facilitation de l'accès au marché par le RESI-2P se traduit par un accroissement direct des revenus des femmes et des jeunes (y compris les personnes handicapées), mesuré via des enquêtes de rentabilité périodiques.`,
+    image: resi_water,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
@@ -302,18 +310,18 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '5 min',
     excerpt: 'Évaluation de la transformation et du stockage au Bénin.',
     content: `Le suivi-évaluation du programme PADAAM (ProCaR) permet de garantir la rentabilité des filières clés, avec une nette amélioration de la transformation locale du manioc et du conditionnement du riz béninois.`,
-    image: 'https://images.unsplash.com/photo-1576085898323-218339e3b43c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_market,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
     id: '27',
-    title: 'RESI2P : Le rôle de la radio communautaire dans le partage des résultats de S&E',
-    category: 'Projet RESI2P',
+    title: 'RESI-2P : Le rôle de la communication locale dans le partage des résultats S&E',
+    category: 'Projet RESI-2P',
     date: '12 Avril 2026',
     readTime: '4 min',
-    excerpt: 'Vulgariser les données et les leçons apprises auprès des populations non-alphabétisées.',
-    content: `La diffusion d'émissions de radio locales en langues vernaculaires sous le projet RESI2P garantit une véritable transparence démocratique sur la gestion des budgets de développement.`,
-    image: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Vulgariser les acquis du programme "Kakoadb-Jànsùli" auprès des communautés burkinabè.',
+    content: `La restitution des données S&E en langues locales (Mooré, Dioula) permet aux bénéficiaires du programme RESI-2P de s'approprier les résultats et de renforcer la redevabilité des comités locaux.`,
+    image: resi_radio,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   },
   {
@@ -346,7 +354,7 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     readTime: '4 min',
     excerpt: 'Impact de l\'irrigation et des aménagements de bas-fonds sur les récoltes.',
     content: `Les évaluations réalisées sur les sites du ProCaR montrent que les nouveaux aménagements hydro-agricoles ont permis une augmentation des rendements rizicoles et une meilleure gestion de l'eau en saison sèche.`,
-    image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: procar_greenhouse,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   }
 ]
