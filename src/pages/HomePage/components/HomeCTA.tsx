@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 
 export const HomeCTA = () => {
   return (
-    <Box py={{ base: 16, md: 24 }} bg="white">
+    <Box py={{ base: 16, md: 24 }} bg="transparent">
       <Container maxW="800px" px={{ base: 4, md: 6 }}>
         <Box
           bg="linear-gradient(135deg, #2B5BC4 0%, #1f3fa0 100%)"

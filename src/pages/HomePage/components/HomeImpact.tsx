@@ -92,15 +92,18 @@ export const HomeImpact = () => {
             </SimpleGrid>
 
             <VStack align="flex-start" spacing={4} pt={4}>
+              <Text fontWeight={700} fontSize="15px" color="gray.900" textTransform="uppercase" letterSpacing="0.5px" mb={1}>
+                Notre Valeur Ajoutée (Une approche combinant) :
+              </Text>
               {[
-                'Réduction des marges d\'erreur opérationnelles',
-                'Optimisation de l\'allocation des ressources',
-                'Reporting transparent pour les bailleurs de fonds',
-                'Apprentissage institutionnel continu'
+                'Une expertise technique rigoureuse',
+                'Une connaissance approfondie du terrain',
+                'Des outils analytiques modernes et connectés',
+                'Production de résultats mesurables pour des décisions éclairées'
               ].map((text, i) => (
-                <HStack key={i} spacing={3}>
-                  <Icon as={FiCheckCircle} color="gold.500" fontSize="20px" />
-                  <Text fontWeight={600} color="gray.700">{text}</Text>
+                <HStack key={i} spacing={3} align="flex-start">
+                  <Icon as={FiCheckCircle} color="gold.500" fontSize="20px" mt={0.5} />
+                  <Text fontWeight={600} color="gray.700" fontSize="15px" lineHeight={1.4}>{text}</Text>
                 </HStack>
               ))}
             </VStack>

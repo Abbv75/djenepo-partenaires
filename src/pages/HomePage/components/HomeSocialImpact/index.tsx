@@ -17,7 +17,7 @@ export const HomeSocialImpact = () => {
   return (
     <Box 
       py={{ base: 20, md: 32 }} 
-      bg="white" 
+      bg="transparent" 
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

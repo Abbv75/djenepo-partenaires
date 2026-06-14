@@ -37,13 +37,13 @@ export const HomeAboutStrip = () => {
           </Box>
           <VStack align="flex-start" spacing={5} bg="whiteAlpha.100" p={8} borderRadius="24px" border="1px solid" borderColor="whiteAlpha.200">
             <Text color="white" fontWeight={700} fontSize="17px" mb={2}>
-              Notre champ d'intervention
+              Notre Approche
             </Text>
             {[
-              'Conception & Planification du projet',
-              'Suivi opérationnel en temps réel',
-              'Évaluation finale & d\'impact',
-              'Capitalisation & Apprentissage continu',
+              'Une forte immersion terrain',
+              'Une démarche participative et inclusive',
+              'Une orientation résultats claire',
+              'Des indicateurs fiables et mesurables',
             ].map((item) => (
               <HStack key={item} spacing={3} align="flex-start">
                 <Icon as={FiCheckCircle} color="gold.400" fontSize="20px" mt={0.5} />

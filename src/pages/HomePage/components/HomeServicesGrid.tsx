@@ -11,7 +11,7 @@ export const HomeServicesGrid = () => {
   const homeServices = SERVICES.slice(0, 4)
 
   return (
-    <Box py={{ base: 16, md: 24 }} bg="gray.50">
+    <Box py={{ base: 16, md: 24 }} bg="transparent">
       <Container maxW="1200px" px={{ base: 4, md: 6 }}>
         <VStack mb={12} spacing={4} textAlign="center">
           <Badge bg="gold.50" color="gold.600" px={4} py={1.5} borderRadius="full" fontSize="13px" fontWeight={600}>

@@ -27,8 +27,8 @@ export const ImpactMedia = ({ finalYImage, xMouseImage, finalYCard, xMouseCard }
         boxShadow="0 25px 50px rgba(0,0,0,0.1)"
       >
         <Image
-          src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-          alt="Team collaboration in Africa"
+          src="/map-intervention.png"
+          alt="Zones d'intervention DJENEPO Partners en Afrique de l'Ouest"
         />
       </MotionBox>
 
