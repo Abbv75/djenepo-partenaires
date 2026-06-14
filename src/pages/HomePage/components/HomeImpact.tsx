@@ -122,8 +122,8 @@ export const HomeImpact = () => {
               border="8px solid white"
             >
               <Image 
-                src="https://images.unsplash.com/photo-1551288049-bbda48658a71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                alt="Data Visualization"
+                src="/dashboard-impact.png" 
+                alt="Visualisation des données et tableaux de bord S&E"
               />
               
               {/* Overlay Graph Mockup */}
