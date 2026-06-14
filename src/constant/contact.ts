@@ -1,17 +1,16 @@
 export const CONTACT_INFO = {
   address: {
     city: 'Bamako, Mali',
-    district: 'ACI 2000, Hamdallaye',
-    full: 'Bamako, Mali\nACI 2000, Hamdallaye',
+    district: 'Hamdallaye ACI 2000 – Rue 384 • Porte 249',
+    full: 'Bamako, Mali\nHamdallaye ACI 2000 – Rue 384 • Porte 249',
   },
   phones: [
-    '+223 XX XX XX XX',
-    '+223 XX XX XX XX',
+    '+223 66 71 17 72',
   ],
   emails: [
-    'contact@djenepopartners.com',
-    'info@djenepopartners.com',
+    'contact@djenepo-partners.com',
   ],
+  website: 'www.djenepo-partners.com',
   hours: {
     weekdays: 'Lun – Ven : 8h00 – 17h00',
     saturday: 'Sam : 9h00 – 13h00',

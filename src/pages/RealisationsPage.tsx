@@ -26,6 +26,40 @@ const realisations = [
     id: 1,
     category: 'Suivi-Évaluation',
     categoryColor: 'brand',
+    title: 'Élaboration du Manuel de Procédures S&E – Projet BRIDEP',
+    client: 'Burundi / Financement BAD',
+    location: 'Burundi',
+    year: '2025',
+    beneficiaires: 'Programme national',
+    desc: 'Élaboration du manuel de procédures de suivi-évaluation du projet BRIDEP (Burundi Rural Infrastructure Development Project), financé par la Banque Africaine de Développement. Un référentiel méthodologique complet pour encadrer la mise en œuvre et le reporting du projet.',
+    impact: [
+      'Manuel de procédures S&E livré et validé',
+      'Référentiel conforme aux exigences BAD',
+      'Indicateurs de performance définis pour toute la durée du projet',
+    ],
+    tags: ['S&E', 'BAD', 'Burundi', 'Manuel de procédures'],
+  },
+  {
+    id: 2,
+    category: 'Formation',
+    categoryColor: 'gold',
+    title: 'Autonomisation Économique des Jeunes – Régions de Kayes & Ségou',
+    client: 'Organisation Internationale pour les Migrations (OIM)',
+    location: 'Mali – Kayes & Ségou',
+    year: '2025',
+    beneficiaires: 'Jeunes des régions de Kayes et Ségou',
+    desc: 'Appui technique à un programme d\'autonomisation économique des jeunes dans les régions de Kayes et Ségou, financé par l\'OIM. Renforcement des capacités des bénéficiaires et des équipes terrain en gestion de projet et suivi des résultats.',
+    impact: [
+      'Régions de Kayes et Ségou couvertes',
+      'Dispositif de suivi opérationnel déployé',
+      'Bénéficiaires accompagnés vers l\'autonomie économique',
+    ],
+    tags: ['OIM', 'Jeunesse', 'Autonomisation', 'Mali'],
+  },
+  {
+    id: 3,
+    category: 'Suivi-Évaluation',
+    categoryColor: 'brand',
     title: 'Système de Suivi-Évaluation du Programme FIDA Burundi',
     client: 'FIDA / Gouvernement du Burundi',
     location: 'Burundi',
@@ -40,9 +74,9 @@ const realisations = [
     tags: ['FIDA', 'Agriculture', 'S&E', 'KoboToolbox'],
   },
   {
-    id: 2,
+    id: 4,
     category: 'Planification',
-    categoryColor: 'gold',
+    categoryColor: 'teal',
     title: 'Élaboration du Plan Stratégique d\'une ONG nationale',
     client: 'ONG Santé Communautaire Mali',
     location: 'Mali',
@@ -57,7 +91,7 @@ const realisations = [
     tags: ['Santé', 'Stratégie', 'ODD', 'Participation'],
   },
   {
-    id: 3,
+    id: 5,
     category: 'Formation',
     categoryColor: 'teal',
     title: 'Programme de Renforcement des Capacités en GAR',
@@ -74,7 +108,7 @@ const realisations = [
     tags: ['GAR', 'Formation', 'Éducation', 'Mopti'],
   },
   {
-    id: 4,
+    id: 6,
     category: 'Appui Technique',
     categoryColor: 'purple',
     title: 'Évaluation Finale du Programme PAIFAR-B',
@@ -91,7 +125,7 @@ const realisations = [
     tags: ['Évaluation', 'Rural', 'FIDA', 'Burkina Faso'],
   },
   {
-    id: 5,
+    id: 7,
     category: 'Recherche',
     categoryColor: 'orange',
     title: 'Étude de Référence – Projet Nutrition Sénégal',
@@ -99,7 +133,7 @@ const realisations = [
     location: 'Sénégal',
     year: '2021',
     beneficiaires: '3 régions',
-    desc: 'Réalisation d\'une étude de base pour un projet de nutrition financé par USAID couvrant 3 régions du Sénégal. Enquête quantitative auprès de 1200 ménages et entretiens qualitatifs pour établir les valeurs de référence des indicateurs de nutrition infantile.',
+    desc: 'Réalisation d\'une étude de base pour un projet de nutrition financé par USAID couvrant 3 régions du Sénégal. Enquête quantitative auprès de 1 200 ménages et entretiens qualitatifs pour établir les valeurs de référence des indicateurs de nutrition infantile.',
     impact: [
       'Enquête auprès de 1 200 ménages',
       'Baseline validée par USAID',
@@ -108,7 +142,7 @@ const realisations = [
     tags: ['Nutrition', 'Recherche', 'USAID', 'Sénégal'],
   },
   {
-    id: 6,
+    id: 8,
     category: 'Coaching',
     categoryColor: 'pink',
     title: 'Restructuration Institutionnelle – Collectivité Locale',
@@ -173,10 +207,10 @@ export default function RealisationsPage() {
         <Container maxW="1200px" px={{ base: 4, md: 6 }}>
           <SimpleGrid columns={{ base: 2, md: 4 }} spacing={8} textAlign="center">
             {[
-              { val: '50+', label: 'Projets réalisés' },
-              { val: '8', label: 'Pays couverts' },
-              { val: '12+', label: "Années d'expérience" },
-              { val: '30+', label: 'Clients satisfaits' },
+              { val: '8+', label: 'Projets réalisés' },
+              { val: '4', label: 'Pays couverts' },
+              { val: '2025', label: 'Année de création' },
+              { val: '5+', label: 'Partenaires actifs' },
             ].map((s) => (
               <Box key={s.label}>
                 <Text fontFamily="heading" fontWeight={800} fontSize={{ base: '28px', md: '36px' }} color="white">

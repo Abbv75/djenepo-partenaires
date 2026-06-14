@@ -1,15 +1,14 @@
-import { Box, VStack, HStack, Text, Grid, Icon } from '@chakra-ui/react'
+import { Box, VStack, HStack, Text, Icon } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { FiTarget, FiAward, FiGlobe, FiCheck } from 'react-icons/fi'
+import { FiCheckCircle, FiShield, FiTrendingUp, FiMap } from 'react-icons/fi'
 
 const MotionBox = motion(Box)
 
 export const HeroStats = () => {
-  const stats = [
-    { icon: FiTarget, value: '50+', label: 'Projets' },
-    { icon: FiAward, value: '12+', label: 'Ans Exp.' },
-    { icon: FiGlobe, value: '8', label: 'Pays' },
-    { icon: FiCheck, value: '100%', label: 'Engagement' },
+  const valeurs = [
+    { icon: FiShield, title: 'Rigueur & Transparence', desc: 'Méthodologies d\'évaluation conformes aux exigences internationales.' },
+    { icon: FiTrendingUp, title: 'Culture de l\'Impact', desc: 'Orienter chaque intervention vers des résultats durables et mesurables.' },
+    { icon: FiMap, title: 'Engagement Terrain', desc: 'Une présence active et une connaissance pointue des réalités ouest-africaines.' },
   ]
 
   return (
@@ -31,30 +30,37 @@ export const HeroStats = () => {
           <HStack spacing={4}>
             <Box w="40px" h="4px" bg="gold.400" borderRadius="full" />
             <Text color="white" fontWeight={700} fontSize="18px">
-              En quelques chiffres
+              Notre engagement
             </Text>
           </HStack>
           
-          <Grid templateColumns="1fr 1fr" gap={6}>
-            {stats.map((stat, i) => (
-              <VStack key={i} align="flex-start" spacing={1}>
-                <Icon as={stat.icon} color="gold.400" fontSize="20px" mb={1} />
-                <Text color="white" fontWeight={800} fontSize="28px" lineHeight={1}>
-                  {stat.value}
-                </Text>
-                <Text color="gray.400" fontSize="12px" fontWeight={600} textTransform="uppercase">
-                  {stat.label}
-                </Text>
-              </VStack>
+          <VStack align="stretch" spacing={5}>
+            {valeurs.map((item, i) => (
+              <HStack key={i} align="flex-start" spacing={4}>
+                <Box p={2} bg="whiteAlpha.100" borderRadius="10px" mt={0.5}>
+                  <Icon as={item.icon} color="gold.400" fontSize="18px" />
+                </Box>
+                <VStack align="flex-start" spacing={0.5}>
+                  <Text color="white" fontWeight={700} fontSize="14px">
+                    {item.title}
+                  </Text>
+                  <Text color="gray.300" fontSize="12px" lineHeight={1.4}>
+                    {item.desc}
+                  </Text>
+                </VStack>
+              </HStack>
             ))}
-          </Grid>
+          </VStack>
 
-          <Box p={4} bg="brand.600" borderRadius="16px">
-            <Text color="white" fontSize="13px" fontWeight={600} mb={1}>
-              Partenaire stratégique
-            </Text>
+          <Box p={4} bg="brand.600" borderRadius="16px" mt={2}>
+            <HStack spacing={2} mb={1}>
+              <Icon as={FiCheckCircle} color="gold.400" />
+              <Text color="white" fontSize="13px" fontWeight={700}>
+                Cabinet fondé en 2025
+              </Text>
+            </HStack>
             <Text color="brand.100" fontSize="12px">
-              ONG · Institutions · Gouvernements
+              Spécialisé en Planification, Suivi-Évaluation et Formation en Afrique de l'Ouest.
             </Text>
           </Box>
         </VStack>
