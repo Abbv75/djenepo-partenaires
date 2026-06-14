@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Heading, Button, Box } from '@chakra-ui/react';
+import { Flex, Heading, Button } from '@chakra-ui/react';
 import { FiPlus } from 'react-icons/fi';
 
 interface PageHeaderProps {

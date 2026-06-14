@@ -37,6 +37,7 @@ interface DataTableProps<Data extends object> {
 export function DataTable<Data extends object>({ data, columns, searchPlaceholder = "Rechercher..." }: DataTableProps<Data>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
+  const [columnSizing, setColumnSizing] = useState<Record<string, number>>({});
 
   const table = useReactTable({
     columns,
@@ -49,8 +50,11 @@ export function DataTable<Data extends object>({ data, columns, searchPlaceholde
     state: {
       sorting,
       globalFilter,
+      columnSizing,
     },
     onGlobalFilterChange: setGlobalFilter,
+    onColumnSizingChange: setColumnSizing,
+    columnResizeMode: 'onChange',
   });
 
   return (
@@ -84,7 +88,7 @@ export function DataTable<Data extends object>({ data, columns, searchPlaceholde
                         key={header.id}
                         onClick={header.column.getToggleSortingHandler()}
                         isNumeric={meta?.isNumeric}
-                        cursor={header.column.getCanSort() ? 'pointer' : 'default'}
+                        cursor={header.column.getCanSort() ? 'pointer' : (header.column.getCanResize() ? 'col-resize' : 'default')}
                         userSelect="none"
                         color="gray.600"
                         fontWeight="bold"
@@ -92,6 +96,8 @@ export function DataTable<Data extends object>({ data, columns, searchPlaceholde
                         textTransform="uppercase"
                         fontSize="xs"
                         py={4}
+                        position="relative"
+                        width={header.column.getSize()}
                       >
                         <Flex align="center" gap={2}>
                           {flexRender(
@@ -108,7 +114,22 @@ export function DataTable<Data extends object>({ data, columns, searchPlaceholde
                             ) : null}
                           </chakra.span>
                         </Flex>
-                      </Th>
+                      <Box
+  position="absolute"
+  right={0}
+  top={0}
+  bottom={0}
+  w="6px"
+  cursor="col-resize"
+  bg="gray.300"
+  opacity={0.5}
+  _hover={{ opacity: 0.8, bg: "gray.400" }}
+  zIndex={1}
+  onMouseDown={(header as any).getResizeHandler?.()}
+  onDoubleClick={(header as any).resetSize?.()}
+/>
+
+</Th>
                     );
                   })}
                 </Tr>
@@ -127,7 +148,7 @@ export function DataTable<Data extends object>({ data, columns, searchPlaceholde
                     {row.getVisibleCells().map((cell) => {
                       const meta: any = cell.column.columnDef.meta;
                       return (
-                        <Td key={cell.id} isNumeric={meta?.isNumeric} py={4}>
+                        <Td key={cell.id} isNumeric={meta?.isNumeric} width={cell.column.getSize()} py={4}>
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </Td>
                       );
