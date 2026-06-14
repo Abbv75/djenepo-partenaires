@@ -1,5 +1,5 @@
 import { Box, Container, Text, Button } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 
 export const HomeCTA = () => {
   return (

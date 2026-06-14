@@ -1,6 +1,7 @@
 import { Box, Container, VStack, Badge, Text, Button } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { FiArrowRight } from 'react-icons/fi'
+
 
 export const ServicesHero = () => {
   return (

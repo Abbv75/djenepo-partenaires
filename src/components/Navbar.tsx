@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useRouterState } from '@tanstack/react-router'
 import {
   Box,
   Flex,
@@ -23,7 +23,8 @@ const navLinks = [
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure()
   const [scrolled, setScrolled] = useState(false)
-  const location = useLocation()
+  const routerState = useRouterState()
+  const currentPath = routerState.location.pathname
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -32,7 +33,7 @@ export default function Navbar() {
   }, [])
 
   const isActive = (to: string) =>
-    to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
+    to === '/' ? currentPath === '/' : currentPath.startsWith(to)
 
   return (
     <Box
@@ -156,3 +157,4 @@ export default function Navbar() {
     </Box>
   )
 }
+

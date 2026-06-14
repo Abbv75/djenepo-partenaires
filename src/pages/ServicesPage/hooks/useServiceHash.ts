@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useRouterState } from '@tanstack/react-router'
 
 export const useServiceHash = () => {
-  const { hash } = useLocation()
+  const routerState = useRouterState()
+  const hash = routerState.location.hash
 
   useEffect(() => {
     if (hash) {
@@ -17,3 +18,4 @@ export const useServiceHash = () => {
     }
   }, [hash])
 }
+

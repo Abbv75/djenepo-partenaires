@@ -1,8 +1,9 @@
 import { Box, Container, VStack, Badge, Text, SimpleGrid, Flex, Button, Icon } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import { SERVICES } from '../../../constant/services'
+
 
 const MotionBox = motion(Box)
 
@@ -34,7 +35,7 @@ export const HomeServicesGrid = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
             >
-              <Link to={`/services#${s.id}`}>
+              <Link to="/services" hash={s.id}>
                 <Box
                   bg="white"
                   borderRadius="20px"

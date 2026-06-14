@@ -1,6 +1,6 @@
 import { VStack, HStack, Box, Badge, Text, Button, Icon } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { FiArrowRight, FiCheck } from 'react-icons/fi'
 import { CONTACT_INFO } from '../../../../constant/contact'
 

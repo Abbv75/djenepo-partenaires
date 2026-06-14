@@ -1,37 +1,19 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Outlet } from '@tanstack/react-router'
 import { Box } from '@chakra-ui/react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { CursorFollower } from './components/CursorFollower'
-import HomePage from './pages/HomePage'
-import ServicesPage from './pages/ServicesPage'
-import ContactPage from './pages/ContactPage'
-
-function ScrollToTop() {
-  const { pathname, hash } = useLocation()
-  useEffect(() => {
-    if (!hash) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-  }, [pathname, hash])
-  return null
-}
 
 export default function App() {
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
       <CursorFollower />
-      <ScrollToTop />
       <Navbar />
       <Box flex={1}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
+        <Outlet />
       </Box>
       <Footer />
     </Box>
   )
 }
+

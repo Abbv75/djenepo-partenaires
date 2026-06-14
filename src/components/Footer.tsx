@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import {
   Box,
   Container,
@@ -18,7 +18,14 @@ import { SERVICES } from '../constant/services'
 import { FiMapPin, FiPhone, FiMail, FiLinkedin, FiFacebook } from 'react-icons/fi'
 
 export default function Footer() {
-  const footerLinks = [
+  const footerLinks: Array<{
+    title: string
+    links: Array<{
+      label: string
+      to: string
+      hash?: string
+    }>
+  }> = [
     {
       title: 'Navigation',
       links: [
@@ -31,7 +38,8 @@ export default function Footer() {
       title: 'Expertises',
       links: SERVICES.map(service => ({
         label: service.title,
-        to: `/services#${service.id}`
+        to: '/services',
+        hash: service.id,
       })),
     },
   ]
@@ -91,7 +99,7 @@ export default function Footer() {
               </Text>
               <VStack align="flex-start" spacing={3}>
                 {section.links.map((link) => (
-                  <Link key={link.label} to={link.to}>
+                  <Link key={link.label} to={link.to} hash={link.hash}>
                     <Text
                       color="gray.400"
                       fontSize="14px"
