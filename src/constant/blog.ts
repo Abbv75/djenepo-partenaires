@@ -7,6 +7,12 @@ import resi_resilience from '../assets/blog/resi_resilience.png';
 import resi_tablet from '../assets/blog/resi_tablet.png';
 import resi_water from '../assets/blog/resi_water.png';
 import resi_radio from '../assets/blog/resi_radio.png';
+import blog_kobo from '../assets/blog/blog_kobo.png';
+import blog_excel from '../assets/blog/blog_excel.png';
+import blog_powerbi from '../assets/blog/blog_powerbi.png';
+import blog_ai from '../assets/blog/blog_ai.png';
+import blog_claude from '../assets/blog/claude.png';
+
 
 export interface BlogPost {
   id: string
@@ -356,6 +362,60 @@ Notre cœur de métier s'articule autour de la conception de cadres logiques, la
     content: `Les évaluations réalisées sur les sites du ProCaR montrent que les nouveaux aménagements hydro-agricoles ont permis une augmentation des rendements rizicoles et une meilleure gestion de l'eau en saison sèche.`,
     image: procar_greenhouse,
     author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
+  },
+  {
+    id: '31',
+    title: 'KoboToolbox : Optimiser vos formulaires pour la collecte hors-ligne',
+    category: 'Astuces & Outils',
+    date: '10 Juin 2026',
+    readTime: '6 min',
+    excerpt: 'Découvrez les meilleures pratiques pour structurer vos formulaires KoboToolbox et éviter les pertes de données en zone rurale.',
+    content: `La collecte de données en milieu rural pose souvent le défi de la connectivité. KoboToolbox offre des fonctionnalités hors-ligne robustes. Dans cet article, nous partageons nos astuces pour pré-charger les listes (cascading selects), utiliser le GPS de manière optimale sans internet, et gérer les médias (photos) pour ne pas saturer la mémoire des tablettes des enquêteurs.`,
+    image: blog_kobo,
+    author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
+  },
+  {
+    id: '32',
+    title: 'Excel avancé : 5 formules indispensables pour le suivi-évaluation',
+    category: 'Astuces & Outils',
+    date: '12 Juin 2026',
+    readTime: '5 min',
+    excerpt: 'Maîtrisez INDEX/EQUIV, SOMMEPROD et d\'autres fonctions pour automatiser vos tableaux de bord.',
+    content: `Bien que de nombreux outils spécialisés existent, Excel reste le socle du suivi-évaluation (S&E). Apprenez à combiner RECHERCHEX avec des listes déroulantes dynamiques pour créer des rapports interactifs. Nous verrons également comment utiliser SOMME.SI.ENS pour consolider les données de vos bénéficiaires par région et par genre en quelques clics.`,
+    image: blog_excel,
+    author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
+  },
+  {
+    id: '33',
+    title: 'Power BI : Créer un tableau de bord interactif pour vos projets',
+    category: 'Astuces & Outils',
+    date: '15 Juin 2026',
+    readTime: '7 min',
+    excerpt: 'Passez des rapports statiques aux visualisations dynamiques pour impressionner vos bailleurs de fonds.',
+    content: `Power BI révolutionne la manière dont les résultats de projets sont présentés. Ce tutoriel vous guide dans la connexion de Power BI directement à vos bases de données KoboToolbox via API, la modélisation en étoile de vos données, et la création de cartes interactives pour visualiser l'impact de vos interventions sur le territoire national.`,
+    image: blog_powerbi,
+    author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
+  },
+  {
+    id: '34',
+    title: 'L\'Intelligence Artificielle au service du S&E : Cas pratiques',
+    category: 'Intelligence Artificielle',
+    date: '18 Juin 2026',
+    readTime: '5 min',
+    excerpt: 'Comment les algorithmes d\'IA permettent de prédire les tendances et d\'identifier les anomalies dans vos bases de données.',
+    content: `L'intégration de l'IA dans les processus d'évaluation transforme notre façon d'analyser l'impact. En utilisant le machine learning pour détecter des valeurs aberrantes dans les enquêtes terrain en temps réel, ou en appliquant des modèles prédictifs pour anticiper les baisses de rendement agricole, l'IA devient l'allié incontournable du spécialiste S&E.`,
+    image: blog_ai,
+    author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
+  },
+  {
+    id: '35',
+    title: 'Claude AI : Gagner du temps dans la capitalisation qualitative',
+    category: 'Intelligence Artificielle',
+    date: '20 Juin 2026',
+    readTime: '4 min',
+    excerpt: 'Utilisez l\'assistant Claude pour synthétiser des centaines de pages d\'entretiens (Focus Group).',
+    content: `L'analyse qualitative demande énormément de temps. Avec des IA comme Claude d'Anthropic, il est désormais possible de traiter des dizaines de transcriptions de Focus Group Discussions (FGD) en quelques secondes. Découvrez comment formuler les bons "prompts" pour extraire les thématiques récurrentes, les citations clés et générer la trame de votre rapport de capitalisation tout en gardant un esprit critique.`,
+    image: blog_claude,
+    author: { name: 'DJENEPO PARTNERS', role: 'Cabinet Conseil', avatar: logo }
   }
 ]
-
