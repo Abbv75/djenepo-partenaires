@@ -15,6 +15,10 @@ import {
 import { motion } from 'framer-motion'
 import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi'
 import { BLOG_POSTS } from '../constant/blog'
+import { IMAGES } from '../constant/image';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fr';
+dayjs.locale('fr');
 import type { BlogPost } from '../constant/blog'
 import { BlogDetailModal } from './HomePage/components/BlogDetailModal'
 
@@ -155,7 +159,7 @@ export default function BlogPage() {
                     <HStack spacing={4} mb={3} color="gray.400" fontSize="12px">
                       <HStack spacing={1}>
                         <Icon as={FiCalendar} />
-                        <Text>{post.date}</Text>
+                        <Text>{dayjs(post.date).format('D MMMM YYYY')}</Text>
                       </HStack>
                       <HStack spacing={1}>
                         <Icon as={FiClock} />

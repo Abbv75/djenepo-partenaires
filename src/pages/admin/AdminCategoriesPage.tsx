@@ -3,19 +3,16 @@ import {
   Box, Button, Heading, Flex, IconButton, useDisclosure,
   Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter,
   ModalBody, ModalCloseButton, FormControl, FormLabel, Input,
-  useToast, Table, Thead, Tbody, Tr, Th, Td, TableContainer,
-  Spinner, Center, Text, AlertDialog, AlertDialogBody,
+  useToast, Spinner, Center, Text, AlertDialog, AlertDialogBody,
   AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
   createColumnHelper,
 } from '@tanstack/react-table';
 import React from 'react';
 import api from '../../constant/AxiosInstance';
+import { DataTable } from '../../components/DataTable';
 
 interface Category {
   id: number;
@@ -157,12 +154,6 @@ export default function AdminCategoriesPage() {
     })
   ], []);
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
   return (
     <Box>
       <Flex justify="space-between" align="center" mb={6}>
@@ -172,53 +163,13 @@ export default function AdminCategoriesPage() {
         </Button>
       </Flex>
 
-      <Box bg="white" shadow="sm" rounded="lg" overflow="hidden" borderWidth="1px" borderColor="gray.200">
-        {loading ? (
-          <Center p={10}>
-            <Spinner color="brand.500" size="xl" />
-          </Center>
-        ) : (
-          <TableContainer>
-            <Table variant="simple">
-              <Thead bg="gray.50">
-                {table.getHeaderGroups().map(headerGroup => (
-                  <Tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                      <Th key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </Th>
-                    ))}
-                  </Tr>
-                ))}
-              </Thead>
-              <Tbody>
-                {table.getRowModel().rows.length === 0 ? (
-                  <Tr>
-                    <Td colSpan={columns.length} textAlign="center" py={8} color="gray.500">
-                      Aucune catégorie trouvée.
-                    </Td>
-                  </Tr>
-                ) : (
-                  table.getRowModel().rows.map(row => (
-                    <Tr key={row.id} _hover={{ bg: 'gray.50' }}>
-                      {row.getVisibleCells().map(cell => (
-                        <Td key={cell.id}>
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </Td>
-                      ))}
-                    </Tr>
-                  ))
-                )}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        )}
-      </Box>
+      {loading ? (
+        <Center p={10}>
+          <Spinner color="brand.500" size="xl" />
+        </Center>
+      ) : (
+        <DataTable columns={columns} data={data} searchPlaceholder="Rechercher une catégorie..." />
+      )}
 
       {/* Add/Edit Modal */}
       <Modal isOpen={isOpen} onClose={onClose}>

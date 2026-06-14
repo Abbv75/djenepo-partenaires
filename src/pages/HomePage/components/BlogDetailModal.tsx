@@ -15,7 +15,11 @@ import {
   Badge,
   Box
 } from '@chakra-ui/react'
+
 import type { BlogPost } from '../../../constant/blog'
+import dayjs from 'dayjs';
+import 'dayjs/locale/fr';
+dayjs.locale('fr');
 
 
 interface BlogDetailModalProps {
@@ -71,7 +75,7 @@ export const BlogDetailModal = ({ isOpen, onClose, post }: BlogDetailModalProps)
               </Text>
             </VStack>
             <Text fontSize="12px" color="gray.400" ml="auto">
-              {post.date} • {post.readTime} de lecture
+              {dayjs(post.date).format('D MMMM YYYY')} • {post.readTime} de lecture
             </Text>
           </HStack>
         </ModalHeader>

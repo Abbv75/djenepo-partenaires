@@ -6,8 +6,8 @@ import {
   HStack,
   VStack,
   IconButton,
-  Button, useDisclosure,
-  Collapse,
+  Button,
+  useDisclosure,
   Container,
   Image,
   Menu,
@@ -15,10 +15,17 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Text
+  Text,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  Divider
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import { FiChevronDown, FiLogOut, FiHome } from 'react-icons/fi'
+import { HamburgerIcon } from '@chakra-ui/icons'
+import { FiChevronDown, FiLogOut, FiHome, FiMail } from 'react-icons/fi'
 import { IMAGES } from '../constant/image'
 import { useAuthStore } from '../store/useAuthStore'
 
@@ -30,7 +37,7 @@ const navLinks = [
 ]
 
 export default function Navbar() {
-  const { isOpen, onToggle } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [scrolled, setScrolled] = useState(false)
   const routerState = useRouterState()
   const currentPath = routerState.location.pathname
@@ -53,54 +60,58 @@ export default function Navbar() {
       left={0}
       right={0}
       zIndex={1000}
-      bg={scrolled ? 'white' : 'white'}
-      boxShadow={scrolled ? '0 2px 20px rgba(0,0,0,0.08)' : '0 1px 0 rgba(0,0,0,0.06)'}
-      transition="all 0.3s ease"
+      bg={scrolled ? 'rgba(255, 255, 255, 0.85)' : 'white'}
+      backdropFilter={scrolled ? 'blur(12px)' : 'none'}
+      boxShadow={scrolled ? '0 4px 30px rgba(0, 0, 0, 0.05)' : 'none'}
+      borderBottom="1px solid"
+      borderColor={scrolled ? 'whiteAlpha.300' : 'gray.100'}
+      transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
     >
       <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <Flex h="72px" align="center" justify="space-between">
+        <Flex h={{ base: '70px', md: '80px' }} align="center" justify="space-between">
           {/* Logo */}
           <Link to="/">
-            <Image 
-              src={IMAGES.logo} 
-              alt="Djenepo Partners" 
-              h={{ base: "40px", md: "50px" }}
-              w="auto"
-              objectFit="contain"
-            />
+            <Box _hover={{ transform: 'scale(1.02)' }} transition="all 0.2s">
+              <Image 
+                src={IMAGES.logo} 
+                alt="Djenepo Partners" 
+                h={{ base: "40px", md: "52px" }}
+                w="auto"
+                objectFit="contain"
+              />
+            </Box>
           </Link>
 
           {/* Desktop Nav */}
-          <HStack spacing={1} display={{ base: 'none', md: 'flex' }}>
+          <HStack spacing={2} display={{ base: 'none', md: 'flex' }}>
             {navLinks.map((link) => (
               <Link key={link.to} to={link.to}>
                 <Box
-                  px={4}
-                  py={2}
-                  borderRadius="8px"
-                  fontWeight={isActive(link.to) ? 600 : 500}
+                  px={5}
+                  py={2.5}
+                  borderRadius="12px"
+                  fontWeight={isActive(link.to) ? 700 : 500}
                   fontSize="15px"
-                  color={isActive(link.to) ? 'brand.600' : 'gray.700'}
+                  color={isActive(link.to) ? 'brand.600' : 'gray.600'}
                   bg={isActive(link.to) ? 'brand.50' : 'transparent'}
                   _hover={{
-                    bg: 'brand.50',
-                    color: 'brand.600',
+                    bg: isActive(link.to) ? 'brand.50' : 'gray.50',
+                    color: isActive(link.to) ? 'brand.700' : 'gray.900',
                   }}
-                  transition="all 0.2s"
-                  cursor="pointer"
+                  transition="all 0.3s ease"
                   position="relative"
                 >
                   {link.label}
                   {isActive(link.to) && (
                     <Box
                       position="absolute"
-                      bottom="-2px"
+                      bottom="4px"
                       left="50%"
                       transform="translateX(-50%)"
-                      w="4px"
-                      h="4px"
+                      w="16px"
+                      h="3px"
                       borderRadius="full"
-                      bg="gold.500"
+                      bg="brand.500"
                     />
                   )}
                 </Box>
@@ -110,30 +121,70 @@ export default function Navbar() {
 
           {/* CTA & User Menu */}
           <HStack display={{ base: 'none', md: 'flex' }} spacing={4}>
-            
+            {!isAuthenticated && (
+              <Link to="/contact">
+                <Button 
+                  variant="brand" 
+                  size="md" 
+                  borderRadius="12px"
+                  px={6}
+                  fontWeight={600}
+                  boxShadow="0 4px 14px 0 rgba(43,91,196,0.39)"
+                  _hover={{ 
+                    transform: 'translateY(-2px)', 
+                    boxShadow: '0 6px 20px rgba(43,91,196,0.3)' 
+                  }}
+                  transition="all 0.3s ease"
+                >
+                  Nous contacter
+                </Button>
+              </Link>
+            )}
+
             {isAuthenticated && (
-              <Menu>
+              <Menu autoSelect={false}>
                 <MenuButton 
                   as={Button} 
                   variant="ghost" 
                   rightIcon={<FiChevronDown />}
-                  px={2}
+                  px={3}
+                  py={6}
+                  borderRadius="16px"
+                  _hover={{ bg: 'gray.50' }}
+                  _active={{ bg: 'gray.100' }}
                 >
-                  <HStack>
-                    <Avatar size="sm" name={user?.name} bg="brand.500" color="white" />
-                    <Text fontSize="sm" fontWeight="500">{user?.name}</Text>
+                  <HStack spacing={3}>
+                    <Avatar size="sm" name={user?.name} bg="brand.500" color="white" border="2px solid white" shadow="sm" />
+                    <VStack spacing={0} align="flex-start" display={{ base: 'none', lg: 'flex' }}>
+                      <Text fontSize="14px" fontWeight="600" lineHeight="1">{user?.name}</Text>
+                      <Text fontSize="11px" color="gray.500" fontWeight="500">Administrateur</Text>
+                    </VStack>
                   </HStack>
                 </MenuButton>
-                <MenuList>
+                <MenuList 
+                  border="none" 
+                  boxShadow="0 10px 40px rgba(0,0,0,0.1)" 
+                  borderRadius="16px" 
+                  p={2}
+                  minW="220px"
+                >
                   <MenuItem 
-                    icon={<FiHome />} 
+                    icon={<FiHome size={18} />} 
                     onClick={() => routerState.location.pathname !== '/admin' && (window.location.href = '/admin')}
+                    borderRadius="10px"
+                    _hover={{ bg: 'brand.50', color: 'brand.600' }}
+                    fontWeight="500"
+                    mb={1}
                   >
                     Tableau de bord
                   </MenuItem>
+                  <Divider my={1} />
                   <MenuItem 
-                    icon={<FiLogOut />} 
+                    icon={<FiLogOut size={18} />} 
                     color="red.500"
+                    borderRadius="10px"
+                    _hover={{ bg: 'red.50', color: 'red.600' }}
+                    fontWeight="500"
                     onClick={() => {
                       logout();
                       window.location.href = '/login';
@@ -149,45 +200,97 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <IconButton
             display={{ base: 'flex', md: 'none' }}
-            onClick={onToggle}
-            icon={isOpen ? <CloseIcon w={4} h={4} /> : <HamburgerIcon w={5} h={5} />}
+            onClick={onOpen}
+            icon={<HamburgerIcon w={6} h={6} />}
             variant="ghost"
             aria-label="Toggle menu"
-            color="gray.700"
+            color="gray.800"
+            _hover={{ bg: 'gray.100' }}
+            borderRadius="12px"
           />
         </Flex>
       </Container>
 
-      {/* Mobile Menu */}
-      <Collapse in={isOpen} animateOpacity>
-        <Box bg="white" borderTop="1px solid" borderColor="gray.100" py={4} px={6}>
-          <VStack spacing={1} align="stretch">
-            {navLinks.map((link) => (
-              <Link key={link.to} to={link.to} onClick={onToggle}>
-                <Box
-                  px={4}
-                  py={3}
-                  borderRadius="8px"
-                  fontWeight={isActive(link.to) ? 600 : 500}
-                  fontSize="15px"
-                  color={isActive(link.to) ? 'brand.600' : 'gray.700'}
-                  bg={isActive(link.to) ? 'brand.50' : 'transparent'}
-                  _hover={{ bg: 'brand.50', color: 'brand.600' }}
-                  transition="all 0.2s"
-                >
-                  {link.label}
-                </Box>
-              </Link>
-            ))}
-            <Link to="/contact" onClick={onToggle}>
-              <Button variant="brand" w="full" mt={2}>
-                Nous contacter
-              </Button>
-            </Link>
-          </VStack>
-        </Box>
-      </Collapse>
+      {/* Mobile Drawer Menu */}
+      <Drawer placement="right" onClose={onClose} isOpen={isOpen} size="sm">
+        <DrawerOverlay backdropFilter="blur(4px)" bg="blackAlpha.300" />
+        <DrawerContent borderLeftRadius="24px">
+          <DrawerCloseButton mt={4} mr={4} size="lg" borderRadius="full" _hover={{ bg: 'gray.100' }} />
+          <DrawerHeader borderBottomWidth="1px" borderColor="gray.100" pt={6} pb={4}>
+            <Image 
+              src={IMAGES.logo} 
+              alt="Djenepo Partners" 
+              h="40px"
+              w="auto"
+            />
+          </DrawerHeader>
+          <DrawerBody px={6} py={8}>
+            <VStack spacing={4} align="stretch">
+              {navLinks.map((link) => (
+                <Link key={link.to} to={link.to} onClick={onClose}>
+                  <Box
+                    px={5}
+                    py={4}
+                    borderRadius="16px"
+                    fontWeight={isActive(link.to) ? 700 : 500}
+                    fontSize="16px"
+                    color={isActive(link.to) ? 'brand.600' : 'gray.700'}
+                    bg={isActive(link.to) ? 'brand.50' : 'gray.50'}
+                    _hover={{ bg: 'brand.100' }}
+                    transition="all 0.2s"
+                    display="flex"
+                    alignItems="center"
+                  >
+                    {link.label}
+                  </Box>
+                </Link>
+              ))}
+              
+              <Divider my={4} />
+              
+              {!isAuthenticated ? (
+                <Link to="/contact" onClick={onClose}>
+                  <Button variant="brand" w="full" size="lg" borderRadius="16px" leftIcon={<FiMail />}>
+                    Nous contacter
+                  </Button>
+                </Link>
+              ) : (
+                <VStack spacing={3}>
+                  <Button 
+                    variant="outline" 
+                    colorScheme="brand" 
+                    w="full" 
+                    size="lg" 
+                    borderRadius="16px" 
+                    leftIcon={<FiHome />}
+                    onClick={() => {
+                      onClose();
+                      window.location.href = '/admin';
+                    }}
+                  >
+                    Tableau de bord
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    colorScheme="red" 
+                    w="full" 
+                    size="lg" 
+                    borderRadius="16px" 
+                    leftIcon={<FiLogOut />}
+                    onClick={() => {
+                      logout();
+                      onClose();
+                      window.location.href = '/login';
+                    }}
+                  >
+                    Déconnexion
+                  </Button>
+                </VStack>
+              )}
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </Box>
   )
 }
-
