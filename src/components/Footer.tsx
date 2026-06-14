@@ -31,6 +31,7 @@ export default function Footer() {
       links: [
         { label: 'Accueil', to: '/' },
         { label: 'Services', to: '/services' },
+        { label: 'Blog', to: '/blog' },
         { label: 'Contact', to: '/contact' },
       ],
     },

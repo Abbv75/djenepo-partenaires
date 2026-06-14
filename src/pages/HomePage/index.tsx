@@ -5,6 +5,7 @@ import { HomeServicesGrid } from './components/HomeServicesGrid'
 import { HomeImpact } from './components/HomeImpact'
 import { HomeProcess } from './components/HomeProcess'
 import { HomeSocialImpact } from './components/HomeSocialImpact'
+import { HomeBlogSection } from './components/HomeBlogSection'
 import { HomeCTA } from './components/HomeCTA'
 
 export default () => {
@@ -16,7 +17,9 @@ export default () => {
       <HomeImpact />
       <HomeProcess />
       <HomeSocialImpact />
+      <HomeBlogSection />
       <HomeCTA />
     </Box>
   )
 }
+

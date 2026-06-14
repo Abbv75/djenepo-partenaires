@@ -17,6 +17,7 @@ import { IMAGES } from '../constant/image'
 const navLinks = [
   { label: 'Accueil', to: '/' },
   { label: 'Services', to: '/services' },
+  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ]
 

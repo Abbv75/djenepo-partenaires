@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
 import RealisationsPage from './pages/RealisationsPage'
+import BlogPage from './pages/BlogPage'
 
 // Root Route which acts as our layout container
 export const rootRoute = createRootRoute({
@@ -39,12 +40,19 @@ export const realisationsRoute = createRoute({
   component: RealisationsPage,
 })
 
+export const blogRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/blog',
+  component: BlogPage,
+})
+
 // Register all routes into a route tree
 const routeTree = rootRoute.addChildren([
   indexRoute,
   servicesRoute,
   contactRoute,
   realisationsRoute,
+  blogRoute,
 ])
 
 // Create and export the router instance
