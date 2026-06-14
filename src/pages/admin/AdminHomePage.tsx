@@ -82,7 +82,7 @@ export default function AdminHomePage() {
         <Box position="relative" zIndex={2}>
           <VStack align="flex-start" spacing={2}>
             <Text fontSize={{ base: '24px', md: '32px' }} fontWeight="800" fontFamily="heading" lineHeight={1.2}>
-              Bonjour, {user?.name || 'Admin'} ! 👋
+              Bonjour, {user?.name || 'Admin'} !
             </Text>
             <Text fontSize={{ base: '15px', md: '17px' }} color="whiteAlpha.800" maxW="600px">
               Bienvenue sur votre tableau de bord. Voici un résumé de l'activité récente de votre plateforme.

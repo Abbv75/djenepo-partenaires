@@ -16,7 +16,6 @@ class BlogApiTest extends TestCase
         return BlogPost::create([
             'category_id' => $categoryId,
             'title' => 'Test Post',
-            'slug' => 'test-post-' . uniqid(),
             'excerpt' => 'Excerpt',
             'content' => 'Content',
             'author_name' => 'Author',
@@ -28,7 +27,7 @@ class BlogApiTest extends TestCase
 
     public function test_can_list_all_blogs()
     {
-        $category = Category::create(['name' => 'Tech', 'slug' => 'tech', 'icon' => 'FaLaptop']);
+        $category = Category::create(['name' => 'Tech', 'icon' => 'FaLaptop']);
         $this->createPost($category->id);
         $this->createPost($category->id);
 
@@ -40,8 +39,8 @@ class BlogApiTest extends TestCase
 
     public function test_can_filter_blogs_by_category()
     {
-        $category1 = Category::create(['name' => 'Tech', 'slug' => 'tech', 'icon' => 'FaLaptop']);
-        $category2 = Category::create(['name' => 'News', 'slug' => 'news', 'icon' => 'FaNewspaper']);
+        $category1 = Category::create(['name' => 'Tech', 'icon' => 'FaLaptop']);
+        $category2 = Category::create(['name' => 'News', 'icon' => 'FaNewspaper']);
         
         $this->createPost($category1->id);
         $this->createPost($category1->id);
@@ -55,7 +54,7 @@ class BlogApiTest extends TestCase
 
     public function test_can_get_single_blog()
     {
-        $category = Category::create(['name' => 'Tech', 'slug' => 'tech', 'icon' => 'FaLaptop']);
+        $category = Category::create(['name' => 'Tech', 'icon' => 'FaLaptop']);
         $post = $this->createPost($category->id);
 
         $response = $this->getJson("/api/blogs/{$post->id}");

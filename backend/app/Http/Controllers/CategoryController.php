@@ -24,7 +24,6 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:categories',
             'icon' => 'required|string|max:255',
         ]);
 
@@ -41,7 +40,6 @@ class CategoryController extends Controller
 
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'slug' => 'sometimes|required|string|max:255|unique:categories,slug,' . $id,
             'icon' => 'sometimes|required|string|max:255',
         ]);
 

@@ -12,8 +12,8 @@ class CategoryApiTest extends TestCase
 
     public function test_can_list_all_categories()
     {
-        Category::create(['name' => 'Tech', 'slug' => 'tech', 'icon' => 'FaLaptop']);
-        Category::create(['name' => 'News', 'slug' => 'news', 'icon' => 'FaNewspaper']);
+        Category::create(['name' => 'Tech', 'icon' => 'FaLaptop']);
+        Category::create(['name' => 'News', 'icon' => 'FaNewspaper']);
 
         $response = $this->getJson('/api/categories');
 
@@ -23,7 +23,7 @@ class CategoryApiTest extends TestCase
 
     public function test_can_get_single_category()
     {
-        $category = Category::create(['name' => 'Tech', 'slug' => 'tech', 'icon' => 'FaLaptop']);
+        $category = Category::create(['name' => 'Tech', 'icon' => 'FaLaptop']);
 
         $response = $this->getJson("/api/categories/{$category->id}");
 

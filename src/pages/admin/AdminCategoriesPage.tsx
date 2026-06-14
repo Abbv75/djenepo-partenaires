@@ -1,39 +1,29 @@
 import { useState, useEffect, useMemo } from 'react';
-import {
-  Box, Button, Heading, Flex, IconButton, useDisclosure,
-  Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter,
-  ModalBody, ModalCloseButton, FormControl, FormLabel, Input,
-  useToast, Spinner, Center, Text, AlertDialog, AlertDialogBody,
-  AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay,
-} from '@chakra-ui/react';
-import { FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
-import {
-  createColumnHelper,
-} from '@tanstack/react-table';
-import React from 'react';
+import { Box, Flex, IconButton, useDisclosure, useToast, Spinner, Center, Text } from '@chakra-ui/react';
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { createColumnHelper } from '@tanstack/react-table';
 import api from '../../constant/AxiosInstance';
 import { DataTable } from '../../components/DataTable';
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  icon: string;
-}
+import { PageHeader } from '../../components/ui/PageHeader';
+import { CustomModal } from '../../components/ui/CustomModal';
+import { ConfirmDeleteAlert } from '../../components/ui/ConfirmDeleteAlert';
+import { DynamicForm } from '../../components/ui/DynamicForm';
+import type { FormField } from '../../components/ui/DynamicForm';
+import type { Category } from '../../types';
 
 export default function AdminCategoriesPage() {
   const [data, setData] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   // Modal state
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [editingCat, setEditingCat] = useState<Category | null>(null);
-  const [formData, setFormData] = useState({ name: '', slug: '', icon: '' });
+  const [formData, setFormData] = useState<Record<string, any>>({ name: '', icon: '' });
 
   // Delete Alert state
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
-  const cancelRef = React.useRef<HTMLButtonElement>(null);
   const [catToDelete, setCatToDelete] = useState<number | null>(null);
 
   const toast = useToast();
@@ -57,12 +47,16 @@ export default function AdminCategoriesPage() {
   const handleOpenModal = (cat?: Category) => {
     if (cat) {
       setEditingCat(cat);
-      setFormData({ name: cat.name, slug: cat.slug, icon: cat.icon });
+      setFormData({ name: cat.name, icon: cat.icon || '' });
     } else {
       setEditingCat(null);
-      setFormData({ name: '', slug: '', icon: 'FiGrid' });
+      setFormData({ name: '', icon: 'FiGrid' });
     }
     onOpen();
+  };
+
+  const handleFormChange = (name: string, value: any) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,6 +90,7 @@ export default function AdminCategoriesPage() {
 
   const handleDelete = async () => {
     if (!catToDelete) return;
+    setIsDeleting(true);
     try {
       await api.delete(`/categories/${catToDelete}`);
       toast({ title: 'Catégorie supprimée', status: 'success' });
@@ -103,10 +98,17 @@ export default function AdminCategoriesPage() {
     } catch (error) {
       toast({ title: 'Erreur lors de la suppression', status: 'error' });
     } finally {
+      setIsDeleting(false);
       onAlertClose();
       setCatToDelete(null);
     }
   };
+
+  // Dynamic Form configuration
+  const formFields: FormField[] = [
+    { name: 'name', label: 'Nom de la catégorie', type: 'text', placeholder: 'Ex: Technologies' },
+    { name: 'icon', label: "Nom de l'icône (React Icons)", type: 'text', placeholder: 'Ex: FiMonitor' }
+  ];
 
   // TanStack Table configuration
   const columnHelper = createColumnHelper<Category>();
@@ -119,10 +121,6 @@ export default function AdminCategoriesPage() {
     columnHelper.accessor('name', {
       header: 'Nom',
       cell: info => <Text fontWeight="bold">{info.getValue()}</Text>,
-    }),
-    columnHelper.accessor('slug', {
-      header: 'Slug',
-      cell: info => info.getValue(),
     }),
     columnHelper.accessor('icon', {
       header: 'Icône',
@@ -156,12 +154,11 @@ export default function AdminCategoriesPage() {
 
   return (
     <Box>
-      <Flex justify="space-between" align="center" mb={6}>
-        <Heading size="lg" color="gray.700">Gestion des Catégories</Heading>
-        <Button leftIcon={<FiPlus />} variant="brand" onClick={() => handleOpenModal()}>
-          Nouvelle catégorie
-        </Button>
-      </Flex>
+      <PageHeader 
+        title="Gestion des Catégories" 
+        actionLabel="Nouvelle catégorie" 
+        onAction={() => handleOpenModal()} 
+      />
 
       {loading ? (
         <Center p={10}>
@@ -171,72 +168,29 @@ export default function AdminCategoriesPage() {
         <DataTable columns={columns} data={data} searchPlaceholder="Rechercher une catégorie..." />
       )}
 
-      {/* Add/Edit Modal */}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent as="form" onSubmit={handleSubmit}>
-          <ModalHeader>{editingCat ? 'Modifier la catégorie' : 'Nouvelle catégorie'}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl isRequired mb={4}>
-              <FormLabel>Nom de la catégorie</FormLabel>
-              <Input 
-                value={formData.name} 
-                onChange={e => setFormData({...formData, name: e.target.value})} 
-                placeholder="Ex: Technologies"
-              />
-            </FormControl>
-            <FormControl isRequired mb={4}>
-              <FormLabel>Slug (URL)</FormLabel>
-              <Input 
-                value={formData.slug} 
-                onChange={e => setFormData({...formData, slug: e.target.value})} 
-                placeholder="Ex: technologies"
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Nom de l'icône (React Icons)</FormLabel>
-              <Input 
-                value={formData.icon} 
-                onChange={e => setFormData({...formData, icon: e.target.value})} 
-                placeholder="Ex: FiMonitor"
-              />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose} mr={3} variant="ghost">Annuler</Button>
-            <Button colorScheme="green" type="submit" isLoading={isSubmitting}>
-              Enregistrer
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      {/* Add/Edit Modal with Dynamic Form */}
+      <CustomModal 
+        isOpen={isOpen} 
+        onClose={onClose} 
+        onSubmit={handleSubmit}
+        title={editingCat ? 'Modifier la catégorie' : 'Nouvelle catégorie'}
+        isSubmitting={isSubmitting}
+      >
+        <DynamicForm 
+          fields={formFields} 
+          formData={formData} 
+          onChange={handleFormChange} 
+        />
+      </CustomModal>
 
       {/* Delete Confirmation Alert */}
-      <AlertDialog
-        isOpen={isAlertOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onAlertClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Supprimer la catégorie
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              Êtes-vous sûr ? Vous ne pourrez pas annuler cette action.
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onAlertClose}>
-                Annuler
-              </Button>
-              <Button colorScheme="red" onClick={handleDelete} ml={3}>
-                Supprimer
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      <ConfirmDeleteAlert 
+        isOpen={isAlertOpen} 
+        onClose={onAlertClose} 
+        onConfirm={handleDelete} 
+        isDeleting={isDeleting}
+        message="Êtes-vous sûr de vouloir supprimer cette catégorie ? Cette action est irréversible."
+      />
     </Box>
   );
 }

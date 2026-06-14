@@ -1,6 +1,6 @@
-import { 
-  createRootRoute, 
-  createRoute, 
+import {
+  createRootRoute,
+  createRoute,
   createRouter,
 } from '@tanstack/react-router'
 import App from './App'

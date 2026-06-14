@@ -8,12 +8,12 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        Category::firstOrCreate(['slug' => 'actualité'], ['name' => 'Actualité']);
-        Category::firstOrCreate(['slug' => 'projet-simandou'], ['name' => 'Projet Simandou']);
-        Category::firstOrCreate(['slug' => 'intelligence-artificielle'], ['name' => 'Intelligence Artificielle']);
-        Category::firstOrCreate(['slug' => 'projet-resi-2p'], ['name' => 'Projet RESI-2P']);
-        Category::firstOrCreate(['slug' => 'méthodologie'], ['name' => 'Méthodologie']);
-        Category::firstOrCreate(['slug' => 'projet-procar'], ['name' => 'Projet ProCaR']);
-        Category::firstOrCreate(['slug' => 'astuces-and-outils'], ['name' => 'Astuces & Outils']);
+        Category::firstOrCreate(['name' => 'Actualité'], ['icon' => 'FiGlobe']);
+        Category::firstOrCreate(['name' => 'Projet Simandou'], ['icon' => 'FiActivity']);
+        Category::firstOrCreate(['name' => 'Intelligence Artificielle'], ['icon' => 'FiCpu']);
+        Category::firstOrCreate(['name' => 'Projet RESI-2P'], ['icon' => 'FiShield']);
+        Category::firstOrCreate(['name' => 'Méthodologie'], ['icon' => 'FiList']);
+        Category::firstOrCreate(['name' => 'Projet ProCaR'], ['icon' => 'FiTrendingUp']);
+        Category::firstOrCreate(['name' => 'Astuces & Outils'], ['icon' => 'FiSettings']);
     }
 }

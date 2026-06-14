@@ -36,7 +36,6 @@ class BlogPostController extends Controller
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:blog_posts',
             'excerpt' => 'required|string',
             'content' => 'required|string',
             'author_name' => 'required|string|max:255',
@@ -59,7 +58,6 @@ class BlogPostController extends Controller
         $validated = $request->validate([
             'category_id' => 'sometimes|required|exists:categories,id',
             'title' => 'sometimes|required|string|max:255',
-            'slug' => 'sometimes|required|string|max:255|unique:blog_posts,slug,' . $id,
             'excerpt' => 'sometimes|required|string',
             'content' => 'sometimes|required|string',
             'author_name' => 'sometimes|required|string|max:255',
