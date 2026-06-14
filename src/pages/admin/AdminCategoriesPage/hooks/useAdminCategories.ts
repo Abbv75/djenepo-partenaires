@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDisclosure, useToast } from '@chakra-ui/react';
-import api from '../../../../constant/AxiosInstance';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCategories, useDeleteCategory } from '../../../../api/useCategoriesQuery';
+import { categoryKeys } from '../../../../api/queryKeys';
 import type { Category } from '../../../../types';
 
 export function useAdminCategories() {
-  const [data, setData] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  const { data: data = [], isLoading: loading } = useCategories();
+  const deleteCategoryMutation = useDeleteCategory();
 
   // Modal state
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -14,32 +19,13 @@ export function useAdminCategories() {
   // Delete Alert state
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
   const [catToDelete, setCatToDelete] = useState<number | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  const toast = useToast();
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const res = await api.get('/categories');
-      setData(res.data.data);
-    } catch (error) {
-      toast({ title: 'Erreur de chargement', status: 'error' });
-    } finally {
-      setLoading(false);
-    }
+  const fetchData = () => {
+    queryClient.invalidateQueries({ queryKey: categoryKeys.list() });
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const handleOpenModal = (cat?: Category) => {
-    if (cat) {
-      setEditingCat(cat);
-    } else {
-      setEditingCat(null);
-    }
+    setEditingCat(cat ?? null);
     onOpen();
   };
 
@@ -50,18 +36,18 @@ export function useAdminCategories() {
 
   const handleDelete = async () => {
     if (!catToDelete) return;
-    setIsDeleting(true);
-    try {
-      await api.delete(`/categories/${catToDelete}`);
-      toast({ title: 'Catégorie supprimée', status: 'success' });
-      fetchData();
-    } catch (error) {
-      toast({ title: 'Erreur lors de la suppression', status: 'error' });
-    } finally {
-      setIsDeleting(false);
-      onAlertClose();
-      setCatToDelete(null);
-    }
+    deleteCategoryMutation.mutate(catToDelete, {
+      onSuccess: () => {
+        toast({ title: 'Catégorie supprimée', status: 'success' });
+        onAlertClose();
+        setCatToDelete(null);
+      },
+      onError: () => {
+        toast({ title: 'Erreur lors de la suppression', status: 'error' });
+        onAlertClose();
+        setCatToDelete(null);
+      },
+    });
   };
 
   return {
@@ -72,10 +58,10 @@ export function useAdminCategories() {
     editingCat,
     isAlertOpen,
     onAlertClose,
-    isDeleting,
+    isDeleting: deleteCategoryMutation.isPending,
     fetchData,
     handleOpenModal,
     confirmDelete,
-    handleDelete
+    handleDelete,
   };
 }

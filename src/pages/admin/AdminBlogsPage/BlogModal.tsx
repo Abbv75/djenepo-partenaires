@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
-import api from '../../../constant/AxiosInstance';
 import { CustomModal } from '../../../components/ui/CustomModal';
 import { DynamicForm } from '../../../components/ui/DynamicForm';
 import type { FormField } from '../../../components/ui/DynamicForm';
 import type { BlogPost, Category } from '../../../types';
 import { blogPostSchema } from '../../../schemas';
+import { useCreateBlog, useUpdateBlog } from '../../../api/useBlogsQuery';
 
 interface BlogModalProps {
   isOpen: boolean;
@@ -16,13 +16,15 @@ interface BlogModalProps {
 }
 
 export function BlogModal({ isOpen, onClose, editingBlog, categories, onSuccess }: BlogModalProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<Record<string, any>>({
     title: '', excerpt: '', content: '',
     author_name: '', read_time: '', image_url: '', date: '', category_id: ''
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const toast = useToast();
+  const createBlog = useCreateBlog();
+  const updateBlog = useUpdateBlog();
+  const isSubmitting = createBlog.isPending || updateBlog.isPending;
 
   useEffect(() => {
     setErrors({});
@@ -58,7 +60,6 @@ export function BlogModal({ isOpen, onClose, editingBlog, categories, onSuccess 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     const validation = blogPostSchema.safeParse(formData);
     if (!validation.success) {
@@ -69,28 +70,34 @@ export function BlogModal({ isOpen, onClose, editingBlog, categories, onSuccess 
         }
       });
       setErrors(fieldErrors);
-      setIsSubmitting(false);
       return;
     }
 
-    try {
-      if (editingBlog) {
-        await api.put(`/blogs/${editingBlog.id}`, formData);
-        toast({ title: 'Article modifié', status: 'success' });
-      } else {
-        await api.post('/blogs', formData);
-        toast({ title: 'Article ajouté', status: 'success' });
-      }
+    const onMutationSuccess = () => {
       onSuccess();
       onClose();
-    } catch (error: any) {
+    };
+    const onMutationError = (error: any) => {
       toast({
         title: 'Erreur',
         description: error.response?.data?.message || 'Une erreur est survenue',
-        status: 'error'
+        status: 'error',
       });
-    } finally {
-      setIsSubmitting(false);
+    };
+
+    if (editingBlog) {
+      updateBlog.mutate(
+        { id: editingBlog.id, data: formData },
+        {
+          onSuccess: () => { toast({ title: 'Article modifié', status: 'success' }); onMutationSuccess(); },
+          onError: onMutationError,
+        }
+      );
+    } else {
+      createBlog.mutate(formData, {
+        onSuccess: () => { toast({ title: 'Article ajouté', status: 'success' }); onMutationSuccess(); },
+        onError: onMutationError,
+      });
     }
   };
 

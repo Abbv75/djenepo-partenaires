@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import {
   Box,
   Container,
@@ -10,59 +10,72 @@ import {
   Image,
   Avatar,
   Icon,
-  useDisclosure
-} from '@chakra-ui/react'
-import { motion } from 'framer-motion'
-import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi'
-import { BLOG_POSTS } from '../constant/blog'
-import { IMAGES } from '../constant/image';
+  useDisclosure,
+  Spinner,
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
+import { useBlogs } from '../api/useBlogsQuery';
+import { resolveImageUrl } from '../utils/imageUrl';
+import type { BlogPost } from '../types';
+import { BlogDetailModal } from './HomePage/components/BlogDetailModal';
+
 dayjs.locale('fr');
-import type { BlogPost } from '../constant/blog'
-import { BlogDetailModal } from './HomePage/components/BlogDetailModal'
 
-
-const MotionBox = motion(Box)
+const MotionBox = motion(Box);
 
 export default function BlogPage() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
-  const [selectedCategory, setSelectedCategory] = useState('Toutes')
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('Toutes');
 
-  const categories = ['Toutes', ...Array.from(new Set(BLOG_POSTS.map(post => post.category)))]
+  const { data: posts = [], isLoading, isError } = useBlogs();
 
-  const filteredPosts = selectedCategory === 'Toutes' 
-    ? BLOG_POSTS 
-    : BLOG_POSTS.filter(post => post.category === selectedCategory)
+  const categories = ['Toutes', ...Array.from(new Set(posts.map((post) => post.category?.name ?? '')))].filter(Boolean);
+
+  const filteredPosts =
+    selectedCategory === 'Toutes'
+      ? posts
+      : posts.filter((post) => (post.category?.name ?? '') === selectedCategory);
 
   const handlePostClick = (post: BlogPost) => {
-    setSelectedPost(post)
-    onOpen()
+    setSelectedPost(post);
+    onOpen();
+  };
+
+  if (isLoading) {
+    return (
+      <Box pt="72px" minH="calc(100vh - 72px)" display="flex" justifyContent="center" alignItems="center">
+        <Spinner size="xl" color="brand.500" />
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Box pt="72px" p={8}>
+        <Alert status="error" borderRadius="md">
+          <AlertIcon />
+          Impossible de charger les articles. Veuillez réessayer plus tard.
+        </Alert>
+      </Box>
+    );
   }
 
   return (
     <Box pt="72px">
       {/* Header */}
-      <Box
-        bg="linear-gradient(135deg, #f8f9ff 0%, #eff3fb 100%)"
-        py={{ base: 16, md: 24 }}
-        borderBottom="1px solid"
-        borderColor="gray.100"
-      >
+      <Box bg="linear-gradient(135deg, #f8f9ff 0%, #eff3fb 100%)" py={{ base: 16, md: 24 }} borderBottom="1px solid" borderColor="gray.100">
         <Container maxW="1200px" px={{ base: 4, md: 6 }}>
           <VStack textAlign="center" spacing={5} maxW="700px" mx="auto">
             <Badge bg="brand.50" color="brand.600" px={4} py={1.5} borderRadius="full" fontSize="13px" fontWeight={600}>
               Actualités & Méthodologies
             </Badge>
-            <Text
-              as="h1"
-              fontFamily="heading"
-              fontWeight={800}
-              fontSize={{ base: '32px', md: '48px' }}
-              color="gray.900"
-              lineHeight={1.15}
-            >
+            <Text as="h1" fontFamily="heading" fontWeight={800} fontSize={{ base: '32px', md: '48px' }} color="gray.900" lineHeight={1.15}>
               Le Blog de l'Impact
             </Text>
             <Text fontSize="17px" color="gray.600" lineHeight={1.8}>
@@ -131,7 +144,7 @@ export default function BlogPage() {
                 >
                   <Box position="relative" h="240px" overflow="hidden">
                     <Image
-                      src={post.image}
+                      src={resolveImageUrl(post.image_url)}
                       alt={post.title}
                       w="100%"
                       h="100%"
@@ -141,8 +154,8 @@ export default function BlogPage() {
                     />
                     <Badge
                       position="absolute"
-                      top="4"
-                      left="4"
+                      top={4}
+                      left={4}
                       bg="brand.600"
                       color="white"
                       px={3}
@@ -151,7 +164,7 @@ export default function BlogPage() {
                       fontSize="11px"
                       fontWeight={600}
                     >
-                      {post.category}
+                      {post.category?.name}
                     </Badge>
                   </Box>
 
@@ -163,7 +176,7 @@ export default function BlogPage() {
                       </HStack>
                       <HStack spacing={1}>
                         <Icon as={FiClock} />
-                        <Text>{post.readTime}</Text>
+                        <Text>{post.read_time}</Text>
                       </HStack>
                     </HStack>
 
@@ -186,9 +199,9 @@ export default function BlogPage() {
 
                     <HStack justify="space-between" align="center" pt={4} borderTop="1px solid" borderColor="gray.50">
                       <HStack spacing={2.5}>
-                        <Avatar size="xs" name={post.author.name} src={post.author.avatar} />
+                        <Avatar size="xs" name={post.author_name} />
                         <Text fontSize="12px" fontWeight={600} color="gray.700">
-                          {post.author.name}
+                          {post.author_name}
                         </Text>
                       </HStack>
                       <HStack spacing={1} color="brand.600" fontWeight={700} fontSize="12px">
@@ -206,5 +219,5 @@ export default function BlogPage() {
 
       <BlogDetailModal isOpen={isOpen} onClose={onClose} post={selectedPost} />
     </Box>
-  )
+  );
 }

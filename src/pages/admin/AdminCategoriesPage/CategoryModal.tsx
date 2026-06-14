@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
-import api from '../../../constant/AxiosInstance';
 import { CustomModal } from '../../../components/ui/CustomModal';
 import { DynamicForm } from '../../../components/ui/DynamicForm';
 import type { FormField } from '../../../components/ui/DynamicForm';
 import type { Category } from '../../../types';
 import { categorySchema } from '../../../schemas';
+import { useCreateCategory, useUpdateCategory } from '../../../api/useCategoriesQuery';
 
 interface CategoryModalProps {
   isOpen: boolean;
@@ -15,10 +15,12 @@ interface CategoryModalProps {
 }
 
 export function CategoryModal({ isOpen, onClose, editingCat, onSuccess }: CategoryModalProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<Record<string, any>>({ name: '', icon: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const toast = useToast();
+  const createCategory = useCreateCategory();
+  const updateCategory = useUpdateCategory();
+  const isSubmitting = createCategory.isPending || updateCategory.isPending;
 
   useEffect(() => {
     setErrors({});
@@ -42,7 +44,6 @@ export function CategoryModal({ isOpen, onClose, editingCat, onSuccess }: Catego
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     const validation = categorySchema.safeParse(formData);
     if (!validation.success) {
@@ -53,28 +54,34 @@ export function CategoryModal({ isOpen, onClose, editingCat, onSuccess }: Catego
         }
       });
       setErrors(fieldErrors);
-      setIsSubmitting(false);
       return;
     }
 
-    try {
-      if (editingCat) {
-        await api.put(`/categories/${editingCat.id}`, formData);
-        toast({ title: 'Catégorie modifiée', status: 'success' });
-      } else {
-        await api.post('/categories', formData);
-        toast({ title: 'Catégorie ajoutée', status: 'success' });
-      }
+    const onMutationSuccess = () => {
       onSuccess();
       onClose();
-    } catch (error: any) {
+    };
+    const onMutationError = (error: any) => {
       toast({
         title: 'Erreur',
         description: error.response?.data?.message || 'Une erreur est survenue',
-        status: 'error'
+        status: 'error',
       });
-    } finally {
-      setIsSubmitting(false);
+    };
+
+    if (editingCat) {
+      updateCategory.mutate(
+        { id: editingCat.id, data: formData },
+        {
+          onSuccess: () => { toast({ title: 'Catégorie modifiée', status: 'success' }); onMutationSuccess(); },
+          onError: onMutationError,
+        }
+      );
+    } else {
+      createCategory.mutate(formData, {
+        onSuccess: () => { toast({ title: 'Catégorie ajoutée', status: 'success' }); onMutationSuccess(); },
+        onError: onMutationError,
+      });
     }
   };
 

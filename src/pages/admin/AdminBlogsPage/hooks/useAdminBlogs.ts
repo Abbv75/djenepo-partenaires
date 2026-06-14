@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDisclosure, useToast } from '@chakra-ui/react';
-import api from '../../../../constant/AxiosInstance';
-import type { BlogPost, Category } from '../../../../types';
+import { useQueryClient } from '@tanstack/react-query';
+import { useBlogs, useDeleteBlog } from '../../../../api/useBlogsQuery';
+import { useCategories } from '../../../../api/useCategoriesQuery';
+import { blogKeys } from '../../../../api/queryKeys';
+import type { BlogPost } from '../../../../types';
 
 export function useAdminBlogs() {
-  const [data, setData] = useState<BlogPost[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  const { data: data = [], isLoading: loading } = useBlogs();
+  const { data: categories = [] } = useCategories();
+  const deleteBlogMutation = useDeleteBlog();
 
   // Modal state
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -15,36 +21,13 @@ export function useAdminBlogs() {
   // Delete Alert state
   const { isOpen: isAlertOpen, onOpen: onAlertOpen, onClose: onAlertClose } = useDisclosure();
   const [blogToDelete, setBlogToDelete] = useState<number | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  const toast = useToast();
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const [blogsRes, catsRes] = await Promise.all([
-        api.get('/blogs'),
-        api.get('/categories')
-      ]);
-      setData(blogsRes.data.data);
-      setCategories(catsRes.data.data);
-    } catch (error) {
-      toast({ title: 'Erreur de chargement', status: 'error' });
-    } finally {
-      setLoading(false);
-    }
+  const fetchData = () => {
+    queryClient.invalidateQueries({ queryKey: blogKeys.list() });
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const handleOpenModal = (blog?: BlogPost) => {
-    if (blog) {
-      setEditingBlog(blog);
-    } else {
-      setEditingBlog(null);
-    }
+    setEditingBlog(blog ?? null);
     onOpen();
   };
 
@@ -55,18 +38,18 @@ export function useAdminBlogs() {
 
   const handleDelete = async () => {
     if (!blogToDelete) return;
-    setIsDeleting(true);
-    try {
-      await api.delete(`/blogs/${blogToDelete}`);
-      toast({ title: 'Article supprimé', status: 'success' });
-      fetchData();
-    } catch (error) {
-      toast({ title: 'Erreur lors de la suppression', status: 'error' });
-    } finally {
-      setIsDeleting(false);
-      onAlertClose();
-      setBlogToDelete(null);
-    }
+    deleteBlogMutation.mutate(blogToDelete, {
+      onSuccess: () => {
+        toast({ title: 'Article supprimé', status: 'success' });
+        onAlertClose();
+        setBlogToDelete(null);
+      },
+      onError: () => {
+        toast({ title: 'Erreur lors de la suppression', status: 'error' });
+        onAlertClose();
+        setBlogToDelete(null);
+      },
+    });
   };
 
   return {
@@ -78,10 +61,10 @@ export function useAdminBlogs() {
     editingBlog,
     isAlertOpen,
     onAlertClose,
-    isDeleting,
+    isDeleting: deleteBlogMutation.isPending,
     fetchData,
     handleOpenModal,
     confirmDelete,
-    handleDelete
+    handleDelete,
   };
 }

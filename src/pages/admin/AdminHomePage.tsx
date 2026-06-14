@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { 
   Box, 
   SimpleGrid, 
@@ -12,37 +11,23 @@ import {
 } from '@chakra-ui/react';
 import { FiGrid, FiFileText, FiTrendingUp } from 'react-icons/fi';
 import { motion } from 'framer-motion';
-import api from '../../constant/AxiosInstance';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useBlogs } from '../../api/useBlogsQuery';
+import { useCategories } from '../../api/useCategoriesQuery';
 
 const MotionBox = motion(Box);
 const MotionCard = motion(Card);
 
 export default function AdminHomePage() {
-  const [stats, setStats] = useState({ categories: 0, blogs: 0 });
-  const [loading, setLoading] = useState(true);
   const { user } = useAuthStore();
+  const { data: blogs = [], isLoading: blogsLoading } = useBlogs();
+  const { data: categories = [], isLoading: categoriesLoading } = useCategories();
+  const loading = blogsLoading || categoriesLoading;
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        setLoading(true);
-        const [catRes, blogRes] = await Promise.all([
-          api.get('/categories'),
-          api.get('/blogs')
-        ]);
-        setStats({
-          categories: catRes.data.data.length,
-          blogs: blogRes.data.data.length
-        });
-      } catch (error) {
-        console.error('Failed to fetch stats', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchStats();
-  }, []);
+  const stats = {
+    categories: categories.length,
+    blogs: blogs.length,
+  };
 
   const statCards = [
     {

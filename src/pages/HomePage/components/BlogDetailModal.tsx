@@ -16,7 +16,8 @@ import {
   Box
 } from '@chakra-ui/react'
 
-import type { BlogPost } from '../../../constant/blog'
+import type { BlogPost } from '../../../types'
+import { resolveImageUrl } from '../../../utils/imageUrl'
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 dayjs.locale('fr');
@@ -37,7 +38,7 @@ export const BlogDetailModal = ({ isOpen, onClose, post }: BlogDetailModalProps)
       <ModalContent borderRadius="24px" overflow="hidden">
         <Box position="relative">
           <Image
-            src={post.image}
+            src={resolveImageUrl(post.image_url)}
             alt={post.title}
             w="full"
             h="280px"
@@ -55,7 +56,7 @@ export const BlogDetailModal = ({ isOpen, onClose, post }: BlogDetailModalProps)
             fontSize="12px"
             fontWeight={600}
           >
-            {post.category}
+            {post.category?.name}
           </Badge>
         </Box>
         <ModalCloseButton color="white" bg="blackAlpha.600" borderRadius="full" _hover={{ bg: 'blackAlpha.800' }} />
@@ -65,17 +66,14 @@ export const BlogDetailModal = ({ isOpen, onClose, post }: BlogDetailModalProps)
             {post.title}
           </Text>
           <HStack mt={4} spacing={3} align="center">
-            <Avatar size="sm" name={post.author.name} src={post.author.avatar} />
+            <Avatar size="sm" name={post.author_name} />
             <VStack align="flex-start" spacing={0}>
               <Text fontSize="13px" fontWeight={700} color="gray.800">
-                {post.author.name}
-              </Text>
-              <Text fontSize="11px" color="gray.500">
-                {post.author.role}
+                {post.author_name}
               </Text>
             </VStack>
             <Text fontSize="12px" color="gray.400" ml="auto">
-              {dayjs(post.date).format('D MMMM YYYY')} • {post.readTime} de lecture
+              {dayjs(post.date).format('D MMMM YYYY')} • {post.read_time} de lecture
             </Text>
           </HStack>
         </ModalHeader>
