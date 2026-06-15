@@ -9,12 +9,13 @@ import {
   VStack,
   Skeleton
 } from '@chakra-ui/react';
-import { FiGrid, FiFileText, FiTrendingUp, FiBriefcase } from 'react-icons/fi';
+import { FiGrid, FiFileText, FiTrendingUp, FiBriefcase, FiLayers } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useBlogs } from '../../api/useBlogsQuery';
 import { useCategories } from '../../api/useCategoriesQuery';
 import { useServices } from '../../api/useServicesQuery';
+import { useServiceCategories } from '../../api/useServiceCategoriesQuery';
 
 const MotionBox = motion(Box);
 const MotionCard = motion(Card);
@@ -24,12 +25,14 @@ export default function AdminHomePage() {
   const { data: blogs = [], isLoading: blogsLoading } = useBlogs();
   const { data: categories = [], isLoading: categoriesLoading } = useCategories();
   const { data: services = [], isLoading: servicesLoading } = useServices();
-  const loading = blogsLoading || categoriesLoading || servicesLoading;
+  const { data: serviceCategories = [], isLoading: serviceCategoriesLoading } = useServiceCategories();
+  const loading = blogsLoading || categoriesLoading || servicesLoading || serviceCategoriesLoading;
 
   const stats = {
     categories: categories.length,
     blogs: blogs.length,
     services: services.length,
+    serviceCategories: serviceCategories.length,
   };
 
   const statCards = [
@@ -56,6 +59,14 @@ export default function AdminHomePage() {
       color: 'teal',
       gradient: 'linear(to-br, teal.400, teal.600)',
       helpText: 'Services proposés'
+    },
+    {
+      title: 'Catégories de Services',
+      value: stats.serviceCategories,
+      icon: FiLayers,
+      color: 'purple',
+      gradient: 'linear(to-br, purple.400, purple.600)',
+      helpText: 'Catégories de services'
     }
   ];
 

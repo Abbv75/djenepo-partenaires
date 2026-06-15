@@ -19,10 +19,18 @@ export interface BlogPost {
 
 export interface Service {
   id: number;
+  service_category_id: number;
   slug: string;
   title: string;
   tagline: string;
   desc: string;
   features: string[];
+  icon: string;
+  service_category?: ServiceCategory;
+}
+
+export interface ServiceCategory {
+  id: number;
+  name: string;
   icon: string;
 }

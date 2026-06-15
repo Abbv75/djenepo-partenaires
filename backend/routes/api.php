@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceCategoryController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -28,6 +29,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/services', [ServiceController::class, 'store']);
     Route::put('/services/{id}', [ServiceController::class, 'update']);
     Route::delete('/services/{id}', [ServiceController::class, 'destroy']);
+
+    // Admin CRUD Service Categories
+    Route::post('/service-categories', [ServiceCategoryController::class, 'store']);
+    Route::put('/service-categories/{id}', [ServiceCategoryController::class, 'update']);
+    Route::delete('/service-categories/{id}', [ServiceCategoryController::class, 'destroy']);
 });
 
 
@@ -39,3 +45,4 @@ Route::get('/blogs', [BlogPostController::class, 'index']);
 Route::get('/blogs/{id}', [BlogPostController::class, 'show']);
 
 Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/service-categories', [ServiceCategoryController::class, 'index']);

@@ -15,6 +15,7 @@ class ServiceSeeder extends Seeder
         $services = [
             [
                 'slug' => 'planification',
+                'service_category_id' => 1,
                 'title' => 'Planification Stratégique',
                 'tagline' => 'Des projets bien conçus dès le départ',
                 'desc' => "Nous aidons vos équipes à construire des cadres d'intervention cohérents, à définir des théories du changement réalistes et à aligner vos activités sur vos objectifs de développement.",
@@ -29,6 +30,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'slug' => 'suivi',
+                'service_category_id' => 2,
                 'title' => 'Suivi-Évaluation',
                 'tagline' => 'Mesurer pour mieux agir',
                 'desc' => "DJENEPO PARTNERS conçoit et met en place des systèmes de suivi-évaluation robustes qui permettent à vos équipes de mesurer l'impact réel de leurs interventions et de prendre des décisions fondées sur des données.",
@@ -43,6 +45,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'slug' => 'formation',
+                'service_category_id' => 3,
                 'title' => 'Formation & Renforcement des Capacités',
                 'tagline' => 'Investir dans les hommes',
                 'desc' => 'Nous développons et animons des programmes de formation sur mesure qui renforcent durablement les compétences des équipes projet, des coordinateurs terrain et des responsables de suivi-évaluation.',
@@ -57,6 +60,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'slug' => 'appui',
+                'service_category_id' => 1,
                 'title' => 'Appui Technique',
                 'tagline' => 'Un accompagnement opérationnel sur le terrain',
                 'desc' => 'Nos experts interviennent directement auprès de vos équipes pour apporter un soutien technique ciblé dans la mise en œuvre de vos projets et programmes de développement.',
@@ -71,6 +75,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'slug' => 'recherche',
+                'service_category_id' => 2,
                 'title' => 'Recherche & Analyses',
                 'tagline' => 'Des données pour guider vos décisions',
                 'desc' => 'Nous réalisons des études de base, des enquêtes terrain et des analyses sectorielles qui alimentent la prise de décision éclairée et améliorent la conception des interventions.',
@@ -85,6 +90,7 @@ class ServiceSeeder extends Seeder
             ],
             [
                 'slug' => 'coaching',
+                'service_category_id' => 1,
                 'title' => 'Coaching Organisationnel',
                 'tagline' => 'Renforcer votre organisation de l\'intérieur',
                 'desc' => 'Nous accompagnons les organisations dans leur développement institutionnel, la structuration de leurs processus internes et l\'amélioration de leur gouvernance pour une efficacité accrue.',

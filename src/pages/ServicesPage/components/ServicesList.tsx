@@ -1,4 +1,4 @@
-import { Box, Container, VStack, Grid, GridItem, HStack, Icon, Text, List, ListItem, ListIcon, Spinner, Alert, AlertIcon } from '@chakra-ui/react'
+import { Box, Container, VStack, Grid, GridItem, HStack, Icon, Text, List, ListItem, ListIcon, Spinner, Alert, AlertIcon, Badge } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import {
   FiCheck,
@@ -96,9 +96,16 @@ export const ServicesList = () => {
                         <Icon as={iconComponent} color={style.color} fontSize="24px" />
                       </Box>
                       <Box>
-                        <Text fontSize="12px" color="gray.500" fontWeight={600} textTransform="uppercase" letterSpacing="1px">
-                          {service.tagline}
-                        </Text>
+                        <HStack spacing={2} mb={1} wrap="wrap">
+                          <Text fontSize="12px" color="gray.500" fontWeight={600} textTransform="uppercase" letterSpacing="1px">
+                            {service.tagline}
+                          </Text>
+                          {service.service_category && (
+                            <Badge colorScheme="purple" fontSize="10px" borderRadius="full" px={2} py={0.5}>
+                              {service.service_category.name}
+                            </Badge>
+                          )}
+                        </HStack>
                         <Text fontFamily="heading" fontWeight={800} fontSize={{ base: '20px', md: '26px' }} color="gray.900">
                           {service.title}
                         </Text>

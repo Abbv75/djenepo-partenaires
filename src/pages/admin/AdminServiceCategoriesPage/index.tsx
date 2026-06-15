@@ -8,11 +8,11 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { DataTable } from '../../../components/DataTable';
 import { PageHeader } from '../../../components/ui/PageHeader';
 import { ConfirmDeleteAlert } from '../../../components/ui/ConfirmDeleteAlert';
-import { CategoryModal } from './CategoryModal';
-import type { Category } from '../../../types';
-import { useAdminCategories } from './hooks/useAdminCategories';
+import { ServiceCategoryModal } from './ServiceCategoryModal';
+import type { ServiceCategory } from '../../../types';
+import { useAdminServiceCategories } from './hooks/useAdminServiceCategories';
 
-export default function AdminCategoriesPage() {
+export default function AdminServiceCategoriesPage() {
   const {
     data,
     loading,
@@ -26,16 +26,11 @@ export default function AdminCategoriesPage() {
     handleOpenModal,
     confirmDelete,
     handleDelete
-  } = useAdminCategories();
+  } = useAdminServiceCategories();
 
-  // TanStack Table configuration
-  const columnHelper = createColumnHelper<Category>();
+  const columnHelper = createColumnHelper<ServiceCategory>();
 
   const columns = useMemo(() => [
-    columnHelper.accessor('id', {
-      header: 'ID',
-      cell: info => info.getValue(),
-    }),
     columnHelper.accessor('name', {
       header: 'Nom',
       cell: info => <Text fontWeight="bold">{info.getValue()}</Text>,
@@ -97,7 +92,7 @@ export default function AdminCategoriesPage() {
   return (
     <Box>
       <PageHeader
-        title="Gestion des Catégories"
+        title="Gestion des Catégories de Services"
         actionLabel="Nouvelle catégorie"
         onAction={() => handleOpenModal()}
       />
@@ -111,7 +106,7 @@ export default function AdminCategoriesPage() {
       )}
 
       {/* Add/Edit Modal */}
-      <CategoryModal
+      <ServiceCategoryModal
         isOpen={isOpen}
         onClose={onClose}
         editingCat={editingCat}
@@ -129,4 +124,3 @@ export default function AdminCategoriesPage() {
     </Box>
   );
 }
-

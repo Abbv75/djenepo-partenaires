@@ -6,6 +6,7 @@ import type { FormField } from '../../../components/ui/DynamicForm';
 import type { Service } from '../../../types';
 import { serviceSchema } from '../../../schemas';
 import { useCreateService, useUpdateService } from '../../../api/useServicesQuery';
+import { useServiceCategories } from '../../../api/useServiceCategoriesQuery';
 
 interface ServiceModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface ServiceModalProps {
 
 export function ServiceModal({ isOpen, onClose, editingService, onSuccess }: ServiceModalProps) {
   const [formData, setFormData] = useState<Record<string, any>>({
+    service_category_id: '',
     title: '',
     slug: '',
     tagline: '',
@@ -27,12 +29,14 @@ export function ServiceModal({ isOpen, onClose, editingService, onSuccess }: Ser
   const toast = useToast();
   const createService = useCreateService();
   const updateService = useUpdateService();
+  const { data: serviceCategories = [] } = useServiceCategories();
   const isSubmitting = createService.isPending || updateService.isPending;
 
   useEffect(() => {
     setErrors({});
     if (editingService) {
       setFormData({
+        service_category_id: editingService.service_category_id ? String(editingService.service_category_id) : '',
         title: editingService.title,
         slug: editingService.slug,
         tagline: editingService.tagline,
@@ -42,6 +46,7 @@ export function ServiceModal({ isOpen, onClose, editingService, onSuccess }: Ser
       });
     } else {
       setFormData({
+        service_category_id: serviceCategories[0] ? String(serviceCategories[0].id) : '',
         title: '',
         slug: '',
         tagline: '',
@@ -50,12 +55,11 @@ export function ServiceModal({ isOpen, onClose, editingService, onSuccess }: Ser
         featuresString: '',
       });
     }
-  }, [editingService, isOpen]);
+  }, [editingService, isOpen, serviceCategories]);
 
   const handleFormChange = (name: string, value: any) => {
     setFormData(prev => {
       const updated = { ...prev, [name]: value };
-      // Auto-generate slug from title if slug was empty or matches previous auto-slug
       if (name === 'title' && !editingService) {
         const generatedSlug = value
           .toLowerCase()
@@ -80,12 +84,12 @@ export function ServiceModal({ isOpen, onClose, editingService, onSuccess }: Ser
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Map featuresString to features array for validation and submission
     const features = formData.featuresString
       ? formData.featuresString.split('\n').map((f: string) => f.trim()).filter(Boolean)
       : [];
 
     const dataToValidate = {
+      service_category_id: formData.service_category_id,
       title: formData.title,
       slug: formData.slug,
       tagline: formData.tagline,
@@ -110,6 +114,7 @@ export function ServiceModal({ isOpen, onClose, editingService, onSuccess }: Ser
     }
 
     const payload = {
+      service_category_id: Number(formData.service_category_id),
       title: formData.title,
       slug: formData.slug,
       tagline: formData.tagline,
@@ -147,6 +152,14 @@ export function ServiceModal({ isOpen, onClose, editingService, onSuccess }: Ser
   };
 
   const formFields: FormField[] = [
+    {
+      name: 'service_category_id',
+      label: 'Catégorie de service',
+      type: 'select',
+      isRequired: true,
+      options: serviceCategories.map(cat => ({ value: String(cat.id), label: cat.name })),
+      placeholder: 'Sélectionnez une catégorie...'
+    },
     { name: 'title', label: 'Titre du service', type: 'text', placeholder: 'Ex: Planification Stratégique' },
     { name: 'slug', label: 'Slug / Ancre HTML', type: 'text', placeholder: 'Ex: planification' },
     { name: 'tagline', label: 'Accroche / Tagline', type: 'text', placeholder: 'Ex: Des projets bien conçus dès le départ' },

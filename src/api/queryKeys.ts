@@ -16,3 +16,9 @@ export const serviceKeys = {
   all: ['services'] as const,
   list: () => [...serviceKeys.all, 'list'] as const,
 };
+
+export const serviceCategoryKeys = {
+  all: ['service-categories'] as const,
+  list: () => [...serviceCategoryKeys.all, 'list'] as const,
+  detail: (id: number) => [...serviceCategoryKeys.all, 'detail', id] as const,
+};

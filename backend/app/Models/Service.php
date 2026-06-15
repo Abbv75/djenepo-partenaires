@@ -10,6 +10,7 @@ class Service extends Model
     use HasFactory;
 
     protected $fillable = [
+        'service_category_id',
         'slug',
         'title',
         'tagline',
@@ -21,4 +22,9 @@ class Service extends Model
     protected $casts = [
         'features' => 'array',
     ];
+
+    public function serviceCategory()
+    {
+        return $this->belongsTo(ServiceCategory::class);
+    }
 }

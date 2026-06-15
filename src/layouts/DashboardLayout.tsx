@@ -30,7 +30,8 @@ import {
   FiLogOut,
   FiMenu,
   FiChevronDown,
-  FiBriefcase
+  FiBriefcase,
+  FiLayers
 } from 'react-icons/fi';
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -108,12 +109,63 @@ export default function DashboardLayout() {
     navigate({ to: '/login' });
   };
 
-  const navItems = [
-    { name: 'Tableau de bord', icon: FiHome, path: '/admin' },
-    { name: 'Catégories', icon: FiGrid, path: '/admin/categories' },
-    { name: 'Articles de blog', icon: FiFileText, path: '/admin/blogs' },
-    { name: 'Services', icon: FiBriefcase, path: '/admin/services' },
+  const navSections = [
+    {
+      title: null,
+      items: [
+        { name: 'Tableau de bord', icon: FiHome, path: '/admin' }
+      ]
+    },
+    {
+      title: 'Gestion du Blog',
+      items: [
+        { name: 'Catégories', icon: FiGrid, path: '/admin/categories' },
+        { name: 'Articles de blog', icon: FiFileText, path: '/admin/blogs' },
+      ]
+    },
+    {
+      title: 'Gestion des Services',
+      items: [
+        { name: 'Catégories de services', icon: FiLayers, path: '/admin/service-categories' },
+        { name: 'Services', icon: FiBriefcase, path: '/admin/services' },
+      ]
+    }
   ];
+
+  const SidebarLinks = ({ onClick }: { onClick?: () => void }) => (
+    <VStack spacing={6} align="stretch" mt={6}>
+      {navSections.map((section, idx) => (
+        <Box key={idx}>
+          {section.title && (
+            <Text 
+              fontSize="11px" 
+              fontWeight="800" 
+              color="gray.400" 
+              textTransform="uppercase" 
+              px="6" 
+              mb="2" 
+              letterSpacing="1px"
+            >
+              {section.title}
+            </Text>
+          )}
+          <VStack spacing={1} align="stretch">
+            {section.items.map((item) => (
+              <NavItem 
+                key={item.name} 
+                icon={item.icon} 
+                to={item.path}
+                isActive={location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path))}
+                onClick={onClick}
+              >
+                {item.name}
+              </NavItem>
+            ))}
+          </VStack>
+        </Box>
+      ))}
+    </VStack>
+  );
 
   const SidebarContent = ({ ...rest }) => (
     <Box
@@ -132,18 +184,7 @@ export default function DashboardLayout() {
           Djenepo<Text as="span" color="brand.500">Admin</Text>
         </Text>
       </Flex>
-      <VStack spacing={2} align="stretch" mt={6}>
-        {navItems.map((item) => (
-          <NavItem 
-            key={item.name} 
-            icon={item.icon} 
-            to={item.path}
-            isActive={location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path))}
-          >
-            {item.name}
-          </NavItem>
-        ))}
-      </VStack>
+      <SidebarLinks />
       
       <Box position="absolute" bottom="8" left="0" w="full" px="4">
         <Flex
@@ -187,19 +228,7 @@ export default function DashboardLayout() {
             </Text>
           </DrawerHeader>
           <DrawerBody p={0} pt={6}>
-            <VStack spacing={2} align="stretch">
-              {navItems.map((item) => (
-                <NavItem 
-                  key={item.name} 
-                  icon={item.icon} 
-                  to={item.path}
-                  isActive={location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path))}
-                  onClick={onClose}
-                >
-                  {item.name}
-                </NavItem>
-              ))}
-            </VStack>
+            <SidebarLinks onClick={onClose} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

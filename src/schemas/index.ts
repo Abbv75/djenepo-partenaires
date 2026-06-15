@@ -17,10 +17,16 @@ export const blogPostSchema = z.object({
 });
 
 export const serviceSchema = z.object({
+  service_category_id: z.string().min(1, "La catégorie de service est requise"),
   title: z.string().min(1, "Le titre est requis"),
   slug: z.string().min(1, "Le slug est requis"),
   tagline: z.string().min(1, "L'accroche est requise"),
   desc: z.string().min(1, "La description est requise"),
   icon: z.string().min(1, "L'icône est requise"),
   features: z.array(z.string()).min(1, "Au moins une caractéristique est requise"),
+});
+
+export const serviceCategorySchema = z.object({
+  name: z.string().min(1, "Le nom est requis"),
+  icon: z.string().min(1, "L'icône est requise"),
 });

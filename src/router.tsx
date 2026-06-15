@@ -15,6 +15,7 @@ import AdminHomePage from './pages/admin/AdminHomePage'
 import AdminCategoriesPage from './pages/admin/AdminCategoriesPage'
 import AdminBlogsPage from './pages/admin/AdminBlogsPage'
 import AdminServicesPage from './pages/admin/AdminServicesPage'
+import AdminServiceCategoriesPage from './pages/admin/AdminServiceCategoriesPage'
 
 // Root Route which acts as our layout container
 export const rootRoute = createRootRoute({
@@ -88,6 +89,12 @@ export const adminServicesRoute = createRoute({
   component: AdminServicesPage,
 })
 
+export const adminServiceCategoriesRoute = createRoute({
+  getParentRoute: () => adminRootRoute,
+  path: '/service-categories',
+  component: AdminServiceCategoriesPage,
+})
+
 // Register all routes into a route tree
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -101,6 +108,7 @@ const routeTree = rootRoute.addChildren([
     adminCategoriesRoute,
     adminBlogsRoute,
     adminServicesRoute,
+    adminServiceCategoriesRoute,
   ]),
 ])
 
