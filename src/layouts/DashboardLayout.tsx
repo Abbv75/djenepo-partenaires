@@ -29,7 +29,8 @@ import {
   FiGrid,
   FiLogOut,
   FiMenu,
-  FiChevronDown
+  FiChevronDown,
+  FiBriefcase
 } from 'react-icons/fi';
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -111,6 +112,7 @@ export default function DashboardLayout() {
     { name: 'Tableau de bord', icon: FiHome, path: '/admin' },
     { name: 'Catégories', icon: FiGrid, path: '/admin/categories' },
     { name: 'Articles de blog', icon: FiFileText, path: '/admin/blogs' },
+    { name: 'Services', icon: FiBriefcase, path: '/admin/services' },
   ];
 
   const SidebarContent = ({ ...rest }) => (

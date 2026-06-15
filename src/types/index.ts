@@ -16,3 +16,13 @@ export interface BlogPost {
   category_id: number;
   category?: Category;
 }
+
+export interface Service {
+  id: number;
+  slug: string;
+  title: string;
+  tagline: string;
+  desc: string;
+  features: string[];
+  icon: string;
+}

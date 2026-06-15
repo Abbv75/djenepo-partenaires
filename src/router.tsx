@@ -14,6 +14,7 @@ import DashboardLayout from './layouts/DashboardLayout'
 import AdminHomePage from './pages/admin/AdminHomePage'
 import AdminCategoriesPage from './pages/admin/AdminCategoriesPage'
 import AdminBlogsPage from './pages/admin/AdminBlogsPage'
+import AdminServicesPage from './pages/admin/AdminServicesPage'
 
 // Root Route which acts as our layout container
 export const rootRoute = createRootRoute({
@@ -81,6 +82,12 @@ export const adminBlogsRoute = createRoute({
   component: AdminBlogsPage,
 })
 
+export const adminServicesRoute = createRoute({
+  getParentRoute: () => adminRootRoute,
+  path: '/services',
+  component: AdminServicesPage,
+})
+
 // Register all routes into a route tree
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -93,6 +100,7 @@ const routeTree = rootRoute.addChildren([
     adminIndexRoute,
     adminCategoriesRoute,
     adminBlogsRoute,
+    adminServicesRoute,
   ]),
 ])
 

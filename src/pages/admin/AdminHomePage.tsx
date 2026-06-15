@@ -9,11 +9,12 @@ import {
   VStack,
   Skeleton
 } from '@chakra-ui/react';
-import { FiGrid, FiFileText, FiTrendingUp } from 'react-icons/fi';
+import { FiGrid, FiFileText, FiTrendingUp, FiBriefcase } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useBlogs } from '../../api/useBlogsQuery';
 import { useCategories } from '../../api/useCategoriesQuery';
+import { useServices } from '../../api/useServicesQuery';
 
 const MotionBox = motion(Box);
 const MotionCard = motion(Card);
@@ -22,11 +23,13 @@ export default function AdminHomePage() {
   const { user } = useAuthStore();
   const { data: blogs = [], isLoading: blogsLoading } = useBlogs();
   const { data: categories = [], isLoading: categoriesLoading } = useCategories();
-  const loading = blogsLoading || categoriesLoading;
+  const { data: services = [], isLoading: servicesLoading } = useServices();
+  const loading = blogsLoading || categoriesLoading || servicesLoading;
 
   const stats = {
     categories: categories.length,
     blogs: blogs.length,
+    services: services.length,
   };
 
   const statCards = [
@@ -45,6 +48,14 @@ export default function AdminHomePage() {
       color: 'gold',
       gradient: 'linear(to-br, gold.400, gold.600)',
       helpText: 'Articles publiés'
+    },
+    {
+      title: 'Services',
+      value: stats.services,
+      icon: FiBriefcase,
+      color: 'teal',
+      gradient: 'linear(to-br, teal.400, teal.600)',
+      helpText: 'Services proposés'
     }
   ];
 
