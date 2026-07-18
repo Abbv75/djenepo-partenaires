@@ -2,11 +2,11 @@
 
 // Configuration de la base de données
 // À adapter avec les vraies valeurs du `.env` de Laravel (ou utiliser dotenv si on l'installe)
-define('DB_HOST', '127.0.0.1');
+define('DB_HOST', 'localhost'); // localhost est le plus commun pour les db distantes sur même hébergement, ou 127.0.0.1
 define('DB_PORT', '3306');
-define('DB_NAME', 'djenepo_db'); // Remplacer par le vrai nom de la BDD
-define('DB_USER', 'root'); // Remplacer par le vrai user
-define('DB_PASS', ''); // Remplacer par le vrai mot de passe
+define('DB_NAME', 'c0dje3205'); 
+define('DB_USER', 'c0dje3205'); 
+define('DB_PASS', '!!U!Mydbla-CO'); 
 define('JWT_SECRET', 'super_secret_key_change_me'); // À changer en production
 
 class Database {
