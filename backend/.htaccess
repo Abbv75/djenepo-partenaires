@@ -1,3 +1,10 @@
+# Force PHP 8.3 (Standard cPanel / LiteSpeed / o2switch / LWS)
+AddHandler application/x-httpd-ea-php83___lsphp .php
+AddHandler application/x-httpd-ea-php83 .php
+
+# Force PHP 8.3 (OVH / LWS alternative)
+SetEnv PHP_VER 8.3
+
 <IfModule mod_rewrite.c>
     # Désactiver le moteur de réécriture hérité du dossier parent (React)
     # Ainsi, le .htaccess de React n'interfèrera pas avec nos fichiers PHP
