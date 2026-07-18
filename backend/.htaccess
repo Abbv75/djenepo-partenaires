@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    # Désactiver le moteur de réécriture hérité du dossier parent (React)
+    # Ainsi, le .htaccess de React n'interfèrera pas avec nos fichiers PHP
+    RewriteEngine Off
+</IfModule>
