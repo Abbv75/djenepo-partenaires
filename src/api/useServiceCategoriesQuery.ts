@@ -1,24 +1,25 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import api from '../constant/AxiosInstance';
 import { serviceCategoryKeys } from '../constant/queryKeys';
-import {
-  fetchServiceCategories,
-  fetchServiceCategory,
-  createServiceCategory,
-  updateServiceCategory,
-  deleteServiceCategory
-} from './serviceCategories';
+import type { ServiceCategory } from '../types';
 
 export function useServiceCategories() {
   return useQuery({
     queryKey: serviceCategoryKeys.list(),
-    queryFn: fetchServiceCategories,
+    queryFn: async (): Promise<ServiceCategory[]> => {
+      const res = await api.get('/service-categories');
+      return res.data.data;
+    },
   });
 }
 
 export function useServiceCategory(id: number) {
   return useQuery({
     queryKey: serviceCategoryKeys.detail(id),
-    queryFn: () => fetchServiceCategory(id),
+    queryFn: async (): Promise<ServiceCategory> => {
+      const res = await api.get(`/service-categories/${id}`);
+      return res.data.data;
+    },
     enabled: !!id,
   });
 }
@@ -26,7 +27,10 @@ export function useServiceCategory(id: number) {
 export function useCreateServiceCategory() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: createServiceCategory,
+    mutationFn: async (data: Partial<ServiceCategory>): Promise<ServiceCategory> => {
+      const res = await api.post('/service-categories', data);
+      return res.data.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: serviceCategoryKeys.list() });
     },
@@ -36,8 +40,10 @@ export function useCreateServiceCategory() {
 export function useUpdateServiceCategory() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Parameters<typeof updateServiceCategory>[1] }) =>
-      updateServiceCategory(id, data),
+    mutationFn: async ({ id, data }: { id: number; data: Partial<ServiceCategory> }): Promise<ServiceCategory> => {
+      const res = await api.put(`/service-categories/${id}`, data);
+      return res.data.data;
+    },
     onSuccess: (_data, { id }) => {
       queryClient.invalidateQueries({ queryKey: serviceCategoryKeys.list() });
       queryClient.invalidateQueries({ queryKey: serviceCategoryKeys.detail(id) });
@@ -48,7 +54,9 @@ export function useUpdateServiceCategory() {
 export function useDeleteServiceCategory() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: deleteServiceCategory,
+    mutationFn: async (id: number): Promise<void> => {
+      await api.delete(`/service-categories/${id}`);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: serviceCategoryKeys.list() });
     },
