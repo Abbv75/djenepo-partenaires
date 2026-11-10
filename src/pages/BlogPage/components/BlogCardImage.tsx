@@ -26,7 +26,7 @@ export const BlogCardImage = ({
         isHero
           ? { base: 'full', md: '50%' }
           : isWide
-          ? { base: 'full', sm: '42%' }
+          ? { base: 'full', md: '44%' }
           : 'full'
       }
       h={
@@ -35,10 +35,12 @@ export const BlogCardImage = ({
           : isTall
           ? '250px'
           : isWide
-          ? { base: '200px', sm: 'auto' }
+          ? { base: '220px', md: 'auto' }
           : '200px'
       }
-      minH={isHero ? { md: '340px' } : isWide ? { sm: '230px' } : undefined}
+      minH={
+        isHero ? { md: '320px' } : isWide ? { md: '230px' } : undefined
+      }
       overflow="hidden"
       bg="gray.100"
       flexShrink={0}

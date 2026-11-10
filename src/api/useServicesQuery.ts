@@ -7,7 +7,7 @@ export function useServices() {
   return useQuery({
     queryKey: serviceKeys.list(),
     queryFn: async (): Promise<Service[]> => {
-      const res = await api.get('/services');
+      const res = await api.get('/services.php');
       return res.data.data;
     },
   });
@@ -17,7 +17,7 @@ export function useCreateService() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: Partial<Service>): Promise<Service> => {
-      const res = await api.post('/services', data);
+      const res = await api.post('/services.php', data);
       return res.data.data;
     },
     onSuccess: () => {
@@ -30,7 +30,7 @@ export function useUpdateService() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, data }: { id: number; data: Partial<Service> }): Promise<Service> => {
-      const res = await api.put(`/services/${id}`, data);
+      const res = await api.put(`/services.php?id=${id}`, data);
       return res.data.data;
     },
     onSuccess: () => {
@@ -43,7 +43,7 @@ export function useDeleteService() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number): Promise<void> => {
-      await api.delete(`/services/${id}`);
+      await api.delete(`/services.php?id=${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: serviceKeys.list() });

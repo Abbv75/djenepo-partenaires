@@ -17,29 +17,11 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5173,
       proxy: {
-        // Endpoints d'API backend
-        '^/(blogs|categories|services|service-categories|logout|user)': {
+        // Relayer tous les appels aux scripts PHP directs vers le backend
+        '^/.*\\.php': {
           target: backendTarget,
           changeOrigin: true,
           secure: false,
-        },
-        // Authentification login (proxifié pour l'API, bypassé pour la page SPA en HTML)
-        '/login': {
-          target: backendTarget,
-          changeOrigin: true,
-          secure: false,
-          bypass: (req) => {
-            if (req.headers.accept?.includes('text/html')) {
-              return '/index.html'
-            }
-          },
-        },
-        // Fallback si un préfixe /api est utilisé
-        '/api': {
-          target: backendTarget,
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },

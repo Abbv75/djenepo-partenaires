@@ -21,7 +21,7 @@ import { FiCalendar, FiClock, FiShare2, FiCheck } from 'react-icons/fi'
 import { useState } from 'react'
 import type { BlogPost } from '../../../types'
 import { resolveImageUrl } from '../../../utils/imageUrl'
-import dayjs from 'dayjs'
+import { formatBlogDate } from '../../../utils/formatDate'
 
 interface BlogDetailModalProps {
   isOpen: boolean
@@ -128,10 +128,12 @@ export const BlogDetailModal = ({
             </HStack>
 
             <HStack spacing={4} color="gray.500" fontSize="12px" fontWeight={500}>
-              <HStack spacing={1.5}>
-                <Icon as={FiCalendar} />
-                <Text>{dayjs(post.date).format('D MMMM YYYY')}</Text>
-              </HStack>
+              {formatBlogDate(post.date) && (
+                <HStack spacing={1.5}>
+                  <Icon as={FiCalendar} />
+                  <Text>{formatBlogDate(post.date)}</Text>
+                </HStack>
+              )}
               <HStack spacing={1.5}>
                 <Icon as={FiClock} />
                 <Text>{post.read_time}</Text>

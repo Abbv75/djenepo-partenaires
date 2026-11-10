@@ -49,7 +49,7 @@ export const SpotlightCard = ({
           left={0}
           right={0}
           bottom={0}
-          zIndex={1}
+          zIndex={10}
           transition="opacity 0.2s ease"
           opacity={1}
           style={{
@@ -58,10 +58,7 @@ export const SpotlightCard = ({
         />
       )}
 
-      {/* Content */}
-      <Box position="relative" zIndex={2} h="full">
-        {children}
-      </Box>
+      {children}
     </Box>
   );
 };

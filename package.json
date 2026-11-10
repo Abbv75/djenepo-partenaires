@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "backend": "php -S localhost:8000 -t backend/public backend/public/router.php",
+    "backend": "php -S localhost:8000 -t backend/public",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

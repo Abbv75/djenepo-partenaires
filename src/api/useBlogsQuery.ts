@@ -9,7 +9,7 @@ export function useBlogs() {
   return useQuery({
     queryKey: blogKeys.list(),
     queryFn: async (): Promise<BlogPost[]> => {
-      const res = await api.get('/blogs');
+      const res = await api.get('/blogs.php');
       return res.data.data;
     },
   });
@@ -19,7 +19,7 @@ export function useBlog(id: number) {
   return useQuery({
     queryKey: blogKeys.detail(id),
     queryFn: async (): Promise<BlogPost> => {
-      const res = await api.get(`/blogs/${id}`);
+      const res = await api.get(`/blogs.php?id=${id}`);
       return res.data.data;
     },
     enabled: !!id,
@@ -30,7 +30,7 @@ export function useBlogsByCategory(categoryId: number) {
   return useQuery({
     queryKey: blogKeys.byCategory(categoryId),
     queryFn: async (): Promise<BlogPost[]> => {
-      const res = await api.get(`/categories/${categoryId}/blogs`);
+      const res = await api.get(`/categories.php?id=${categoryId}&action=blogs`);
       return res.data.data;
     },
     enabled: !!categoryId,
@@ -43,7 +43,7 @@ export function useCreateBlog() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: Partial<BlogPost>): Promise<BlogPost> => {
-      const res = await api.post('/blogs', data);
+      const res = await api.post('/blogs.php', data);
       return res.data.data;
     },
     onSuccess: () => {
@@ -56,7 +56,7 @@ export function useUpdateBlog() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, data }: { id: number; data: Partial<BlogPost> }): Promise<BlogPost> => {
-      const res = await api.put(`/blogs/${id}`, data);
+      const res = await api.put(`/blogs.php?id=${id}`, data);
       return res.data.data;
     },
     onSuccess: (_data, { id }) => {
@@ -70,7 +70,7 @@ export function useDeleteBlog() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number): Promise<void> => {
-      await api.delete(`/blogs/${id}`);
+      await api.delete(`/blogs.php?id=${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: blogKeys.list() });

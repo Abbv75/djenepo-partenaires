@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>()(
       logout: async () => {
         try {
           if (get().token) {
-            await api.post('/logout');
+            await api.post('/logout.php');
           }
         } catch (error) {
           console.error('Logout error:', error);
@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthState>()(
         if (!token) return;
 
         try {
-          const response = await api.get('/user');
+          const response = await api.get('/user.php');
           set({ user: response.data.data, isAuthenticated: true });
         } catch (error) {
           console.error('Session expired');

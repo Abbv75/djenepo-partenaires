@@ -7,7 +7,7 @@ export function useServiceCategories() {
   return useQuery({
     queryKey: serviceCategoryKeys.list(),
     queryFn: async (): Promise<ServiceCategory[]> => {
-      const res = await api.get('/service-categories');
+      const res = await api.get('/service-categories.php');
       return res.data.data;
     },
   });
@@ -17,7 +17,7 @@ export function useServiceCategory(id: number) {
   return useQuery({
     queryKey: serviceCategoryKeys.detail(id),
     queryFn: async (): Promise<ServiceCategory> => {
-      const res = await api.get(`/service-categories/${id}`);
+      const res = await api.get(`/service-categories.php?id=${id}`);
       return res.data.data;
     },
     enabled: !!id,
@@ -28,7 +28,7 @@ export function useCreateServiceCategory() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: Partial<ServiceCategory>): Promise<ServiceCategory> => {
-      const res = await api.post('/service-categories', data);
+      const res = await api.post('/service-categories.php', data);
       return res.data.data;
     },
     onSuccess: () => {
@@ -41,7 +41,7 @@ export function useUpdateServiceCategory() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, data }: { id: number; data: Partial<ServiceCategory> }): Promise<ServiceCategory> => {
-      const res = await api.put(`/service-categories/${id}`, data);
+      const res = await api.put(`/service-categories.php?id=${id}`, data);
       return res.data.data;
     },
     onSuccess: (_data, { id }) => {
@@ -55,7 +55,7 @@ export function useDeleteServiceCategory() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number): Promise<void> => {
-      await api.delete(`/service-categories/${id}`);
+      await api.delete(`/service-categories.php?id=${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: serviceCategoryKeys.list() });

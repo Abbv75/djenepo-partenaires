@@ -8,8 +8,8 @@ import {
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi'
-import dayjs from 'dayjs'
 import type { BlogPost } from '../../../types'
+import { formatBlogDate } from '../../../utils/formatDate'
 import { SpotlightCard } from '../../../components/reactbits'
 import { BlogCardImage } from './BlogCardImage'
 
@@ -30,6 +30,8 @@ export const BlogCard = ({ post, index, onClick }: BlogCardProps) => {
   let colSpan = { base: 1, md: 1, lg: 4 }
   if (isHero) colSpan = { base: 1, md: 2, lg: 8 }
   else if (isWide) colSpan = { base: 1, md: 2, lg: 6 }
+
+  const formattedDate = formatBlogDate(post.date)
 
   return (
     <MotionGridItem
@@ -60,11 +62,7 @@ export const BlogCard = ({ post, index, onClick }: BlogCardProps) => {
         }}
         display="flex"
         flexDirection={
-          isHero
-            ? { base: 'column', md: 'row' }
-            : isWide
-            ? { base: 'column', sm: 'row' }
-            : 'column'
+          isHero || isWide ? { base: 'column', md: 'row' } : 'column'
         }
       >
         {/* Section Image & Badges */}
@@ -94,14 +92,18 @@ export const BlogCard = ({ post, index, onClick }: BlogCardProps) => {
               fontSize="12px"
               fontWeight={500}
             >
-              <HStack spacing={1.5}>
-                <Icon as={FiCalendar} />
-                <Text>{dayjs(post.date).format('D MMMM YYYY')}</Text>
-              </HStack>
-              <HStack spacing={1.5}>
-                <Icon as={FiClock} />
-                <Text>{post.read_time}</Text>
-              </HStack>
+              {formattedDate && (
+                <HStack spacing={1.5}>
+                  <Icon as={FiCalendar} />
+                  <Text>{formattedDate}</Text>
+                </HStack>
+              )}
+              {post.read_time && (
+                <HStack spacing={1.5}>
+                  <Icon as={FiClock} />
+                  <Text>{post.read_time}</Text>
+                </HStack>
+              )}
             </HStack>
 
             {/* Titre */}

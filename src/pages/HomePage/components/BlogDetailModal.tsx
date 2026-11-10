@@ -18,9 +18,7 @@ import {
 
 import type { BlogPost } from '../../../types'
 import { resolveImageUrl } from '../../../utils/imageUrl'
-import dayjs from 'dayjs';
-import 'dayjs/locale/fr';
-dayjs.locale('fr');
+import { formatBlogDate } from '../../../utils/formatDate'
 
 
 interface BlogDetailModalProps {
@@ -72,8 +70,8 @@ export const BlogDetailModal = ({ isOpen, onClose, post }: BlogDetailModalProps)
                 {post.author_name}
               </Text>
             </VStack>
-            <Text fontSize="12px" color="gray.400" ml="auto">
-              {dayjs(post.date).format('D MMMM YYYY')} • {post.read_time} de lecture
+            <Text fontSize="12px" color="gray.500" ml="auto">
+              {formatBlogDate(post.date)} • {post.read_time} de lecture
             </Text>
           </HStack>
         </ModalHeader>

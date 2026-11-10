@@ -45,7 +45,7 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await api.post('/login', { email, password });
+      const response = await api.post('/login.php', { email, password });
       login(response.data.data.token, response.data.data.user);
       toast({
         title: 'Connexion réussie',

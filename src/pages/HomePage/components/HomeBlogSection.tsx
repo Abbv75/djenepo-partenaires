@@ -21,11 +21,8 @@ import { FiCalendar, FiClock, FiArrowRight } from 'react-icons/fi'
 import type { BlogPost } from '../../../types'
 import { useBlogs } from '../../../api/useBlogsQuery'
 import { resolveImageUrl } from '../../../utils/imageUrl'
+import { formatBlogDate } from '../../../utils/formatDate'
 import { SpotlightCard } from '../../../components/reactbits'
-import dayjs from 'dayjs'
-import 'dayjs/locale/fr'
-
-dayjs.locale('fr')
 
 import { BlogDetailModal } from './BlogDetailModal'
 
@@ -148,11 +145,13 @@ export const HomeBlogSection = () => {
                   {/* Contenu */}
                   <Box p={6} flex={1} display="flex" flexDirection="column" justifyContent="space-between">
                     <Box>
-                      <HStack spacing={3.5} mb={3} color="gray.400" fontSize="12px" fontWeight={500}>
-                        <HStack spacing={1.5}>
-                          <Icon as={FiCalendar} />
-                          <Text>{dayjs(post.date).format('D MMMM YYYY')}</Text>
-                        </HStack>
+                      <HStack spacing={3.5} mb={3} color="gray.500" fontSize="12px" fontWeight={500}>
+                        {formatBlogDate(post.date) && (
+                          <HStack spacing={1.5}>
+                            <Icon as={FiCalendar} />
+                            <Text>{formatBlogDate(post.date)}</Text>
+                          </HStack>
+                        )}
                         <HStack spacing={1.5}>
                           <Icon as={FiClock} />
                           <Text>{post.read_time}</Text>
