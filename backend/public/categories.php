@@ -5,7 +5,7 @@ $controller = new \App\Controllers\CategoryController();
 $method = $_SERVER['REQUEST_METHOD'];
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
-if ($method === 'GET') {
+if ($method === 'GET' || $method === 'HEAD') {
     if ($id) {
         // Optionnel: si l'URL est categories.php?id=1&action=blogs pour récupérer les blogs d'une catégorie
         if (isset($_GET['action']) && $_GET['action'] === 'blogs') {

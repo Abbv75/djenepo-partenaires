@@ -5,7 +5,7 @@ $controller = new \App\Controllers\ServiceCategoryController();
 $method = $_SERVER['REQUEST_METHOD'];
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
-if ($method === 'GET') {
+if ($method === 'GET' || $method === 'HEAD') {
     $controller->index();
 } elseif ($method === 'POST') {
     $controller->store();
