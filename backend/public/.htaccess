@@ -1,0 +1,30 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Si le fichier ou dossier physique existe, ne pas réécrire
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Authentification
+    RewriteRule ^login/?$ login.php [L,QSA]
+    RewriteRule ^logout/?$ logout.php [L,QSA]
+    RewriteRule ^user/?$ user.php [L,QSA]
+
+    # Catégories
+    RewriteRule ^categories/([0-9]+)/blogs/?$ categories.php?id=$1&action=blogs [L,QSA]
+    RewriteRule ^categories/([0-9]+)/?$ categories.php?id=$1 [L,QSA]
+    RewriteRule ^categories/?$ categories.php [L,QSA]
+
+    # Blogs
+    RewriteRule ^blogs/([0-9]+)/?$ blogs.php?id=$1 [L,QSA]
+    RewriteRule ^blogs/?$ blogs.php [L,QSA]
+
+    # Services
+    RewriteRule ^services/([0-9]+)/?$ services.php?id=$1 [L,QSA]
+    RewriteRule ^services/?$ services.php [L,QSA]
+
+    # Catégories de Services
+    RewriteRule ^service-categories/([0-9]+)/?$ service-categories.php?id=$1 [L,QSA]
+    RewriteRule ^service-categories/?$ service-categories.php [L,QSA]
+</IfModule>
