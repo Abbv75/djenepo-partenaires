@@ -1,8 +1,9 @@
-import { VStack, HStack, Box, Badge, Text, Button, Icon } from '@chakra-ui/react'
+import { VStack, HStack, Box, Text, Button, Icon } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
-import { FiArrowRight, FiCheck } from 'react-icons/fi'
+import { FiArrowRight, FiCheckCircle } from 'react-icons/fi'
 import { CONTACT_INFO } from '../../../../constant/contact'
+import { ShinyBadge, BlurText } from '../../../../components/reactbits'
 
 const MotionBox = motion(Box)
 const MotionText = motion(Text)
@@ -10,79 +11,77 @@ const MotionText = motion(Text)
 export const HeroMainContent = () => {
   return (
     <VStack align="flex-start" spacing={7}>
+      {/* ReactBits ShinyBadge */}
       <MotionBox
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Badge
-          bg="whiteAlpha.200"
-          color="gold.400"
-          px={4}
-          py={1.5}
-          borderRadius="full"
-          fontSize="13px"
-          fontWeight={600}
-          backdropFilter="blur(10px)"
-          border="1px solid"
-          borderColor="whiteAlpha.300"
-          display="inline-flex"
-          alignItems="center"
-          gap={2}
-        >
-          <Box w="6px" h="6px" borderRadius="full" bg="gold.400" />
-          Basé à {CONTACT_INFO.address.city}
-        </Badge>
+        <ShinyBadge
+          text={`Cabinet d'expertise en S&E • ${CONTACT_INFO.address.city}`}
+          dotColor="gold.400"
+        />
       </MotionBox>
 
-      <MotionBox
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
+      {/* Titre avec ReactBits BlurText */}
+      <Box>
         <Text
           as="h1"
           fontFamily="heading"
           fontWeight={800}
-          fontSize={{ base: '38px', md: '56px', lg: '64px' }}
-          lineHeight={1.1}
+          fontSize={{ base: '36px', md: '54px', lg: '62px' }}
+          lineHeight={1.12}
           color="white"
+          letterSpacing="-0.02em"
         >
-          Expertise locale pour un{' '}
-          <Text as="span" display="block" color="gold.400">
-            impact durable
+          <BlurText text="Expertise locale pour un" delay={0.06} />{' '}
+          <Text
+            as="span"
+            display="block"
+            color="gold.400"
+            textShadow="0 0 35px rgba(200, 134, 26, 0.4)"
+          >
+            <BlurText text="impact durable" delay={0.09} />
           </Text>
         </Text>
-      </MotionBox>
+      </Box>
 
       <MotionText
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        fontSize={{ base: '17px', md: '19px' }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        fontSize={{ base: '16px', md: '18px' }}
         color="gray.300"
         lineHeight={1.8}
-        maxW="600px"
+        maxW="580px"
       >
-        DJENEPO PARTNERS accompagne les organisations internationales et locales
-        dans la réalisation de leurs ambitions de développement en Afrique de l'Ouest.
+        DJENEPO PARTNERS accompagne les institutions, ONG et programmes de développement
+        dans la conception, le pilotage et l'évaluation rigoureuse de leurs interventions en Afrique de l'Ouest.
       </MotionText>
 
+      {/* Boutons d'action */}
       <MotionBox
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
+        transition={{ duration: 0.6, delay: 0.45 }}
       >
         <HStack spacing={4} flexWrap="wrap">
           <Link to="/services">
             <Button
               variant="brand"
               size="lg"
-              h="60px"
-              px={10}
-              fontSize="16px"
+              h="56px"
+              px={8}
+              fontSize="15px"
+              fontWeight={700}
+              borderRadius="16px"
               rightIcon={<FiArrowRight />}
-              boxShadow="0 10px 25px rgba(43, 91, 196, 0.4)"
+              boxShadow="0 10px 30px rgba(43, 91, 196, 0.45)"
+              _hover={{
+                transform: 'translateY(-2px)',
+                boxShadow: '0 15px 35px rgba(43, 91, 196, 0.55)',
+              }}
+              transition="all 0.25s ease"
             >
               Nos expertises
             </Button>
@@ -93,27 +92,39 @@ export const HeroMainContent = () => {
               colorScheme="whiteAlpha"
               color="white"
               size="lg"
-              h="60px"
-              px={10}
-              fontSize="16px"
-              _hover={{ bg: 'whiteAlpha.200' }}
+              h="56px"
+              px={8}
+              fontSize="15px"
+              fontWeight={600}
+              borderRadius="16px"
+              border="1px solid"
+              borderColor="whiteAlpha.400"
+              backdropFilter="blur(10px)"
+              bg="whiteAlpha.100"
+              _hover={{
+                bg: 'whiteAlpha.200',
+                borderColor: 'whiteAlpha.600',
+                transform: 'translateY(-2px)',
+              }}
+              transition="all 0.25s ease"
             >
-              Parlons de votre projet
+              Échanger avec un consultant
             </Button>
           </Link>
         </HStack>
       </MotionBox>
 
-      <HStack spacing={8} pt={4}>
+      {/* Pilliers de confiance */}
+      <HStack spacing={{ base: 4, sm: 8 }} pt={2} flexWrap="wrap">
         {[
-          { icon: FiCheck, text: 'Rigueur' },
-          { icon: FiCheck, text: 'Impact' },
-          { icon: FiCheck, text: 'Expertise' },
+          'Rigueur méthodologique',
+          'Suivi orienté résultats',
+          'Présence terrain active',
         ].map((item, i) => (
           <HStack key={i} spacing={2}>
-            <Icon as={item.icon} color="gold.400" />
-            <Text color="gray.400" fontWeight={500} fontSize="14px">
-              {item.text}
+            <Icon as={FiCheckCircle} color="gold.400" fontSize="16px" />
+            <Text color="gray.300" fontWeight={500} fontSize="13px">
+              {item}
             </Text>
           </HStack>
         ))}

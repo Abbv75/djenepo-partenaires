@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react'
 import { motion, MotionValue } from 'framer-motion'
+import { GridBackground } from '../../../../components/reactbits'
 
 const MotionBox = motion(Box)
 
@@ -21,14 +22,15 @@ export const HeroBackground = ({ y }: HeroBackgroundProps) => {
       backgroundPosition="center"
       style={{ y }}
     >
+      {/* Superposition sombre élégante */}
       <Box
         position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        bottom={0}
-        bg="linear-gradient(to right, rgba(10, 15, 30, 0.95) 0%, rgba(10, 15, 30, 0.7) 50%, rgba(10, 15, 30, 0.4) 100%)"
+        inset={0}
+        bg="linear-gradient(135deg, rgba(11, 19, 41, 0.96) 0%, rgba(13, 27, 62, 0.88) 50%, rgba(11, 19, 41, 0.75) 100%)"
       />
+
+      {/* ReactBits Grid Pattern avec fondu radial */}
+      <GridBackground color="rgba(255, 255, 255, 0.07)" size={36} opacity={0.8} />
     </MotionBox>
   )
 }
