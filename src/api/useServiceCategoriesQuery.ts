@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { serviceCategoryKeys } from './queryKeys';
+import { serviceCategoryKeys } from '../constant/queryKeys';
 import {
   fetchServiceCategories,
   fetchServiceCategory,

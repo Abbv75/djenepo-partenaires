@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDisclosure, useToast } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useServiceCategories, useDeleteServiceCategory } from '../../../../api/useServiceCategoriesQuery';
-import { serviceCategoryKeys } from '../../../../api/queryKeys';
+import { serviceCategoryKeys } from '../../../../constant/queryKeys';
 import type { ServiceCategory } from '../../../../types';
 
 export function useAdminServiceCategories() {

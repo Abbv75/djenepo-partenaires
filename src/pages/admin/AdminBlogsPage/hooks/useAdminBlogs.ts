@@ -3,7 +3,7 @@ import { useDisclosure, useToast } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useBlogs, useDeleteBlog } from '../../../../api/useBlogsQuery';
 import { useCategories } from '../../../../api/useCategoriesQuery';
-import { blogKeys } from '../../../../api/queryKeys';
+import { blogKeys } from '../../../../constant/queryKeys';
 import type { BlogPost } from '../../../../types';
 
 export function useAdminBlogs() {

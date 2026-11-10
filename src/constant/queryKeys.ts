@@ -1,4 +1,4 @@
-// Query keys — used to uniquely identify and cache queries
+// Query keys — used to uniquely identify and cache TanStack queries
 export const blogKeys = {
   all: ['blogs'] as const,
   list: () => [...blogKeys.all, 'list'] as const,

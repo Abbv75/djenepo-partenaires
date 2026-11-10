@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDisclosure, useToast } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCategories, useDeleteCategory } from '../../../../api/useCategoriesQuery';
-import { categoryKeys } from '../../../../api/queryKeys';
+import { categoryKeys } from '../../../../constant/queryKeys';
 import type { Category } from '../../../../types';
 
 export function useAdminCategories() {

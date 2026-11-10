@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDisclosure, useToast } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useServices, useDeleteService } from '../../../../api/useServicesQuery';
-import { serviceKeys } from '../../../../api/queryKeys';
+import { serviceKeys } from '../../../../constant/queryKeys';
 import type { Service } from '../../../../types';
 
 export function useAdminServices() {
