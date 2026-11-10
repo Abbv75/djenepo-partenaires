@@ -21,7 +21,8 @@ import {
   DrawerHeader,
   DrawerBody,
   Divider,
-  Button
+  Button,
+  Spinner
 } from '@chakra-ui/react';
 import {
   FiHome,
@@ -86,6 +87,115 @@ const NavItem = ({ icon, children, to, isActive, onClick }: { icon: any, childre
   );
 };
 
+const navSections = [
+  {
+    title: null,
+    items: [
+      { name: 'Tableau de bord', icon: FiHome, path: '/admin' }
+    ]
+  },
+  {
+    title: 'Gestion des Actualités',
+    items: [
+      { name: 'Catégories', icon: FiGrid, path: '/admin/categories' },
+      { name: 'Actualités', icon: FiFileText, path: '/admin/blogs' },
+    ]
+  },
+  {
+    title: 'Gestion des Services',
+    items: [
+      { name: 'Catégories de services', icon: FiLayers, path: '/admin/service-categories' },
+      { name: 'Services', icon: FiBriefcase, path: '/admin/services' },
+    ]
+  }
+];
+
+interface SidebarLinksProps {
+  currentPath: string;
+  onClick?: () => void;
+}
+
+const SidebarLinks = ({ currentPath, onClick }: SidebarLinksProps) => (
+  <VStack spacing={6} align="stretch" mt={6}>
+    {navSections.map((section, idx) => (
+      <Box key={idx}>
+        {section.title && (
+          <Text 
+            fontSize="11px" 
+            fontWeight="800" 
+            color="gray.400" 
+            textTransform="uppercase" 
+            px="6" 
+            mb="2" 
+            letterSpacing="1px"
+          >
+            {section.title}
+          </Text>
+        )}
+        <VStack spacing={1} align="stretch">
+          {section.items.map((item) => (
+            <NavItem 
+              key={item.name} 
+              icon={item.icon} 
+              to={item.path}
+              isActive={currentPath === item.path || (item.path !== '/admin' && currentPath.startsWith(item.path))}
+              onClick={onClick}
+            >
+              {item.name}
+            </NavItem>
+          ))}
+        </VStack>
+      </Box>
+    ))}
+  </VStack>
+);
+
+interface SidebarContentProps {
+  currentPath: string;
+  onLogout: () => void;
+  [key: string]: any;
+}
+
+const SidebarContent = ({ currentPath, onLogout, ...rest }: SidebarContentProps) => (
+  <Box
+    bg="white"
+    borderRight="1px"
+    borderRightColor="gray.100"
+    w={{ base: 'full', md: '280px' }}
+    pos="fixed"
+    h="full"
+    boxShadow="4px 0 24px rgba(0,0,0,0.02)"
+    zIndex="10"
+    {...rest}
+  >
+    <Flex h="80px" alignItems="center" mx="8" justifyContent="space-between">
+      <Text fontSize="22px" fontWeight="800" color="gray.900" letterSpacing="tight">
+        Djenepo<Text as="span" color="brand.500">Admin</Text>
+      </Text>
+    </Flex>
+    <SidebarLinks currentPath={currentPath} />
+    
+    <Box position="absolute" bottom="8" left="0" w="full" px="4">
+      <Flex
+        as="button"
+        type="button"
+        align="center"
+        w="full"
+        p="3"
+        borderRadius="12px"
+        cursor="pointer"
+        color="red.500"
+        _hover={{ bg: 'red.50', color: 'red.600' }}
+        transition="all 0.2s"
+        onClick={onLogout}
+      >
+        <Icon mr="4" fontSize="18" as={FiLogOut} />
+        <Text fontWeight="600" fontSize="15px">Déconnexion</Text>
+      </Flex>
+    </Box>
+  </Box>
+);
+
 export default function DashboardLayout() {
   const { isAuthenticated, user, logout, checkAuth } = useAuthStore();
   const navigate = useNavigate();
@@ -94,120 +204,36 @@ export default function DashboardLayout() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate({ to: '/login' });
+      navigate({ to: '/login', replace: true });
     }
   }, [isAuthenticated, navigate]);
 
-  if (!isAuthenticated) return null;
-
-  const handleLogout = () => {
-    logout();
-    navigate({ to: '/login' });
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (e) {
+      console.error('Logout error:', e);
+    } finally {
+      window.location.href = '/login';
+    }
   };
 
-  const navSections = [
-    {
-      title: null,
-      items: [
-        { name: 'Tableau de bord', icon: FiHome, path: '/admin' }
-      ]
-    },
-    {
-      title: 'Gestion du Blog',
-      items: [
-        { name: 'Catégories', icon: FiGrid, path: '/admin/categories' },
-        { name: 'Articles de blog', icon: FiFileText, path: '/admin/blogs' },
-      ]
-    },
-    {
-      title: 'Gestion des Services',
-      items: [
-        { name: 'Catégories de services', icon: FiLayers, path: '/admin/service-categories' },
-        { name: 'Services', icon: FiBriefcase, path: '/admin/services' },
-      ]
-    }
-  ];
-
-  const SidebarLinks = ({ onClick }: { onClick?: () => void }) => (
-    <VStack spacing={6} align="stretch" mt={6}>
-      {navSections.map((section, idx) => (
-        <Box key={idx}>
-          {section.title && (
-            <Text 
-              fontSize="11px" 
-              fontWeight="800" 
-              color="gray.400" 
-              textTransform="uppercase" 
-              px="6" 
-              mb="2" 
-              letterSpacing="1px"
-            >
-              {section.title}
-            </Text>
-          )}
-          <VStack spacing={1} align="stretch">
-            {section.items.map((item) => (
-              <NavItem 
-                key={item.name} 
-                icon={item.icon} 
-                to={item.path}
-                isActive={location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path))}
-                onClick={onClick}
-              >
-                {item.name}
-              </NavItem>
-            ))}
-          </VStack>
-        </Box>
-      ))}
-    </VStack>
-  );
-
-  const SidebarContent = ({ ...rest }) => (
-    <Box
-      bg="white"
-      borderRight="1px"
-      borderRightColor="gray.100"
-      w={{ base: 'full', md: '280px' }}
-      pos="fixed"
-      h="full"
-      boxShadow="4px 0 24px rgba(0,0,0,0.02)"
-      zIndex="10"
-      {...rest}
-    >
-      <Flex h="80px" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="22px" fontWeight="800" color="gray.900" letterSpacing="tight">
-          Djenepo<Text as="span" color="brand.500">Admin</Text>
-        </Text>
+  if (!isAuthenticated) {
+    return (
+      <Flex minH="100vh" align="center" justify="center" bg="#F7F9FC">
+        <Spinner size="xl" color="brand.500" thickness="4px" />
       </Flex>
-      <SidebarLinks />
-      
-      <Box position="absolute" bottom="8" left="0" w="full" px="4">
-        <Flex
-          align="center"
-          p="3"
-          borderRadius="12px"
-          cursor="pointer"
-          color="red.500"
-          _hover={{ bg: 'red.50', color: 'red.600' }}
-          transition="all 0.2s"
-          onClick={handleLogout}
-        >
-          <Icon mr="4" fontSize="18" as={FiLogOut} />
-          <Text fontWeight="600" fontSize="15px">Déconnexion</Text>
-        </Flex>
-      </Box>
-    </Box>
-  );
+    );
+  }
 
   return (
     <Box minH="100vh" bg="#F7F9FC">
       {/* Desktop Sidebar */}
-      <SidebarContent display={{ base: 'none', md: 'block' }} />
+      <SidebarContent currentPath={location.pathname} onLogout={handleLogout} display={{ base: 'none', md: 'block' }} />
       
       {/* Mobile Drawer */}
       <Drawer
@@ -228,7 +254,7 @@ export default function DashboardLayout() {
             </Text>
           </DrawerHeader>
           <DrawerBody p={0} pt={6}>
-            <SidebarLinks onClick={onClose} />
+            <SidebarLinks currentPath={location.pathname} onClick={onClose} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

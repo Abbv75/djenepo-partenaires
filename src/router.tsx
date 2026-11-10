@@ -10,6 +10,7 @@ import ContactPage from './pages/ContactPage'
 import RealisationsPage from './pages/RealisationsPage'
 import BlogPage from './pages/BlogPage'
 import LoginPage from './pages/LoginPage'
+import NotFoundPage from './pages/NotFoundPage'
 import DashboardLayout from './layouts/DashboardLayout'
 import AdminHomePage from './pages/admin/AdminHomePage'
 import AdminCategoriesPage from './pages/admin/AdminCategoriesPage'
@@ -45,6 +46,12 @@ export const realisationsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/realisations',
   component: RealisationsPage,
+})
+
+export const actualitesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/actualites',
+  component: BlogPage,
 })
 
 export const blogRoute = createRoute({
@@ -100,7 +107,8 @@ const routeTree = rootRoute.addChildren([
   indexRoute,
   servicesRoute,
   contactRoute,
-  realisationsRoute,
+  // realisationsRoute, // Masqué temporairement en attente de validation client
+  actualitesRoute,
   blogRoute,
   loginRoute,
   adminRootRoute.addChildren([
@@ -113,4 +121,7 @@ const routeTree = rootRoute.addChildren([
 ])
 
 // Create and export the router instance
-export const router = createRouter({ routeTree })
+export const router = createRouter({
+  routeTree,
+  defaultNotFoundComponent: NotFoundPage,
+})

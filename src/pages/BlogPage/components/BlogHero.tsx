@@ -94,7 +94,7 @@ export const BlogHero = ({
             lineHeight={1.15}
             letterSpacing="-0.02em"
           >
-            <BlurText text="Le Blog de l'Impact" delay={0.05} />{' '}
+            <BlurText text="Les Actualités de l'Impact" delay={0.05} />{' '}
             <Text
               as="span"
               display="block"

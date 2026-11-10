@@ -30,12 +30,12 @@ export const BlogEmptyState = ({
     >
       <Icon as={FiBookOpen} boxSize={12} color="gray.300" />
       <Text fontFamily="heading" fontWeight={700} fontSize="18px" color="gray.800">
-        Aucun article trouvé
+        Aucune actualité trouvée
       </Text>
       <Text fontSize="14px" color="gray.500" lineHeight={1.6}>
         {searchQuery
           ? `Aucun résultat ne correspond à "${searchQuery}".`
-          : 'Aucun article disponible dans cette catégorie actuellement.'}
+          : 'Aucune actualité disponible dans cette catégorie actuellement.'}
       </Text>
       {hasActiveFilters && (
         <Button

@@ -32,7 +32,7 @@ import { useAuthStore } from '../store/useAuthStore'
 const navLinks = [
   { label: 'Accueil', to: '/' },
   { label: 'Services', to: '/services' },
-  { label: 'Blog', to: '/blog' },
+  { label: 'Actualités', to: '/actualites' },
   { label: 'Contact', to: '/contact' },
 ]
 

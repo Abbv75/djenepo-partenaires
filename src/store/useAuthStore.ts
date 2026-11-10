@@ -48,7 +48,7 @@ export const useAuthStore = create<AuthState>()(
           const response = await api.get('/user.php');
           set({ user: response.data.data, isAuthenticated: true });
         } catch (error) {
-          console.error('Session expired');
+          console.error('Session expired', error);
           set({ token: null, user: null, isAuthenticated: false });
         }
       },

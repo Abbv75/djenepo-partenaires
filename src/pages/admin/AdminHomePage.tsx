@@ -45,12 +45,12 @@ export default function AdminHomePage() {
       helpText: 'Catégories disponibles'
     },
     {
-      title: 'Articles de Blog',
+      title: 'Actualités',
       value: stats.blogs,
       icon: FiFileText,
       color: 'gold',
       gradient: 'linear(to-br, gold.400, gold.600)',
-      helpText: 'Articles publiés'
+      helpText: 'Actualités publiées'
     },
     {
       title: 'Services',

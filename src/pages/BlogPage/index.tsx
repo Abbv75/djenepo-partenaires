@@ -54,7 +54,7 @@ export default function BlogPage() {
         <VStack spacing={4}>
           <Spinner size="xl" color="brand.500" thickness="3px" speed="0.75s" />
           <Text fontSize="14px" color="gray.500" fontWeight={500}>
-            Chargement des articles...
+            Chargement des actualités...
           </Text>
         </VStack>
       </Box>

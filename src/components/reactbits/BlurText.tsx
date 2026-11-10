@@ -54,13 +54,15 @@ export const BlurText = ({
       {...boxProps}
     >
       {elements.map((el, i) => (
-        <motion.span
-          key={i}
-          variants={childVariants}
-          style={{ display: 'inline-block', marginRight: animateBy === 'words' ? '0.25em' : '0' }}
-        >
-          {el}
-        </motion.span>
+        <span key={i} style={{ display: 'inline-block' }}>
+          <motion.span
+            variants={childVariants}
+            style={{ display: 'inline-block' }}
+          >
+            {el}
+          </motion.span>
+          {animateBy === 'words' && i < elements.length - 1 ? '\u00A0' : ''}
+        </span>
       ))}
     </Box>
   );

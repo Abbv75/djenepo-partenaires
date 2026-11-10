@@ -4,7 +4,7 @@ import { ServicesList } from './components/ServicesList'
 import { ServicesCTA } from './components/ServicesCTA'
 import { useServiceHash } from './hooks/useServiceHash'
 
-export default () => {
+const ServicesPage = () => {
   useServiceHash()
 
   return (
@@ -15,3 +15,5 @@ export default () => {
     </Box>
   )
 }
+
+export default ServicesPage

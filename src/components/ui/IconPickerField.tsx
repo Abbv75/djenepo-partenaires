@@ -68,8 +68,7 @@ export function IconPickerField({ value, onChange }: IconPickerFieldProps) {
       }}>
         <SimpleGrid columns={{ base: 4, sm: 6, md: 8 }} spacing={2}>
           {displayedOptions.map((opt) => {
-            // @ts-ignore
-            const IconCmp = opt.library === 'fi' ? FiIcons[opt.value] : HiIcons[opt.value];
+            const IconCmp = opt.library === 'fi' ? (FiIcons as Record<string, any>)[opt.value] : (HiIcons as Record<string, any>)[opt.value];
             if (!IconCmp) return null;
             
             const isSelected = value === opt.value;

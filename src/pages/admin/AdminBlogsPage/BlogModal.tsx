@@ -123,7 +123,7 @@ export function BlogModal({ isOpen, onClose, editingBlog, categories, onSuccess 
       isOpen={isOpen} 
       onClose={onClose} 
       onSubmit={handleSubmit}
-      title={editingBlog ? 'Modifier l\'article' : 'Nouvel article'}
+      title={editingBlog ? 'Modifier l\'actualité' : 'Nouvelle actualité'}
       isSubmitting={isSubmitting}
       size="xl"
     >

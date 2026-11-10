@@ -211,9 +211,9 @@ export const HomeBlogSection = () => {
           </SimpleGrid>
         )}
 
-        {/* Bouton voir tous les articles */}
+        {/* Bouton voir toutes les actualités */}
         <Flex justify="center" mt={12}>
-          <Link to="/blog">
+          <Link to="/actualites">
             <Button
               variant="outline_brand"
               size="lg"
@@ -223,7 +223,7 @@ export const HomeBlogSection = () => {
               fontWeight={700}
               rightIcon={<FiArrowRight />}
             >
-              Consulter tous les articles du blog
+              Consulter toutes les actualités
             </Button>
           </Link>
         </Flex>

@@ -31,7 +31,7 @@ export const BlogHeroStats = ({
         </Text>
         <HStack spacing={1} color="blue.200" fontSize="12px" fontWeight={500}>
           <Icon as={FiBookOpen} />
-          <Text>Articles publiés</Text>
+          <Text>Actualités publiées</Text>
         </HStack>
       </VStack>
 

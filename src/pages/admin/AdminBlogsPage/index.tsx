@@ -71,8 +71,8 @@ export default function AdminBlogsPage() {
   return (
     <Box>
       <PageHeader 
-        title="Gestion des Articles" 
-        actionLabel="Nouvel article" 
+        title="Gestion des Actualités" 
+        actionLabel="Nouvelle actualité" 
         onAction={() => handleOpenModal()} 
       />
 
@@ -82,7 +82,7 @@ export default function AdminBlogsPage() {
             <FiSearch color="gray.300" />
           </InputLeftElement>
           <Input
-            placeholder="Rechercher un article..."
+            placeholder="Rechercher une actualité..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             bg="white"
@@ -253,7 +253,7 @@ export default function AdminBlogsPage() {
         onClose={onAlertClose} 
         onConfirm={handleDelete}
         isDeleting={isDeleting}
-        message="Êtes-vous sûr de vouloir supprimer cet article ? Cette action est irréversible."
+        message="Êtes-vous sûr de vouloir supprimer cette actualité ? Cette action est irréversible."
       />
     </Box>
   );
